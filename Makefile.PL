@@ -1,5 +1,14 @@
 use ExtUtils::MakeMaker;
 
+my $dist = {
+	COMPRESS => 'gzip -9f',	# Compress tarball using gzip
+	SUFFIX => 'gz',	# File suffix for tarball
+};
+
+if($^O eq 'darwin') {
+	$dist->{'TAR'} = 'gtar';
+}
+
 WriteMakefile(
     NAME         => 'Text::Names::Abbreviate',
     VERSION_FROM => 'lib/Text/Names/Abbreviate.pm',
