@@ -7,6 +7,43 @@ use Exporter 'import';
 our @EXPORT_OK = qw(abbreviate);
 our $VERSION   = '0.01';
 
+=head1 NAME
+
+Text::Names::Abbreviate - Create abbreviated name formats from full names
+
+=head1 SYNOPSIS
+
+  use Text::Names::Abbreviate qw(abbreviate);
+
+  say abbreviate("John Quincy Adams");         # "J. Q. Adams"
+  say abbreviate("Adams, John Quincy");        # "J. Q. Adams"
+  say abbreviate("George R R Martin", format => 'initials'); # "G.R.R.M."
+
+=head1 DESCRIPTION
+
+This module provides simple abbreviation logic for full personal names,
+with multiple formatting options and styles.
+
+=head1 OPTIONS
+
+=over
+
+=item format
+
+One of: default, initials, compact, shortlast
+
+=item style
+
+One of: first_last, last_first
+
+=item separator
+
+Customize the spacing/punctuation for initials (default: ". ")
+
+=back
+
+=cut
+
 sub abbreviate {
     my ($name, %opts) = @_;
 
@@ -47,40 +84,3 @@ sub abbreviate {
 1;
 
 __END__
-
-=head1 NAME
-
-Text::Names::Abbreviate - Create abbreviated name formats from full names
-
-=head1 SYNOPSIS
-
-  use Text::Names::Abbreviate qw(abbreviate);
-
-  say abbreviate("John Quincy Adams");         # "J. Q. Adams"
-  say abbreviate("Adams, John Quincy");        # "J. Q. Adams"
-  say abbreviate("George R R Martin", format => 'initials'); # "G.R.R.M."
-
-=head1 DESCRIPTION
-
-This module provides simple abbreviation logic for full personal names,
-with multiple formatting options and styles.
-
-=head1 OPTIONS
-
-=over
-
-=item format
-
-One of: default, initials, compact, shortlast
-
-=item style
-
-One of: first_last, last_first
-
-=item separator
-
-Customize the spacing/punctuation for initials (default: ". ")
-
-=back
-
-=cut
