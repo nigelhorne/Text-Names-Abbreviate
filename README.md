@@ -1,4 +1,4 @@
-![Perl CI](https://github.com/yourname/Text-Names-Abbreviate/actions/workflows/perl-ci.yml/badge.svg)
+![Perl CI](https://github.com/nigelhorne/Text-Names-Abbreviate/actions/workflows/perl-ci.yml/badge.svg)
 
 # NAME
 
