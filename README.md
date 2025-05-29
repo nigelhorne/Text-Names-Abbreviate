@@ -1,3 +1,4 @@
+[![CPAN version](https://badge.fury.io/pl/Text-Names-Abbreviate.svg)](https://metacpan.org/pod/Text::Names::Abbreviate)
 ![Perl CI](https://github.com/nigelhorne/Text-Names-Abbreviate/actions/workflows/perl-ci.yml/badge.svg)
 
 # NAME
