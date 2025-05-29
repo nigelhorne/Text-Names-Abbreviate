@@ -1,3 +1,5 @@
+![Perl CI](https://github.com/yourname/Text-Names-Abbreviate/actions/workflows/perl-ci.yml/badge.svg)
+
 # NAME
 
 Text::Names::Abbreviate - Create abbreviated name formats from full names
