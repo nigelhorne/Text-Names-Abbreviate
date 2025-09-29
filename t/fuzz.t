@@ -64,7 +64,7 @@ sub rand_unicode_char {
     return chr($cp);
 }
 
-# Generate a string: mostly ASCII, sometimes unicode, sometimes null bytes or combining marks
+# Generate a string: mostly ASCII, sometimes unicode, sometimes nul bytes or combining marks
 sub rand_str {
 	my $len = shift || int(rand(10)) + 1;
 	my @chars;
@@ -79,7 +79,7 @@ sub rand_str {
 		} elsif ($r < 0.975) {
 			push @chars, rand_unicode_char();              # occasional emoji/marks
 		} else {
-			push @chars, chr(0);                           # null byte injection
+			push @chars, chr(0);                           # nul byte injection
 		}
 	}
 	# Occasionally prepend/append a combining mark to produce combining sequences
@@ -96,11 +96,11 @@ sub rand_str {
 sub rand_int {
 	my $r = rand();
 	if ($r < 0.75) {
-		return int(rand(200)) - 100;               # -100 .. 100 (usual)
+		return int(rand(200)) - 100;	# -100 .. 100 (usual)
 	} elsif ($r < 0.9) {
-		return int(rand(2**31)) - 2**30;           # 32-bit-ish
+		return int(rand(2**31)) - 2**30;	# 32-bit-ish
 	} elsif ($r < 0.98) {
-		return (int(rand(2**63)) - 2**62);         # 64-bit-ish
+		return (int(rand(2**63)) - 2**62);	# 64-bit-ish
 	} else {
 		# very large/suspicious values
 		return 2**63 - 1;
@@ -112,7 +112,7 @@ sub rand_bool { rand() > 0.5 ? 1 : 0 }
 sub rand_num {
 	my $r = rand();
 	if ($r < 0.7) {
-		return (rand() * 200 - 100);               # -100 .. 100
+		return (rand() * 200 - 100);	# -100 .. 100
 	} elsif ($r < 0.9) {
 		return (rand() * 1e12) - 5e11;             # large-ish
 	} elsif ($r < 0.98) {
@@ -268,6 +268,37 @@ sub fuzz_inputs {
 					push @cases, { %mandatory_strings, $field => 'a' x $len, %mandatory_strings};	# border
 					push @cases, { %mandatory_strings, $field => 'a' x ($len + 1), _STATUS => 'DIES', %mandatory_strings }; # outside
 				}
+				if(defined $spec->{matches}) {
+					my $re = $spec->{matches};
+
+					# --- Positive controls ---
+					my @candidate_good = ('123', 'abc', 'A1B2', '0');
+					foreach my $val (@candidate_good) {
+						if ($val =~ $re) {
+							push @cases, { $field => $val };
+							last; # one good match is enough
+						}
+					}
+
+					# --- Negative controls ---
+					my @candidate_bad = (
+						'',          # empty
+						undef,       # undefined
+						" ",        # null byte
+						"😊",        # emoji
+						"１２３",     # full-width digits
+						"١٢٣",       # Arabic digits
+						'..',        # regex metachars
+						"a
+b",      # newline in middle
+						'x' x 5000,  # huge string
+					);
+					foreach my $val (@candidate_bad) {
+						if ($val !~ $re) {
+							push @cases, { $field => $val, _STATUS => 'DIES' };
+						}
+					}
+				}
 			} elsif ($type eq 'arrayref') {
 				if (defined $spec->{min}) {
 					my $len = $spec->{min};
@@ -314,6 +345,18 @@ sub fuzz_inputs {
 			}
 		}
 	}
+
+	# TODO: dedup, fuzzing can easily generate repeats
+	# our $dedup = 1;	# default on
+
+	# later
+	# if ($dedup) {
+		# my %seen;
+		# @cases = grep {
+			# my $dump = encode_json($_);
+			# !$seen{$dump}++
+		# } @cases;
+	# }
 
 	return \@cases;
 }
