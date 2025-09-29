@@ -99,6 +99,14 @@ Nigel Horne, C<< <njh at nigelhorne.com> >>
 
 L<https://github.com/nigelhorne/Text-Names-Abbreviate>
 
+=head1 SEE ALSO
+
+=over 4
+
+=item * Test coverage report: L<https://nigelhorne.github.io/Text-Names-Abbreviate/coverage/>
+
+=back
+
 =head1 SUPPORT
 
 This module is provided as-is without any warranty.

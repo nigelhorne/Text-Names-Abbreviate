@@ -2,6 +2,7 @@ Revision history for Text-Names-Abbreviate
 
 0.02
 	Use Params::Get
+	Added the test dashboard
 
 0.01	Wed May 28 21:01:16 EDT 2025
         First draft
