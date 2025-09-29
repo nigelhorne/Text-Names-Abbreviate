@@ -5,7 +5,7 @@ use warnings;
 
 use Data::Dumper;
 use Test::Most;
-use Test::Returns;
+use Test::Returns 0.02;
 
 BEGIN { use_ok('Text::Names::Abbreviate') }
 
@@ -256,7 +256,7 @@ foreach my $case (@{fuzz_inputs()}) {
 		if($status eq 'DIES') {
 			dies_ok { $result = $result = Text::Names::Abbreviate::abbreviate($case); } 'function call dies';
 		} elsif($status eq 'WARNS') {
-			warnings_exist { $result = $result = Text::Names::Abbreviate::abbreviate($case); } qr[''], 'function call warns';
+			warnings_exist { $result = $result = Text::Names::Abbreviate::abbreviate($case); } qr/./, 'function call warns';
 		} else {
 			lives_ok { $result = $result = Text::Names::Abbreviate::abbreviate($case); } 'function call survives';
 		}
