@@ -30,7 +30,8 @@ WriteMakefile(
 		'Readonly' => 0,
 		'Test::DescribeMe' => 0,
 		'Test::Most' => 0,
-		'Test::Needs' => 0
+		'Test::Needs' => 0,
+		'Test::Returns' => 0
 	}, dist => $dist,
 	clean		=> { FILES => 'Text-Names-Abbreviate-*' },
 	META_MERGE => {
