@@ -18,6 +18,12 @@ WriteMakefile(
 	PREREQ_PM => {
 		'Params::Get' => 0.13
 	}, TEST_REQUIRES => {
+		'File::Glob' => 0,
+		'File::Slurp' => 0,
+		'File::stat' => 0,
+		'JSON::MaybeXS' => 0,
+		'POSIX' => 0,
+		'Readonly' => 0,
 		'Test::DescribeMe' => 0,
 		'Test::Most' => 0,
 		'Test::Needs' => 0
