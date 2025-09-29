@@ -3,6 +3,7 @@ package Text::Names::Abbreviate;
 use strict;
 use warnings;
 
+use Carp;
 use Exporter 'import';
 use Params::Get 0.13;
 use Params::Validate::Strict 0.13;
@@ -101,7 +102,7 @@ sub abbreviate
 		}
 	});
 
-	my $name = $params->{'name'};
+	my $name = $params->{'name'} or Carp::croak(__PACKAGE__, '::abbreviate: Usage($name, { options })');
 
 	my $format = $params->{format} // 'default';	# default, initials, compact, shortlast
 	my $style = $params->{style} // 'first_last'; # first_last or last_first
