@@ -15,10 +15,12 @@ WriteMakefile(
     ABSTRACT     => 'Generate abbreviated forms of personal names',
     AUTHOR       => 'Nigel Horne <njh@nigelhorne.com>',
     LICENSE      => 'GPL',
-	TEST_REQUIRES => {
+	PREREQ_PM => {
+		'Params::Get' => 0.13
+	}, TEST_REQUIRES => {
 		'Test::DescribeMe' => 0,
 		'Test::Most' => 0,
-		'Test::Needs' => 0,
+		'Test::Needs' => 0
 	}, dist => $dist,
 	clean		=> { FILES => 'Text-Names-Abbreviate-*' },
 	META_MERGE => {
