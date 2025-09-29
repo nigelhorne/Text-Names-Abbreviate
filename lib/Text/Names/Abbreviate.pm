@@ -5,6 +5,7 @@ use warnings;
 
 use Exporter 'import';
 use Params::Get 0.13;
+use Params::Validate::Strict 0.13;
 
 our @EXPORT_OK = qw(abbreviate);
 our $VERSION = '0.01';
@@ -26,7 +27,12 @@ Text::Names::Abbreviate - Create abbreviated name formats from full names
 This module provides simple abbreviation logic for full personal names,
 with multiple formatting options and styles.
 
-=head1 OPTIONS
+=head1 SUBROUTINES/METHODS
+
+=head2 abbreviate
+
+Make the abbreviation.
+It takes the following optional arguments:
 
 =over
 
@@ -44,10 +50,56 @@ Customize the spacing/punctuation for initials (default: ". ")
 
 =back
 
+=head3	API SPECIFICATION
+
+=head4	INPUT
+
+  {
+    'name' => { 'type' => 'string', 'min' => 1 },
+    'format' => {
+      'type' => 'string',
+      'memberof' => [ 'default', 'initials', 'compact', 'shortlast' ],
+      'optional' => 1
+    }, 'style' => {
+      'type' => 'string',
+      'memberof' => [ 'first_last', 'last_first' ],
+      'optional' => 1
+    }, 'separator' => {
+      'type' => 'string',
+      'optional' => 1
+    }
+  }
+
+=head4	OUTPUT
+
+Argument error: croak
+
+  {
+    'type' => 'string',
+  }
+
 =cut
 
-sub abbreviate {
-	my $params = Params::Get::get_params('name', @_);
+sub abbreviate
+{
+        my $params = Params::Validate::Strict::validate_strict({
+		args => Params::Get::get_params('name', @_),
+		schema => {
+			'name' => { 'type' => 'string', 'min' => 1 },
+			'format' => {
+				'type' => 'string',
+				'memberof' => [ 'default', 'initials', 'compact', 'shortlast' ],
+				'optional' => 1
+			}, 'style' => {
+				'type' => 'string',
+				'memberof' => [ 'first_last', 'last_first' ],
+				'optional' => 1
+			}, 'separator' => {
+				'type' => 'string',
+				'optional' => 1
+			}
+		}
+	});
 
 	my $name = $params->{'name'};
 

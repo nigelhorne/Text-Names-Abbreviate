@@ -16,7 +16,8 @@ WriteMakefile(
     AUTHOR       => 'Nigel Horne <njh@nigelhorne.com>',
     LICENSE      => 'GPL',
 	PREREQ_PM => {
-		'Params::Get' => 0.13
+		'Params::Get' => 0.13,
+		'Params::Validate::Strict' => 0.13
 	}, TEST_REQUIRES => {
 		'autodie' => 0,
 		'File::Glob' => 0,

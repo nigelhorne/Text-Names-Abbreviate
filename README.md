@@ -18,7 +18,12 @@ Text::Names::Abbreviate - Create abbreviated name formats from full names
 This module provides simple abbreviation logic for full personal names,
 with multiple formatting options and styles.
 
-# OPTIONS
+# SUBROUTINES/METHODS
+
+## abbreviate
+
+Make the abbreviation.
+It takes the following optional arguments:
 
 - format
 
@@ -31,6 +36,34 @@ with multiple formatting options and styles.
 - separator
 
     Customize the spacing/punctuation for initials (default: ". ")
+
+### API SPECIFICATION
+
+#### INPUT
+
+    {
+      'name' => { 'type' => 'string', 'min' => 1 },
+      'format' => {
+        'type' => 'string',
+        'memberof' => [ 'default', 'initials', 'compact', 'shortlast' ],
+        'optional' => 1
+      }, 'style' => {
+        'type' => 'string',
+        'memberof' => [ 'first_last', 'last_first' ],
+        'optional' => 1
+      }, 'separator' => {
+        'type' => 'string',
+        'optional' => 1
+      }
+    }
+
+#### OUTPUT
+
+Argument error: croak
+
+    {
+      'type' => 'string',
+    }
 
 # AUTHOR
 
