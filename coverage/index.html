@@ -65,7 +65,7 @@
 	<a href="https://github.com/nigelhorne/Test-Names-Abbreviate">
 		<img src="https://img.shields.io/github/stars/nigelhorne/Test-Names-Abbreviate?style=social" alt="GitHub stars">
 	</a>
-	<img src="https://img.shields.io/badge/coverage-87%25-brightgreen" alt="Coverage badge">
+	<img src="https://img.shields.io/badge/coverage-88%25-brightgreen" alt="Coverage badge">
 </div>
 <h1>Test::Names::Abbreviate</h1><h2>Coverage Report</h2>
 <table data-sort-col="0" data-sort-order="asc">
@@ -84,13 +84,29 @@
 
 <tbody>
 
-<tr class="med"><td><a href="blib-lib-Text-Names-Abbreviate-pm.html" title="View coverage line by line" target="_blank">blib/lib/Text/Names/Abbreviate.pm</a> <a href="https://github.com/nigelhorne/Test-Names-Abbreviate/blob/e59093ca6425723e1fac633cbb09d1c555815832/blib/lib/Text/Names/Abbreviate.pm" class="icon-link" title="View source on GitHub">&#128269;</a><canvas class="sparkline" width="80" height="20" data-points=""></canvas></td><td>94.3</td><td>71.4</td><td>75.0</td><td>100.0</td><td><span class="coverage-badge badge-warn" title="Moderate coverage">87.9%</span></td><td class="neutral" title="No previous data">&#9679;</td></tr>
+<tr class="med"><td><a href="blib-lib-Text-Names-Abbreviate-pm.html" title="View coverage line by line" target="_blank">blib/lib/Text/Names/Abbreviate.pm</a> <a href="https://github.com/nigelhorne/Test-Names-Abbreviate/blob/689eaf933c80c85a20ee45e329fb4a42e6942bf7/blib/lib/Text/Names/Abbreviate.pm" class="icon-link" title="View source on GitHub">&#128269;</a><canvas class="sparkline" width="80" height="20" data-points="87.9"></canvas></td><td>94.7</td><td>71.4</td><td>75.0</td><td>100.0</td><td><span class="coverage-badge badge-warn" title="Moderate coverage">88.7%</span></td><td class="positive" title="Previous: 87.9%">&#9650; 0.8%</td></tr>
 
-<tr class="summary-row nosort"><td colspan="2"><strong>Summary</strong></td><td colspan="2">1 files</td><td colspan="3">Avg: 87%, Low: 0</td></tr>
+<tr class="summary-row nosort"><td colspan="2"><strong>Summary</strong></td><td colspan="2">1 files</td><td colspan="3">Avg: 88%, Low: 0</td></tr>
 
-<tr class="high nosort"><td><strong>Total</strong></td><td>94.3</td><td>71.4</td><td>75.0</td><td>100.0</td><td colspan="2"><strong>87.9</strong></td></tr>
+<tr class="high nosort"><td><strong>Total</strong></td><td>94.7</td><td>71.4</td><td>75.0</td><td>100.0</td><td colspan="2"><strong>88.7</strong></td></tr>
 
 </tbody></table>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1em;">
+	<div>
+		<h2>Coverage Trend</h2>
+		<label>
+			<input type="checkbox" id="toggleTrend" checked>
+			Show regression trend
+		</label>
+		<div>
+		</div>
+	</div>
+	<div id="zoomControls" style="margin-top:8px;">
+		<input type="button" value="Refresh" onClick="refresh(this)">
+		<button id="resetZoomBtn" type="button">Reset Zoom</button>
+	</div>
+</div>
+
 <canvas id="coverageTrend" width="600" height="300"></canvas>
 <!-- Zoom controls for the trend chart -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -117,7 +133,7 @@ function linearRegression(data) {
 	}));
 }
 
-const dataPoints = [  ];
+const dataPoints = [ { x: "2025-09-29T08:48:21-04:00", y: 87.9310344827586, delta: 0, url: "https://github.com/nigelhorne/Test-Names-Abbreviate/commit/e59093c", label: "2025-09-29T08:48:21-04:00", pointBackgroundColor: "gray", comment: "Added script pre-reqs" } ];
 
 const regressionPoints = linearRegression(dataPoints);
 // Try to register the zoom plugin (handles different UMD builds)
@@ -378,7 +394,7 @@ function refresh(){
 <footer>
 	<p><span style="margin-left:8px;color:#666;font-size:0.9em;">Use mouse wheel or pinch to zoom; drag to pan</span></p>
 	<p>Project: <a href="https://github.com/nigelhorne/Test-Names-Abbreviate">Test-Names-Abbreviate</a></p>
-	<p><em>Last updated: 2025-09-29 12:52:20 - <a href="https://github.com/nigelhorne/Test-Names-Abbreviate/commit/e59093ca6425723e1fac633cbb09d1c555815832">commit <code>e59093c</code></a></em></p>
+	<p><em>Last updated: 2025-09-29 13:46:39 - <a href="https://github.com/nigelhorne/Test-Names-Abbreviate/commit/689eaf933c80c85a20ee45e329fb4a42e6942bf7">commit <code>689eaf9</code></a></em></p>
 </footer>
 </body>
 </html>
