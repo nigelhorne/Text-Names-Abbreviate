@@ -18,9 +18,11 @@ WriteMakefile(
 	PREREQ_PM => {
 		'Params::Get' => 0.13
 	}, TEST_REQUIRES => {
+		'autodie' => 0,
 		'File::Glob' => 0,
 		'File::Slurp' => 0,
 		'File::stat' => 0,
+		'IPC::System::Simple' => 0,
 		'JSON::MaybeXS' => 0,
 		'POSIX' => 0,
 		'Readonly' => 0,
