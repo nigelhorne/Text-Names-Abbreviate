@@ -13,8 +13,8 @@ use Readonly;
 
 Readonly my %config => (
 	github_user => 'nigelhorne',
-	github_repo => 'Test-Names-Abbreviate',
-	package_name => 'Test::Names::Abbreviate',
+	github_repo => 'Text-Names-Abbreviate',
+	package_name => 'Text::Names::Abbreviate',
 	low_threshold => 70,
 	med_threshold => 90,
 	max_points => 10,	# Only display the last 10 commits in the coverage trend graph
