@@ -21,6 +21,7 @@ WriteMakefile(
 		'Params::Validate::Strict' => 0.13
 	}, TEST_REQUIRES => {
 		'autodie' => 0,
+		'Class::Simple' => 0,
 		'File::Glob' => 0,
 		'File::Slurp' => 0,
 		'File::stat' => 0,
