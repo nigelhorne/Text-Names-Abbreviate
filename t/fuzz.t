@@ -234,20 +234,20 @@ sub fuzz_inputs {
 				} elsif ($type eq 'string') {
 					# Is hello allowed?
 					if(!defined($spec->{'memberof'}) || (grep { $_ eq 'hello' } @{$spec->{'memberof'}})) {
-						push @cases, { %mandatory_strings, ( $field => 'hello' ) };
+						push @cases, { %mandatory_strings, %mandatory_objects, ( $field => 'hello' ) };
 					} else {
-						push @cases, { %mandatory_strings, ( $field => 'hello', _STATUS => 'DIES' ) };
+						push @cases, { %mandatory_strings, %mandatory_objects, ( $field => 'hello', _STATUS => 'DIES' ) };
 					}
 					if((!exists($spec->{min})) || ($spec->{min} == 0)) {
 						# '' should die unless it's in the memberof list
 						if(defined($spec->{'memberof'}) && (!grep { $_ eq '' } @{$spec->{'memberof'}})) {
-							push @cases, { %mandatory_strings, ( $field => '', _name => $field, _STATUS => 'DIES' ) }
+							push @cases, { %mandatory_strings, %mandatory_objects, ( $field => '', _name => $field, _STATUS => 'DIES' ) }
 						} else {
-							push @cases, { %mandatory_strings, ( $field => '', _name => $field ) } if((!exists($spec->{min})) || ($spec->{min} == 0));
+							push @cases, { %mandatory_strings, %mandatory_objects, ( $field => '', _name => $field ) } if((!exists($spec->{min})) || ($spec->{min} == 0));
 						}
 					}
 					# push @cases, { $field => "emoji \x{1F600}" };
-					push @cases, { %mandatory_strings, ( $field => "\0null" ) } if($config{'test_nuls'} && !(defined $spec->{memberof}));
+					push @cases, { %mandatory_strings, %mandatory_objects, ( $field => "\0null" ) } if($config{'test_nuls'} && !(defined $spec->{memberof}));
 				}
 				elsif ($type eq 'boolean') {
 					push @cases, { %mandatory_objects, ( $field => 0 ) };
@@ -743,14 +743,14 @@ foreach my $case (@{fuzz_inputs()}) {
 
 	if(my $status = delete $case->{'_STATUS'} || delete $output{'_STATUS'}) {
 		if($status eq 'DIES') {
-			dies_ok { $result = Text::Names::Abbreviate::abbreviate($input); } sprintf($mess, 'dies');
+			dies_ok { $result = Text::Names::Abbreviate->abbreviate($input); } sprintf($mess, 'dies');
 		} elsif($status eq 'WARNS') {
-			warnings_exist { $result = Text::Names::Abbreviate::abbreviate($input); } qr/./, sprintf($mess, 'warns');
+			warnings_exist { $result = Text::Names::Abbreviate->abbreviate($input); } qr/./, sprintf($mess, 'warns');
 		} else {
-			lives_ok { $result = Text::Names::Abbreviate::abbreviate($input); } sprintf($mess, 'survives');
+			lives_ok { $result = Text::Names::Abbreviate->abbreviate($input); } sprintf($mess, 'survives');
 		}
 	} else {
-		lives_ok { $result = Text::Names::Abbreviate::abbreviate($input); } sprintf($mess, 'survives');
+		lives_ok { $result = Text::Names::Abbreviate->abbreviate($input); } sprintf($mess, 'survives');
 	}
 
 	if($ENV{'TEST_VERBOSE'}) {
