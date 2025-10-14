@@ -22,7 +22,7 @@ WriteMakefile(
 	}, TEST_REQUIRES => {
 		'autodie' => 0,
 		'Class::Simple' => 0,
-		'Date::Random' => 0,
+		'Data::Random' => 0,
 		'File::Glob' => 0,
 		'File::Slurp' => 0,
 		'File::stat' => 0,
@@ -36,10 +36,26 @@ WriteMakefile(
 		'Test::Returns' => 0
 	}, dist => $dist,
 	clean		=> { FILES => 'Text-Names-Abbreviate-*' },
-	META_MERGE => {
+	# META_ADD => {
+		# provides => {}
+	# },
+	META_MERGE => {	# https://perldoc.perl.org/CPAN::Meta::Spec
+		'meta-spec' => { version => 2 },
 		resources => {
+			homepage => 'https://metacpan.org/pod/Text::Names::Abbreviate',
+			repository => {
 			repository => 'https://github.com/nigelhorne/Text-Names-Abbreviate',
-			bugtracker => 'https://github.com/nigelhorne/Text-Names-Abbreviate/issues',
+				type => 'git',
+				url => 'git://github.com/nigelhorne/Text-Names-Abbreviate.git',
+				web => 'https://github.com/nigelhorne/Text-Names-Abbreviate',
+				# license    => 'http://dev.perl.org/licenses/',
+			}, bugtracker => {
+				mailto => 'bug-Text-Names-Abbreviate@rt.cpan.org',
+				url => 'https://github.com/nigelhorne/Text-Names-Abbreviate/issues',
+				# web => 'https://rt.cpan.org/Public/Dist/Display.html?Name=Text-Names-Abbreviate',
+				web => 'https://github.com/nigelhorne/Text-Names-Abbreviate/issues'
+			}
 		},
-	}
+	},
+	MIN_PERL_VERSION	=> '5.008'
 );
