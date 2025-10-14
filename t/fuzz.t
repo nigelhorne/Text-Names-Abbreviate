@@ -7,13 +7,14 @@ use utf8;
 use open qw(:std :encoding(UTF-8));	# https://github.com/nigelhorne/App-Test-Generator/issues/1
 
 use Data::Dumper;
+use Data::Random qw(:all);
 use Test::Most;
 use Test::Returns 0.02;
 use JSON::MaybeXS;
 
 BEGIN { use_ok('Text::Names::Abbreviate') }
 
-diag("Text::Names::Abbreviate::abbreviate test case created by https://github.com/nigelhorne/App-Test-Generator");
+diag("Text::Names::Abbreviate->abbreviate test case created by https://github.com/nigelhorne/App-Test-Generator");
 
 # Edge-case maps injected from config (optional)
 my %edge_cases = (
@@ -36,10 +37,10 @@ my %config = (
 
 
 my %input = (
-	'format' => { memberof => [ 'default', 'initials', 'compact', 'shortlast' ], optional => 1, type => 'string' },
+	'format' => { memberof => [ 'default', 'initials', 'compact', 'shortlast', 'default', 'initials', 'compact', 'shortlast', 'default', 'initials', 'compact', 'shortlast' ], optional => 1, type => 'string' },
 	'name' => { min => 1, type => 'string' },
 	'separator' => { optional => 1, type => 'string' },
-	'style' => { memberof => [ 'first_last', 'last_first' ], optional => 1, type => 'string' }
+	'style' => { memberof => [ 'first_last', 'last_first', 'first_last', 'last_first', 'first_last', 'last_first' ], optional => 1, type => 'string' }
 );
 
 my %output = (
@@ -93,6 +94,7 @@ sub rand_unicode_char {
 # Generate a string: mostly ASCII, sometimes unicode, sometimes nul bytes or combining marks
 sub rand_str {
 	my $len = shift || int(rand(10)) + 1;
+
 	my @chars;
 	for (1..$len) {
 		my $r = rand();
@@ -121,16 +123,18 @@ sub rand_str {
 # Random character either upper or lower case
 sub rand_char
 {
-	my $char = '';
-	my $upper_chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	my $lower_chars = 'abcdefghijklmnopqrstuvwxyz';
-	my $combined_chars = $upper_chars . $lower_chars;
+	return rand_chars(set => 'all', min => 1, max => 1);
 
-	# Generate a random index between 0 and the length of the string minus 1
-	my $rand_index = int(rand(length($combined_chars)));
+	# my $char = '';
+	# my $upper_chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	# my $lower_chars = 'abcdefghijklmnopqrstuvwxyz';
+	# my $combined_chars = $upper_chars . $lower_chars;
 
-	# Get the character at that index
-	return substr($combined_chars, $rand_index, 1);
+	# # Generate a random index between 0 and the length of the string minus 1
+	# my $rand_index = int(rand(length($combined_chars)));
+
+	# # Get the character at that index
+	# return substr($combined_chars, $rand_index, 1);
 }
 
 # Integer generator: mix typical small ints with large limits
@@ -219,6 +223,9 @@ sub fuzz_inputs {
 				# Is hello allowed?
 				if(!defined($input{'memberof'}) || (grep { $_ eq 'hello' } @{$input{'memberof'}})) {
 					push @cases, { _input => 'hello' };
+				} elsif(defined($input{'memberof'}) && !defined($input{'max'})) {
+					# Data::Random
+					push @cases, { _input => rand_set(set => $input{'memberof'}, size => 1) }
 				} else {
 					push @cases, { _input => 'hello', _STATUS => 'DIES' };
 				}
@@ -267,6 +274,9 @@ sub fuzz_inputs {
 						if('hello' =~ $re) {
 							if(!defined($spec->{'memberof'}) || (grep { $_ eq 'hello' } @{$spec->{'memberof'}})) {
 								push @cases, { %mandatory_strings, %mandatory_objects, ( $field => 'hello' ) };
+							} elsif(defined($spec->{'memberof'}) && !defined($spec->{'max'})) {
+								# Data::Random
+								push @cases, { %mandatory_strings, %mandatory_objects, _input => rand_set(set => $spec->{'memberof'}, size => 1) }
 							} else {
 								push @cases, { %mandatory_strings, %mandatory_objects, ( $field => 'hello', _STATUS => 'DIES' ) };
 							}
@@ -284,6 +294,9 @@ sub fuzz_inputs {
 						# '' should die unless it's in the memberof list
 						if(defined($spec->{'memberof'}) && (!grep { $_ eq '' } @{$spec->{'memberof'}})) {
 							push @cases, { %mandatory_strings, %mandatory_objects, ( $field => '', _name => $field, _STATUS => 'DIES' ) }
+						} elsif(defined($spec->{'memberof'}) && !defined($spec->{'max'})) {
+							# Data::Random
+							push @cases, { %mandatory_strings, %mandatory_objects, _input => rand_set(set => $spec->{'memberof'}, size => 1) }
 						} else {
 							push @cases, { %mandatory_strings, %mandatory_objects, ( $field => '', _name => $field ) } if((!exists($spec->{min})) || ($spec->{min} == 0));
 						}
@@ -363,7 +376,7 @@ sub fuzz_inputs {
 					$case_input = rand_str();
 				} elsif($type eq 'integer') {
 					$case_input = rand_int();
-				} elsif($type eq 'number') {
+				} elsif(($type eq 'number') || ($type eq 'float')) {
 					$case_input = rand_num();
 				} elsif($type eq 'boolean') {
 					$case_input = rand_bool();
@@ -463,7 +476,7 @@ sub fuzz_inputs {
 			}
 			# outside value
 			my $outside;
-			if ($type eq 'integer' || $type eq 'number') {
+			if(($type eq 'integer') || ($type eq 'number') || ($type eq 'float')) {
 				$outside = (sort { $a <=> $b } @{$input{memberof}})[-1] + 1;
 			} else {
 				$outside = 'INVALID_MEMBEROF';
@@ -490,11 +503,17 @@ sub fuzz_inputs {
 					my $len = $input{min};
 					push @cases, { _input => 'a' x ($len + 1) };	# just inside
 					if($len == 0) {
-						push @cases, { _input => '' };
+						push @cases, { _input => '' }
 					} else {
 						# outside
 						push @cases, { _input => 'a' x $len };	# border
 						push @cases, { _input => 'a' x ($len - 1), _STATUS => 'DIES' };
+					}
+					if($len >= 1) {
+						# Test checking of 'defined'/'exists' rather than if($string)
+						push @cases, { _input => '0' }
+					} else {
+						push @cases, { _input => '0', _STATUS => 'DIES' }
 					}
 				} else {
 					push @cases, { _input => '' };	# No min, empty string should be allowable
@@ -611,7 +630,7 @@ sub fuzz_inputs {
 						push @cases, { $field => $spec->{max} };	# border
 						push @cases, { $field => $spec->{max} + 1, _STATUS => 'DIES' }; # outside
 					}
-				} elsif ($type eq 'string') {
+				} elsif($type eq 'string') {
 					if (defined $spec->{min}) {
 						my $len = $spec->{min};
 						if(my $re = $spec->{matches}) {
@@ -628,10 +647,16 @@ sub fuzz_inputs {
 							push @cases, { %mandatory_strings, ( $field => 'a' x ($len + 1) ) };	# just inside
 							push @cases, { %mandatory_strings, ( $field => 'a' x $len ) };	# border
 							if($len > 0) {
-								# outside
-								push @cases, { %mandatory_strings, ( $field => 'a' x ($len - 1), _STATUS => 'DIES' ) }
+								push @cases, (
+									# outside
+									{ %mandatory_strings, ( $field => 'a' x ($len - 1), _STATUS => 'DIES' ) },
+									# Test checking of 'defined'/'exists' rather than if($string)
+									{ %mandatory_strings, ( $field => '0' ) }
+								);
 							} else {
 								push @cases, { %mandatory_strings, ( $field => '' ) };	# min == 0, empty string should be allowable
+								# Don't confuse if() with if(defined())
+								push @cases, { %mandatory_strings, ( $field => '0' ), _STATUS => 'DIES' };
 							}
 						}
 					} else {
