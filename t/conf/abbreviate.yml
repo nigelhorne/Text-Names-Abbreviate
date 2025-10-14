@@ -1,0 +1,30 @@
+---
+# Pass through App::Test::Generator/fuzz-harness-generator
+
+module: Text::Names::Abbreviate
+function: abbreviate
+
+input:
+  name:
+    type: string
+    min: 1
+  format:
+    type: string
+    memberof:
+      - default
+      - initials
+      - compact
+      - shortlast
+    optional: true
+  style:
+    type: string
+    memberof:
+      - first_last
+      - last_first
+    optional: true
+  separator:
+    type: string
+    optional: true
+
+output:
+  type: string
