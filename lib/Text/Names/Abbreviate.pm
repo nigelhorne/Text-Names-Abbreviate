@@ -102,7 +102,10 @@ sub abbreviate
 		}
 	});
 
-	my $name = $params->{'name'} or Carp::croak(__PACKAGE__, '::abbreviate: Usage($name, { options })');
+	my $name = $params->{'name'};
+	if(!defined($name)) {
+		Carp::croak(__PACKAGE__, '::abbreviate: Usage($name, { options })')
+	}
 
 	my $format = $params->{format} // 'default';	# default, initials, compact, shortlast
 	my $style = $params->{style} // 'first_last'; # first_last or last_first
