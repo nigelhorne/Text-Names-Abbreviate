@@ -83,7 +83,7 @@ Argument error: croak
 
 sub abbreviate
 {
-        my $params = Params::Validate::Strict::validate_strict({
+	my $params = Params::Validate::Strict::validate_strict({
 		args => Params::Get::get_params('name', @_),
 		schema => {
 			'name' => { 'type' => 'string', 'min' => 1 },
@@ -112,9 +112,25 @@ sub abbreviate
 	my $sep	= defined $params->{separator} ? $params->{separator} : '.';
 
 	# Normalize commas (e.g., "Adams, John Q." -> ("Adams", "John Q."))
+	my $had_leading_comma = 0;
 	if ($name =~ /,/) {
 		my ($last, $rest) = map { s/^\s+|\s+$//gr } split(/\s*,\s*/, $name, 2);
-		$name = "$rest $last";
+		$rest //= '';
+		$last //= '';
+
+		# Track if we had a leading comma (empty last name part)
+		$had_leading_comma = 1 if !length($last) && length($rest);
+
+		if (length($last) && length($rest)) {
+			$name = "$rest $last";
+		} elsif (length($rest)) {
+			$name = $rest;
+		} elsif (length($last)) {
+			$name = $last;
+		} else {
+			return '';
+		}
+
 		$name =~ s/^\s+|\s+$//g;
 		$name =~ s/\s+/ /g;
 	}
@@ -122,8 +138,22 @@ sub abbreviate
 	my @parts = split /\s+/, $name;
 	return '' unless @parts;
 
-	my $last_name = pop @parts;
-	my @initials = map { substr($_, 0, 1) } @parts;
+	# For last_first style in non-default formats, reverse the name parts before processing
+	if ($style eq 'last_first' && $format ne 'default') {
+		@parts = reverse @parts;
+	}
+
+	my $last_name;
+	my @initials;
+
+	# If we had a leading comma (", John"), treat all parts as first names
+	if ($had_leading_comma) {
+		$last_name = '';
+		@initials = map { substr($_, 0, 1) } @parts;
+	} else {
+		$last_name = pop @parts;
+		@initials = map { substr($_, 0, 1) } @parts;
+	}
 
 	if(@initials) {
 		@initials = grep { $_ } @initials;	# Remove empty elements
@@ -147,7 +177,7 @@ sub abbreviate
 			if(length($joined)) {
 				return $style eq 'last_first'
 					? "$last_name, $joined"
-					: "$joined $last_name";
+					: $last_name ? "$joined $last_name" : $joined;
 			}
 		}
 		return $last_name;

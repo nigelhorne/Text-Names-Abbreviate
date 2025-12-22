@@ -36,13 +36,13 @@ subtest 'comma normalization' => sub {
 subtest 'style for non-default formats' => sub {
 	is(
 		abbreviate("John Quincy Adams", { format => 'initials', style => 'last_first' }),
-		'Q.A.J.',
+		'A.J.Q.',
 		'style has effect on initials format'
 	);
 
 	is(
 		abbreviate("John Quincy Adams", { format => 'compact', style => 'last_first' }),
-		'QAJ',
+		'AJQ',
 		'style has effect on compact format'
 	);
 };
