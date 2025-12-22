@@ -20,7 +20,7 @@ https://pjcj.net
 <h1>Branch Coverage</h1>
 <table>
 <tr><td class="h" align="right">File:</td><td align="left">blib/lib/Text/Names/Abbreviate.pm</td></tr>
-<tr><td class="h" align="right">Coverage:</td><td align="left" class="c2">93.8%</td></tr>
+<tr><td class="h" align="right">Coverage:</td><td align="left" class="c1">88.1%</td></tr>
 </table>
 <div><br/></div>
 <table>
@@ -28,11 +28,24 @@ https://pjcj.net
 <tr><td class="h"><a id="L106">106</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">unless (defined $name)</td></tr>
 <tr><td class="h"><a id="L112">112</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">defined $params-&gt;{&#39;separator&#39;} ? :</td></tr>
 <tr><td class="h"><a id="L116">116</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if ($name =~ /,/)</td></tr>
-<tr><td class="h"><a id="L122">122</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">unless @parts</td></tr>
-<tr><td class="h"><a id="L127">127</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if ($format eq &#39;compact&#39;) { }</td></tr>
+<tr><td class="h"><a id="L122">122</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if not length $last and length $rest</td></tr>
+<tr><td class="h"><a id="L124">124</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if (length $last and length $rest) { }</td></tr>
+<tr><td class="h"></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">elsif (length $rest) { }</td></tr>
+<tr><td class="h"></td><td class="c0">50</td><td class="c3">T</td><td class="c0">F</td><td class="s">elsif (length $last) { }</td></tr>
+<tr><td class="h"><a id="L139">139</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">unless @parts</td></tr>
+<tr><td class="h"><a id="L145">145</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if ($had_leading_comma) { }</td></tr>
+<tr><td class="h"><a id="L153">153</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if ($style eq &quot;last_first&quot; and $format ne &quot;default&quot; and length $last_name)</td></tr>
+<tr><td class="h"><a id="L159">159</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if (@initials)</td></tr>
+<tr><td class="h"><a id="L163">163</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if ($format eq &#39;compact&#39;) { }</td></tr>
 <tr><td class="h"></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">elsif ($format eq &#39;initials&#39;) { }</td></tr>
 <tr><td class="h"></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">elsif ($format eq &#39;shortlast&#39;) { }</td></tr>
-<tr><td class="h"><a id="L138">138</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">$style eq &#39;last_first&#39; ? :</td></tr>
+<tr><td class="h"><a id="L164">164</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">length $last_name ? :</td></tr>
+<tr><td class="h"><a id="L167">167</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if length $last_name</td></tr>
+<tr><td class="h"><a id="L171">171</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">if (@initials)</td></tr>
+<tr><td class="h"><a id="L176">176</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if (@initials)</td></tr>
+<tr><td class="h"><a id="L178">178</a></td><td class="c0">50</td><td class="c3">T</td><td class="c0">F</td><td class="s">if (length $joined)</td></tr>
+<tr><td class="h"><a id="L179">179</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">$last_name ? :</td></tr>
+<tr><td class="h"></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">$style eq &#39;last_first&#39; ? :</td></tr>
 </table>
 </body>
 </html>
