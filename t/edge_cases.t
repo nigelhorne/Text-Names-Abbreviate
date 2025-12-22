@@ -30,7 +30,7 @@ subtest 'single-word works' => sub {
 subtest 'comma normalization' => sub {
 	is(abbreviate('Adams,'), 'Adams', 'trailing comma works');
 
-	is(abbreviate(", John"), 'J.', 'leading comma works');
+	is(abbreviate(', John'), 'J.', 'leading comma works');
 };
 
 subtest 'style for non-default formats' => sub {

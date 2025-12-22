@@ -112,10 +112,11 @@ sub abbreviate
 	my $sep	= defined $params->{separator} ? $params->{separator} : '.';
 
 	# Normalize commas (e.g., "Adams, John Q." -> ("Adams", "John Q."))
-	my ($last, $rest);
 	if ($name =~ /,/) {
-		($last, $rest) = map { s/^\s+|\s+$//gr } split(/\s*,\s*/, $name, 2);
+		my ($last, $rest) = map { s/^\s+|\s+$//gr } split(/\s*,\s*/, $name, 2);
 		$name = "$rest $last";
+		$name =~ s/^\s+|\s+$//g;
+		$name =~ s/\s+/ /g;
 	}
 
 	my @parts = split /\s+/, $name;
@@ -130,11 +131,12 @@ sub abbreviate
 
 	if ($format eq 'compact') {
 		return join('', @initials, substr($last_name, 0, 1));
-	}
-	elsif ($format eq 'initials') {
-		return join($sep, @initials, substr($last_name, 0, 1)) . $sep;
-	}
-	elsif ($format eq 'shortlast') {
+	} elsif ($format eq 'initials') {
+		my @letters = @initials;
+		push @letters, substr($last_name, 0, 1) if length $last_name;
+
+		return join($sep, @letters) . $sep;
+	} elsif ($format eq 'shortlast') {
 		if(@initials) {
 			return join(' ', map { "${_}$sep" } @initials) . " $last_name";
 		}
