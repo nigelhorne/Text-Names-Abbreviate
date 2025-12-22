@@ -115,8 +115,8 @@ sub abbreviate
 	my $had_leading_comma = 0;
 	if ($name =~ /,/) {
 		my ($last, $rest) = map { s/^\s+|\s+$//gr } split(/\s*,\s*/, $name, 2);
-		$rest //= '';
-		$last //= '';
+		$rest ||= '';
+		$last ||= '';
 
 		# Track if we had a leading comma (empty last name part)
 		$had_leading_comma = 1 if !length($last) && length($rest);
@@ -138,11 +138,6 @@ sub abbreviate
 	my @parts = split /\s+/, $name;
 	return '' unless @parts;
 
-	# For last_first style in non-default formats, reverse the name parts before processing
-	if ($style eq 'last_first' && $format ne 'default') {
-		@parts = reverse @parts;
-	}
-
 	my $last_name;
 	my @initials;
 
@@ -153,6 +148,12 @@ sub abbreviate
 	} else {
 		$last_name = pop @parts;
 		@initials = map { substr($_, 0, 1) } @parts;
+
+		# For last_first style in non-default formats, put last name initial first
+		if ($style eq 'last_first' && $format ne 'default' && length($last_name)) {
+			unshift @initials, substr($last_name, 0, 1);
+			$last_name = '';
+		}
 	}
 
 	if(@initials) {
@@ -160,7 +161,7 @@ sub abbreviate
 	}
 
 	if ($format eq 'compact') {
-		return join('', @initials, substr($last_name, 0, 1));
+		return join('', @initials, length($last_name) ? substr($last_name, 0, 1) : ());
 	} elsif ($format eq 'initials') {
 		my @letters = @initials;
 		push @letters, substr($last_name, 0, 1) if length $last_name;
