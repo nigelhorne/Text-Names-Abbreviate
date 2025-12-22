@@ -109,7 +109,7 @@ sub abbreviate
 
 	my $format = $params->{format} // 'default';	# default, initials, compact, shortlast
 	my $style = $params->{style} // 'first_last'; # first_last or last_first
-	my $sep	= defined $params->{separator} ? $params->{separator} : '. ';
+	my $sep	= defined $params->{separator} ? $params->{separator} : '.';
 
 	# Normalize commas (e.g., "Adams, John Q." -> ("Adams", "John Q."))
 	my ($last, $rest);
@@ -124,20 +124,31 @@ sub abbreviate
 	my $last_name = pop @parts;
 	my @initials = map { substr($_, 0, 1) } @parts;
 
+	if(@initials) {
+		@initials = grep { $_ } @initials;	# Remove empty elements
+	}
+
 	if ($format eq 'compact') {
 		return join('', @initials, substr($last_name, 0, 1));
 	}
 	elsif ($format eq 'initials') {
-		return join('.', @initials, substr($last_name, 0, 1)) . '.';
+		return join($sep, @initials, substr($last_name, 0, 1)) . $sep;
 	}
 	elsif ($format eq 'shortlast') {
-		return join(' ', map { "$_." } @initials) . " $last_name";
-	}
-	else { # default: "J. Q. Adams"
-		my $joined = join(' ', map { "$_." } @initials);
-		return $style eq 'last_first'
-			? "$last_name, $joined"
-			: "$joined $last_name";
+		if(@initials) {
+			return join(' ', map { "${_}$sep" } @initials) . " $last_name";
+		}
+		return $last_name;
+	} else { # default: "J. Q. Adams"
+		if(@initials) {
+			my $joined = join(' ', map { "${_}$sep" } @initials);
+			if(length($joined)) {
+				return $style eq 'last_first'
+					? "$last_name, $joined"
+					: "$joined $last_name";
+			}
+		}
+		return $last_name;
 	}
 }
 
