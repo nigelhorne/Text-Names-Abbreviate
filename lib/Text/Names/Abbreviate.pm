@@ -56,7 +56,7 @@ Customize the spacing/punctuation for initials (default: ". ")
 =head4	INPUT
 
   {
-    'name' => { 'type' => 'string', 'min' => 1 },
+    'name' => { 'type' => 'string', 'min' => 1, 'optional' => 0 },
     'format' => {
       'type' => 'string',
       'memberof' => [ 'default', 'initials', 'compact', 'shortlast' ],
@@ -86,7 +86,7 @@ sub abbreviate
 	my $params = Params::Validate::Strict::validate_strict({
 		args => Params::Get::get_params('name', @_),
 		schema => {
-			'name' => { 'type' => 'string', 'min' => 1 },
+			'name' => { 'type' => 'string', 'min' => 1, 'optional' => 0 },
 			'format' => {
 				'type' => 'string',
 				'memberof' => [ 'default', 'initials', 'compact', 'shortlast' ],
