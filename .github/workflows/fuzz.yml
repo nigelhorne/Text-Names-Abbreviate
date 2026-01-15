@@ -10,11 +10,21 @@ on:
   pull_request:
     branches: [main, master]
   schedule:
-    - cron: '29 5 15 * *'
+    - cron: '15 5 15 * *'
 
 jobs:
   generate-fuzz-tests:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+        perl: ['5.42', '5.40', '5.38', '5.36', '5.34', '5.32', '5.30', '5.28', '5.22']
+
+    runs-on: ${{ matrix.os }}
+    name: Fuzz testing with perl ${{ matrix.perl }} on ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v6
@@ -22,12 +32,31 @@ jobs:
       - name: Set up Perl
         uses: shogo82148/actions-setup-perl@v1
         with:
-          perl-version: '5.38'
+          perl-version: ${{ matrix.perl }}
+
+      - name: Update Ubuntu Packages
+        run: |
+          sudo apt-get update
+          sudo apt-get -y upgrade && sudo apt-get install -y libdb-dev libwww-perl mailutils
+        if: runner.os == 'Linux'
+
+      - name: Install Perl dependencies
+        run: |
+          cpanm --notest LWP::UserAgent LWP::Protocol::https Data::Throttler CGI::IDS DB_File Config::Abstraction
 
       - name: Install App::Test::Generator this module's dependencies
         run: |
           cpanm App::Test::Generator
           cpanm --installdeps .
+
+      - name: Make Module
+        run: |
+          # find . -name build.log | xargs cat
+          perl Makefile.PL
+          make
+        env:
+          AUTOMATED_TESTING: 1
+          NONINTERACTIVE_TESTING: 1
 
       - name: Generate fuzz tests
         run: |
@@ -40,3 +69,12 @@ jobs:
       - name: Run generated fuzz tests
         run: |
           prove -lr t/fuzz/
+        env:
+          AUTOMATED_TESTING: 1
+          NONINTERACTIVE_TESTING: 1
+
+      - name: Show cpanm build log on failure (non-Windows)
+        if: runner.os != 'Windows' && failure()
+        run: |
+          echo "Fuzz Testing workflow failed" | mailx -s "GitHub Action Failed" alerts@nigelhorne.com
+          tail -100 "$HOME/.cpanm/work/*/build.log"
