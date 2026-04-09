@@ -22,6 +22,7 @@ on 'test' => sub {
 	requires 'Test::Returns';
 	requires 'autodie';
 };
+
 on 'develop' => sub {
 	requires 'Devel::Cover';
 	requires 'Perl::Critic';
