@@ -28,6 +28,14 @@ Text::Names::Abbreviate - Create abbreviated name formats from full names
 This module provides simple abbreviation logic for full personal names,
 with multiple formatting options and styles.
 
+The input is expected to be a personal name consisting of one or more
+whitespace-separated components. These are typically interpreted as:
+
+  First [Middle ...] Last
+
+Names consisting of a single component are treated as a single name,
+and no abbreviation of given names is possible.
+
 =head1 SUBROUTINES/METHODS
 
 =head2 abbreviate
@@ -41,15 +49,77 @@ It takes the following optional arguments:
 
 One of: default, initials, compact, shortlast
 
+C<Shortlast> produces initials followed by the full last name, ignoring style reordering.
+This is similar to the default format but does not support C<last_first> output.
+
 =item style
 
 One of: first_last, last_first
 
 =item separator
 
-Customize the spacing/punctuation for initials (default: ". ")
+String used between initials (default: ".").
+
+Note that spacing between initials is handled separately depending on
+the selected format.
 
 =back
+
+=head3 Name Formats
+
+The function recognizes names in both of the following forms:
+
+=over 4
+
+=item *
+
+C<First Middle Last>
+
+=item *
+
+C<Last, First Middle>
+
+=back
+
+In the latter case, the name will be normalized internally before
+abbreviation.
+
+If the input begins with a comma (e.g., C<", John">), it is interpreted
+as having no last name, and only initials will be produced.
+
+=head3 Errors
+
+The function will throw an exception (via C<croak>) if:
+
+=over 4
+
+=item *
+
+The C<name> parameter is missing or undefined
+
+=item *
+
+The C<name> parameter is an empty string
+
+=item *
+
+An invalid value is provided for C<format> or C<style>
+
+=back
+
+=head1 EXAMPLES
+
+  abbreviate("Madonna")
+  # "Madonna"
+
+  abbreviate("Adams, John Quincy")
+  # "J. Q. Adams"
+
+  abbreviate("John Quincy Adams", { style => 'last_first' })
+  # "Adams, J. Q."
+
+  abbreviate("John Quincy Adams", { format => 'compact' })
+  # "JQA"
 
 =head3 NOTES
 
