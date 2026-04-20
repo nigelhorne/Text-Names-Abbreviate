@@ -121,7 +121,7 @@ An invalid value is provided for C<format> or C<style>
   abbreviate("John Quincy Adams", { format => 'compact' })
   # "JQA"
 
-=head3 NOTES
+=head3 Notes
 
 Abbreviation formats such as C<compact> and C<initials> are lossy
 transformations. They discard structural information about the original
@@ -134,6 +134,10 @@ may not yield equivalent results:
   abbreviate("GRRM", { format => 'initials' })               # "G."
 
 In such cases, the input is treated as a single name.
+
+Initials are derived by taking the first character of each name component verbatim.
+No filtering is applied,
+so non-alphabetic characters (such as punctuation or digits) will be included as-is.
 
 =head3	API SPECIFICATION
 

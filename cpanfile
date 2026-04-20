@@ -20,6 +20,7 @@ on 'test' => sub {
 	requires 'Test::Most';
 	requires 'Test::Needs';
 	requires 'Test::Returns';
+	requires 'Test::Which';
 	requires 'autodie';
 };
 

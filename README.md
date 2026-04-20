@@ -86,7 +86,7 @@ The function will throw an exception (via `croak`) if:
     abbreviate("John Quincy Adams", { format => 'compact' })
     # "JQA"
 
-### NOTES
+### Notes
 
 Abbreviation formats such as `compact` and `initials` are lossy
 transformations. They discard structural information about the original
@@ -99,6 +99,10 @@ may not yield equivalent results:
     abbreviate("GRRM", { format => 'initials' })               # "G."
 
 In such cases, the input is treated as a single name.
+
+Initials are derived by taking the first character of each name component verbatim.
+No filtering is applied,
+so non-alphabetic characters (such as punctuation or digits) will be included as-is.
 
 ### API SPECIFICATION
 
