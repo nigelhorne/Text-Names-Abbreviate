@@ -42,7 +42,7 @@ It takes the following optional arguments:
 #### INPUT
 
     {
-      'name' => { 'type' => 'string', 'min' => 1 },
+      'name' => { 'type' => 'string', 'min' => 1, 'optional' => 0 },
       'format' => {
         'type' => 'string',
         'memberof' => [ 'default', 'initials', 'compact', 'shortlast' ],
@@ -113,13 +113,8 @@ You can also look for information at:
 
 # LICENCE AND COPYRIGHT
 
-Copyright 2025 Nigel Horne.
+Copyright 2025-2026 Nigel Horne.
 
-Usage is subject to licence terms.
-
-The licence terms of this software are as follows:
-
-- Personal single user, single computer use: GPL2
-- All other users (including Commercial, Charity, Educational, Government)
-  must apply in writing for a licence for use from Nigel Horne at the
-  above e-mail.
+Usage is subject to the terms of GPL2.
+If you use it,
+please let me know.
