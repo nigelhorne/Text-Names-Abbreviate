@@ -37,6 +37,20 @@ It takes the following optional arguments:
 
     Customize the spacing/punctuation for initials (default: ". ")
 
+### NOTES
+
+Abbreviation formats such as `compact` and `initials` are lossy
+transformations. They discard structural information about the original
+name.
+
+As a result, passing the output of `abbreviate()` back into the function
+may not yield equivalent results:
+
+    abbreviate("George R R Martin", { format => 'compact' })   # "GRRM"
+    abbreviate("GRRM", { format => 'initials' })               # "G."
+
+In such cases, the input is treated as a single name.
+
 ### API SPECIFICATION
 
 #### INPUT

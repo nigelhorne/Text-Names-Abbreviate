@@ -51,6 +51,20 @@ Customize the spacing/punctuation for initials (default: ". ")
 
 =back
 
+=head3 NOTES
+
+Abbreviation formats such as C<compact> and C<initials> are lossy
+transformations. They discard structural information about the original
+name.
+
+As a result, passing the output of C<abbreviate()> back into the function
+may not yield equivalent results:
+
+  abbreviate("George R R Martin", { format => 'compact' })   # "GRRM"
+  abbreviate("GRRM", { format => 'initials' })               # "G."
+
+In such cases, the input is treated as a single name.
+
 =head3	API SPECIFICATION
 
 =head4	INPUT
