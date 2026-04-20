@@ -247,12 +247,12 @@ sub abbreviate
 
 	if ($format eq 'compact') {
 		return join('', @initials, length($last_name) ? substr($last_name, 0, 1) : ());
-	} elsif ($format eq 'initials') {
+	} elsif($format eq 'initials') {
 		my @letters = @initials;
 		push @letters, substr($last_name, 0, 1) if length $last_name;
 
 		return join($sep, @letters) . $sep;
-	} elsif ($format eq 'shortlast') {
+	} elsif($format eq 'shortlast') {
 		if(@initials) {
 			return join(' ', map { "${_}$sep" } @initials) . " $last_name";
 		}
@@ -260,10 +260,11 @@ sub abbreviate
 	} else { # default: "J. Q. Adams"
 		if(@initials) {
 			my $joined = join(' ', map { "${_}$sep" } @initials);
-			if(length($joined)) {
-				return $style eq 'last_first'
-					? "$last_name, $joined"
-					: $last_name ? "$joined $last_name" : $joined;
+			if (length($joined)) {
+				if ($style eq 'last_first' && length($last_name)) {
+					return "$last_name, $joined";
+				}
+				return $last_name ? "$joined $last_name" : $joined;
 			}
 		}
 		return $last_name;
