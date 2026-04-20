@@ -1,0 +1,664 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+
+/* --------------------------------------------------
+   CSS Variables (Light Mode Default)
+-------------------------------------------------- */
+
+:root {
+    --bg: #ffffff;
+    --text: #000000;
+    --table-header: #333;
+    --table-header-text: #ffffff;
+
+    --survived-1: #f8d7da;
+    --survived-2: #f5b7b1;
+    --survived-3: #ec7063;
+
+    --killed: #d4edda;
+    --border: #cccccc;
+}
+
+/* --------------------------------------------------
+   Dark Mode Overrides
+-------------------------------------------------- */
+
+html[data-theme='dark'] {
+    --bg: #1e1e1e;
+    --text: #dddddd;
+    --table-header: #222;
+    --table-header-text: #ffffff;
+
+    --survived-1: #5c2b2e;
+    --survived-2: #7b2c2f;
+    --survived-3: #a93226;
+
+    --killed: #1e4620;
+    --border: #555;
+}
+
+/* --------------------------------------------------
+   Global Styles
+-------------------------------------------------- */
+
+body {
+	font-family: sans-serif;
+	background: var(--bg);
+	color: var(--text);
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    background: var(--table-header);
+    color: var(--table-header-text);
+}
+
+.survived-1 { background-color: var(--survived-1); }
+.survived-2 { background-color: var(--survived-2); }
+.survived-3 { background-color: var(--survived-3); }
+
+.killed { background-color: var(--killed); }
+
+.legend {
+    border: 1px solid #ccc;
+    background: #fafafa;
+    padding: 10px;
+    margin: 15px 0;
+    font-size: 0.9em;
+}
+
+.legend pre {
+    background: #f4f4f4;
+    padding: 5px;
+}
+
+.legend-box {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin: 0 6px 0 20px;
+    vertical-align: middle;
+    border: 1px solid var(--border);
+}
+
+/* White box for non-mutated lines */
+.legend-box.none {
+	background-color: var(--bg);
+}
+
+/* --------------------------------------------------
+   Suggested Test Box Styling
+   Theme-aware and readable in light & dark modes
+-------------------------------------------------- */
+
+.suggested-test {
+    margin-top: 6px;
+    margin-bottom: 12px;
+
+    /* Use theme variables instead of hardcoded colors */
+    background: var(--bg);
+    color: var(--text);
+
+    padding: 8px;
+    border-radius: 4px;
+
+    /* Subtle border for visual separation */
+    border: 1px solid var(--border);
+}
+
+/* Label styling */
+.suggest-label {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+/* Ensure the test code block inherits readable colors */
+.suggested-test pre {
+    background: transparent;   /* Prevent nested dark blocks */
+    color: inherit;            /* Match theme text color */
+    margin: 0;
+    font-family: monospace;
+}
+
+pre { line-height: 1.4; }
+
+pre > details {
+    margin: 0.2em 0;
+}
+
+pre > details:first-child {
+    margin-top: 0;
+}
+
+pre > details:last-child {
+    margin-bottom: 0;
+}
+
+pre details,
+pre summary,
+pre ul,
+pre li {
+    white-space: normal;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+}
+
+.nav { margin-bottom: 1em; }
+
+.toggle {
+    float: right;
+    cursor: pointer;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+}
+
+/* Tooltip container */
+.tooltip {
+	position: relative;
+	cursor: help;
+}
+
+/* Tooltip bubble */
+.tooltip:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background: var(--table-header);
+    color: var(--table-header-text);
+    padding: 6px 10px;
+    white-space: normal;
+    max-width: 300px;
+    min-width: 30ch;
+    font-size: 12px;
+    border-radius: 6px;
+    z-index: 1000;
+    margin-left: 10ch;   /* move tooltip ~10 characters to the right */
+}
+
+.mutant-details {
+	margin-left: 2em;
+	font-size: 0.9em;
+}
+
+/* Indent the list of mutations that displays when expanding by 8 characters */
+pre details.mutant-details ul {
+	padding-left: 8ch;
+	margin: 0.2em 0;
+}
+
+.mutant-details summary {
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.lcsaj-dot {
+    color: #5555ff;
+    font-size: 10px;
+    margin-right: 3px;
+}
+
+.lcsaj-dot-uncovered {
+    color: #cc4444;
+    font-size: 10px;
+    margin-right: 3px;
+}
+
+.lcsaj-tip {
+	position: relative;
+	display: inline-block;
+}
+
+.lcsaj-tip .lcsaj-tip-text {
+	visibility: hidden;
+	background-color: #333;
+	color: #fff;
+	padding: 4px 8px;
+	border-radius: 4px;
+	font-size: 11px;
+	white-space: nowrap;
+	position: fixed;
+	z-index: 9999;
+	pointer-events: none;
+}
+
+.lcsaj-tip:hover .lcsaj-tip-text {
+	visibility: visible;
+}
+
+</style>
+</head>
+<body>
+<button class="toggle" onclick="toggleTheme()">🌙 Toggle Theme</button>
+<h1>lib/Text/Names/Abbreviate.pm</h1>
+<div class="nav"><a href="../../../../index.html">Index</a>
+</div><div class='summary'>
+<strong>Structural Coverage (Approximate)</strong><p>
+TER1 (Statement): 100.00%<br>
+TER2 (Branch): 97.62%<br>
+TER3 (LCSAJ): 72.0% (18/25)<br>
+Approximate LCSAJ segments: 43<br>
+</div>
+
+    <div class="legend">
+        <h3>LCSAJ Legend</h3>
+
+        <p>
+        <span class="lcsaj-dot">●</span>
+        <b>Covered</b> — this LCSAJ path was executed during testing.
+        </p>
+
+        <p>
+        <span class="lcsaj-dot-uncovered">●</span>
+        <b>Not covered</b> — this LCSAJ path was never executed. These are the paths to focus on.
+        </p>
+
+        <p>
+        Multiple dots on a line indicate that multiple control-flow paths begin at that line.
+        Hovering over any dot shows:
+        </p>
+
+        <pre>
+        start → end → jump
+        </pre>
+
+        <ul>
+        <li><b>start</b> – first line of the linear sequence</li>
+        <li><b>end</b> – last line before control flow changes</li>
+        <li><b>jump</b> – line execution jumps to next</li>
+        </ul>
+
+        <p>
+        Uncovered paths show <b>[NOT COVERED]</b> in the tooltip.
+	</p>
+    </div>
+
+		<div class="legend">
+			<h3>Mutant Testing Legend</h3>
+			<span class="legend-box survived-1"></span> Survived (tests missed this)
+			<span class="legend-box killed"></span> Killed (tests detected this)
+			<span class="legend-box none"></span> No mutation
+		</div>
+	<pre>
+<span class="">    1: package Text::Names::Abbreviate;
+</span><span class="">    2: 
+</span><span class="">    3: use strict;
+</span><span class="">    4: use warnings;
+</span><span class="">    5: 
+</span><span class="">    6: use Carp;
+</span><span class="">    7: use Exporter &#39;import&#39;;
+</span><span class="">    8: use Params::Get 0.13;
+</span><span class="">    9: use Params::Validate::Strict 0.13;
+</span><span class="">   10: 
+</span><span class="">   11: our @EXPORT_OK = qw(abbreviate);
+</span><span class="">   12: our $VERSION = &#39;0.01&#39;;
+</span><span class="">   13: 
+</span><span class="">   14: =head1 NAME
+</span><span class="">   15: 
+</span><span class="">   16: Text::Names::Abbreviate - Create abbreviated name formats from full names
+</span><span class="">   17: 
+</span><span class="">   18: =head1 SYNOPSIS
+</span><span class="">   19: 
+</span><span class="">   20:   use Text::Names::Abbreviate qw(abbreviate);
+</span><span class="">   21: 
+</span><span class="">   22:   say abbreviate(&quot;John Quincy Adams&quot;);		 # &quot;J. Q. Adams&quot;
+</span><span class="">   23:   say abbreviate(&quot;Adams, John Quincy&quot;);		# &quot;J. Q. Adams&quot;
+</span><span class="">   24:   say abbreviate(&quot;George R R Martin&quot;, { format =&gt; &#39;initials&#39; }); # &quot;G.R.R.M.&quot;
+</span><span class="">   25: 
+</span><span class="">   26: =head1 DESCRIPTION
+</span><span class="">   27: 
+</span><span class="">   28: This module provides simple abbreviation logic for full personal names,
+</span><span class="">   29: with multiple formatting options and styles.
+</span><span class="">   30: 
+</span><span class="">   31: The input is expected to be a personal name consisting of one or more
+</span><span class="">   32: whitespace-separated components. These are typically interpreted as:
+</span><span class="">   33: 
+</span><span class="">   34:   First [Middle ...] Last
+</span><span class="">   35: 
+</span><span class="">   36: Names consisting of a single component are treated as a single name,
+</span><span class="">   37: and no abbreviation of given names is possible.
+</span><span class="">   38: 
+</span><span class="">   39: =head1 SUBROUTINES/METHODS
+</span><span class="">   40: 
+</span><span class="">   41: =head2 abbreviate
+</span><span class="">   42: 
+</span><span class="">   43: Make the abbreviation.
+</span><span class="">   44: It takes the following optional arguments:
+</span><span class="">   45: 
+</span><span class="">   46: =over
+</span><span class="">   47: 
+</span><span class="">   48: =item format
+</span><span class="">   49: 
+</span><span class="">   50: One of: default, initials, compact, shortlast
+</span><span class="">   51: 
+</span><span class="">   52: C&lt;Shortlast&gt; produces initials followed by the full last name, ignoring style reordering.
+</span><span class="">   53: This is similar to the default format but does not support C&lt;last_first&gt; output.
+</span><span class="">   54: 
+</span><span class="">   55: =item style
+</span><span class="">   56: 
+</span><span class="">   57: One of: first_last, last_first
+</span><span class="">   58: 
+</span><span class="">   59: =item separator
+</span><span class="">   60: 
+</span><span class="">   61: String used between initials (default: &quot;.&quot;).
+</span><span class="">   62: 
+</span><span class="">   63: Note that spacing between initials is handled separately depending on
+</span><span class="">   64: the selected format.
+</span><span class="">   65: 
+</span><span class="">   66: =back
+</span><span class="">   67: 
+</span><span class="">   68: =head3 Name Formats
+</span><span class="">   69: 
+</span><span class="">   70: The function recognizes names in both of the following forms:
+</span><span class="">   71: 
+</span><span class="">   72: =over 4
+</span><span class="">   73: 
+</span><span class="">   74: =item *
+</span><span class="">   75: 
+</span><span class="">   76: C&lt;First Middle Last&gt;
+</span><span class="">   77: 
+</span><span class="">   78: =item *
+</span><span class="">   79: 
+</span><span class="">   80: C&lt;Last, First Middle&gt;
+</span><span class="">   81: 
+</span><span class="">   82: =back
+</span><span class="">   83: 
+</span><span class="">   84: In the latter case, the name will be normalized internally before
+</span><span class="">   85: abbreviation.
+</span><span class="">   86: 
+</span><span class="">   87: If the input begins with a comma (e.g., C&lt;&quot;, John&quot;&gt;), it is interpreted
+</span><span class="">   88: as having no last name, and only initials will be produced.
+</span><span class="">   89: 
+</span><span class="">   90: =head3 Errors
+</span><span class="">   91: 
+</span><span class="">   92: The function will throw an exception (via C&lt;croak&gt;) if:
+</span><span class="">   93: 
+</span><span class="">   94: =over 4
+</span><span class="">   95: 
+</span><span class="">   96: =item *
+</span><span class="">   97: 
+</span><span class="">   98: The C&lt;name&gt; parameter is missing or undefined
+</span><span class="">   99: 
+</span><span class="">  100: =item *
+</span><span class="">  101: 
+</span><span class="">  102: The C&lt;name&gt; parameter is an empty string
+</span><span class="">  103: 
+</span><span class="">  104: =item *
+</span><span class="">  105: 
+</span><span class="">  106: An invalid value is provided for C&lt;format&gt; or C&lt;style&gt;
+</span><span class="">  107: 
+</span><span class="">  108: =back
+</span><span class="">  109: 
+</span><span class="">  110: =head1 EXAMPLES
+</span><span class="">  111: 
+</span><span class="">  112:   abbreviate(&quot;Madonna&quot;)
+</span><span class="">  113:   # &quot;Madonna&quot;
+</span><span class="">  114: 
+</span><span class="">  115:   abbreviate(&quot;Adams, John Quincy&quot;)
+</span><span class="">  116:   # &quot;J. Q. Adams&quot;
+</span><span class="">  117: 
+</span><span class="">  118:   abbreviate(&quot;John Quincy Adams&quot;, { style =&gt; &#39;last_first&#39; })
+</span><span class="">  119:   # &quot;Adams, J. Q.&quot;
+</span><span class="">  120: 
+</span><span class="">  121:   abbreviate(&quot;John Quincy Adams&quot;, { format =&gt; &#39;compact&#39; })
+</span><span class="">  122:   # &quot;JQA&quot;
+</span><span class="">  123: 
+</span><span class="">  124: =head3 Notes
+</span><span class="">  125: 
+</span><span class="">  126: Abbreviation formats such as C&lt;compact&gt; and C&lt;initials&gt; are lossy
+</span><span class="">  127: transformations. They discard structural information about the original
+</span><span class="">  128: name.
+</span><span class="">  129: 
+</span><span class="">  130: As a result, passing the output of C&lt;abbreviate()&gt; back into the function
+</span><span class="">  131: may not yield equivalent results:
+</span><span class="">  132: 
+</span><span class="">  133:   abbreviate(&quot;George R R Martin&quot;, { format =&gt; &#39;compact&#39; })   # &quot;GRRM&quot;
+</span><span class="">  134:   abbreviate(&quot;GRRM&quot;, { format =&gt; &#39;initials&#39; })               # &quot;G.&quot;
+</span><span class="">  135: 
+</span><span class="">  136: In such cases, the input is treated as a single name.
+</span><span class="">  137: 
+</span><span class="">  138: Initials are derived by taking the first character of each name component verbatim.
+</span><span class="">  139: No filtering is applied,
+</span><span class="">  140: so non-alphabetic characters (such as punctuation or digits) will be included as-is.
+</span><span class="">  141: 
+</span><span class="">  142: =head3	API SPECIFICATION
+</span><span class="">  143: 
+</span><span class="">  144: =head4	INPUT
+</span><span class="">  145: 
+</span><span class="">  146:   {
+</span><span class="">  147:     &#39;name&#39; =&gt; { &#39;type&#39; =&gt; &#39;string&#39;, &#39;min&#39; =&gt; 1, &#39;optional&#39; =&gt; 0 },
+</span><span class="">  148:     &#39;format&#39; =&gt; {
+</span><span class="">  149:       &#39;type&#39; =&gt; &#39;string&#39;,
+</span><span class="">  150:       &#39;memberof&#39; =&gt; [ &#39;default&#39;, &#39;initials&#39;, &#39;compact&#39;, &#39;shortlast&#39; ],
+</span><span class="">  151:       &#39;optional&#39; =&gt; 1
+</span><span class="">  152:     }, &#39;style&#39; =&gt; {
+</span><span class="">  153:       &#39;type&#39; =&gt; &#39;string&#39;,
+</span><span class="">  154:       &#39;memberof&#39; =&gt; [ &#39;first_last&#39;, &#39;last_first&#39; ],
+</span><span class="">  155:       &#39;optional&#39; =&gt; 1
+</span><span class="">  156:     }, &#39;separator&#39; =&gt; {
+</span><span class="">  157:       &#39;type&#39; =&gt; &#39;string&#39;,
+</span><span class="">  158:       &#39;optional&#39; =&gt; 1
+</span><span class="">  159:     }
+</span><span class="">  160:   }
+</span><span class="">  161: 
+</span><span class="">  162: =head4	OUTPUT
+</span><span class="">  163: 
+</span><span class="">  164: Argument error: croak
+</span><span class="">  165: 
+</span><span class="">  166:   {
+</span><span class="">  167:     &#39;type&#39; =&gt; &#39;string&#39;,
+</span><span class="">  168:   }
+</span><span class="">  169: 
+</span><span class="">  170: =cut
+</span><span class="">  171: 
+</span><span class="">  172: sub abbreviate
+</span><span class="">  173: {
+</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">174 → 194 → 198</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">174 → 194 → 0</span></span>  174: 	my $params = Params::Validate::Strict::validate_strict({
+</span><span class="">  175: 		args =&gt; Params::Get::get_params(&#39;name&#39;, @_),
+</span><span class="">  176: 		schema =&gt; {
+</span><span class="">  177: 			&#39;name&#39; =&gt; { &#39;type&#39; =&gt; &#39;string&#39;, &#39;min&#39; =&gt; 1, &#39;optional&#39; =&gt; 0 },
+</span><span class="">  178: 			&#39;format&#39; =&gt; {
+</span><span class="">  179: 				&#39;type&#39; =&gt; &#39;string&#39;,
+</span><span class="">  180: 				&#39;memberof&#39; =&gt; [ &#39;default&#39;, &#39;initials&#39;, &#39;compact&#39;, &#39;shortlast&#39; ],
+</span><span class="">  181: 				&#39;optional&#39; =&gt; 1
+</span><span class="">  182: 			}, &#39;style&#39; =&gt; {
+</span><span class="">  183: 				&#39;type&#39; =&gt; &#39;string&#39;,
+</span><span class="">  184: 				&#39;memberof&#39; =&gt; [ &#39;first_last&#39;, &#39;last_first&#39; ],
+</span><span class="">  185: 				&#39;optional&#39; =&gt; 1
+</span><span class="">  186: 			}, &#39;separator&#39; =&gt; {
+</span><span class="">  187: 				&#39;type&#39; =&gt; &#39;string&#39;,
+</span><span class="">  188: 				&#39;optional&#39; =&gt; 1
+</span><span class="">  189: 			}
+</span><span class="">  190: 		}
+</span><span class="">  191: 	});
+</span><span class="">  192: 
+</span><span class="">  193: 	my $name = $params-&gt;{&#39;name&#39;};
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  194: 	if(!defined($name)) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  195: 		Carp::croak(__PACKAGE__, &#39;::abbreviate: Usage($name, { options })&#39;)
+</span><span class="">  196: 	}
+</span><span class="">  197: 
+</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">198 → 205 → 227</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">198 → 205 → 0</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">198 → 205 → 227</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">198 → 205 → 0</span></span>  198: 	my $format = $params-&gt;{format} // &#39;default&#39;;	# default, initials, compact, shortlast
+</span><span class="">  199: 	my $style = $params-&gt;{style} // &#39;first_last&#39;; # first_last or last_first
+</span><span class="">  200: 	my $sep	= defined $params-&gt;{separator} ? $params-&gt;{separator} : &#39;.&#39;;
+</span><span class="">  201: 
+</span><span class="">  202: 	# Normalize commas (e.g., &quot;Adams, John Q.&quot; -&gt; (&quot;Adams&quot;, &quot;John Q.&quot;))
+</span><span class="">  203: 	my $had_leading_comma = 0;
+</span><span class="">  204: 	$name =~ s/,,/,/g;
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  205: 	if ($name =~ /,/) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  206: 		my ($last, $rest) = map { s/^\s+|\s+$//gr } split(/\s*,\s*/, $name, 2);
+</span><span class="">  207: 		$rest ||= &#39;&#39;;
+</span><span class="">  208: 		$last ||= &#39;&#39;;
+</span><span class="">  209: 
+</span><span class="">  210: 		# Track if we had a leading comma (empty last name part)
+</span><span class="">  211: 		$had_leading_comma = 1 if !length($last) &amp;&amp; length($rest);
+</span><span class="">  212: 
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  213: 		if (length($last) &amp;&amp; length($rest)) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  214: 			$name = &quot;$rest $last&quot;;
+</span><span class="">  215: 		} elsif (length($rest)) {
+</span><span class="">  216: 			$name = $rest;
+</span><span class="">  217: 		} elsif (length($last)) {
+</span><span class="">  218: 			$name = $last;
+</span><span class="">  219: 		} else {
+</span><span class="">  220: 			return &#39;&#39;;
+</span><span class="">  221: 		}
+</span><span class="">  222: 
+</span><span class="">  223: 		$name =~ s/^\s+|\s+$//g;
+</span><span class="">  224: 		$name =~ s/\s+/ /g;
+</span><span class="">  225: 	}
+</span><span class="">  226: 
+</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">227 → 234 → 248</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">227 → 234 → 0</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">227 → 234 → 248</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">227 → 234 → 0</span></span>  227: 	my @parts = split /\s+/, $name;
+</span><span class="">  228: 	return &#39;&#39; unless @parts;
+</span><span class="">  229: 
+</span><span class="">  230: 	my $last_name;
+</span><span class="">  231: 	my @initials;
+</span><span class="">  232: 
+</span><span class="">  233: 	# If we had a leading comma (&quot;, John&quot;), treat all parts as first names
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  234: 	if ($had_leading_comma) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  235: 		$last_name = &#39;&#39;;
+</span><span class="">  236: 		@initials = map { substr($_, 0, 1) } @parts;
+</span><span class="">  237: 	} else {
+</span><span class="">  238: 		$last_name = pop @parts;
+</span><span class="">  239: 		@initials = map { substr($_, 0, 1) } @parts;
+</span><span class="">  240: 
+</span><span class="">  241: 		# For last_first style in non-default formats, put last name initial first
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  242: 		if ($style eq &#39;last_first&#39; &amp;&amp; $format ne &#39;default&#39; &amp;&amp; length($last_name)) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  243: 			unshift @initials, substr($last_name, 0, 1);
+</span><span class="">  244: 			$last_name = &#39;&#39;;
+</span><span class="">  245: 		}
+</span><span class="">  246: 	}
+</span><span class="">  247: 
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic."><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">248 → 248 → 252</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">248 → 248 → 0</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">248 → 248 → 252</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">248 → 248 → 0</span></span>  248: 	if(@initials) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  249: 		@initials = grep { $_ } @initials;	# Remove empty elements
+</span><span class="">  250: 	}
+</span><span class="">  251: 
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic."><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">252 → 252 → 0</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">252 → 252 → 0</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">252 → 252 → 0</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">252 → 252 → 0</span></span>  252: 	if ($format eq &#39;compact&#39;) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  253: 		return join(&#39;&#39;, @initials, length($last_name) ? substr($last_name, 0, 1) : ());
+</span><span class="">  254: 	} elsif($format eq &#39;initials&#39;) {
+</span><span class="">  255: 		my @letters = @initials;
+</span><span class="">  256: 		push @letters, substr($last_name, 0, 1) if length $last_name;
+</span><span class="">  257: 
+</span><span class="">  258: 		return join($sep, @letters) . $sep;
+</span><span class="">  259: 	} elsif($format eq &#39;shortlast&#39;) {
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  260: 		if(@initials) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  261: 			return join(&#39; &#39;, map { &quot;${_}$sep&quot; } @initials) . &quot; $last_name&quot;;
+</span><span class="">  262: 		}
+</span><span class="">  263: 		return $last_name;
+</span><span class="">  264: 	} else { # default: &quot;J. Q. Adams&quot;
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  265: 		if(@initials) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  266: 			my $joined = join(&#39; &#39;, map { &quot;${_}$sep&quot; } @initials);
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  267: 			if (length($joined)) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  268: 				if ($style eq &#39;last_first&#39; &amp;&amp; length($last_name)) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  269: 					return &quot;$last_name, $joined&quot;;
+</span><span class="">  270: 				}
+</span><span class="">  271: 				return $last_name ? &quot;$joined $last_name&quot; : $joined;
+</span><span class="">  272: 			}
+</span><span class="">  273: 		}
+</span><span class="">  274: 		return $last_name;
+</span><span class="">  275: 	}
+</span><span class="">  276: }
+</span><span class="">  277: 
+</span><span class="">  278: 1;
+</span><span class="">  279: 
+</span><span class="">  280: __END__
+</span><span class="">  281: 
+</span><span class="">  282: =head1 AUTHOR
+</span><span class="">  283: 
+</span><span class="">  284: Nigel Horne, C&lt;&lt; &lt;njh at nigelhorne.com&gt; &gt;&gt;
+</span><span class="">  285: 
+</span><span class="">  286: =head1 BUGS
+</span><span class="">  287: 
+</span><span class="">  288: =head1 REPOSITORY
+</span><span class="">  289: 
+</span><span class="">  290: L&lt;https://github.com/nigelhorne/Text-Names-Abbreviate&gt;
+</span><span class="">  291: 
+</span><span class="">  292: =head1 SEE ALSO
+</span><span class="">  293: 
+</span><span class="">  294: =over 4
+</span><span class="">  295: 
+</span><span class="">  296: =item * L&lt;Test Dashboard|https://nigelhorne.github.io/Text-Names-Abbreviate/coverage/&gt;
+</span><span class="">  297: 
+</span><span class="">  298: =back
+</span><span class="">  299: 
+</span><span class="">  300: =head1 SUPPORT
+</span><span class="">  301: 
+</span><span class="">  302: This module is provided as-is without any warranty.
+</span><span class="">  303: 
+</span><span class="">  304: Please report any bugs or feature requests to C&lt;bug-text-names-abbreviate at rt.cpan.org&gt;,
+</span><span class="">  305: or through the web interface at
+</span><span class="">  306: L&lt;http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Text-Names-Abbreviate&gt;.
+</span><span class="">  307: I will be notified, and then you&#39;ll
+</span><span class="">  308: automatically be notified of progress on your bug as I make changes.
+</span><span class="">  309: 
+</span><span class="">  310: You can find documentation for this module with the perldoc command.
+</span><span class="">  311: 
+</span><span class="">  312:     perldoc Text::Names::Abbreviate
+</span><span class="">  313: 
+</span><span class="">  314: You can also look for information at:
+</span><span class="">  315: 
+</span><span class="">  316: =over 4
+</span><span class="">  317: 
+</span><span class="">  318: =item * MetaCPAN
+</span><span class="">  319: 
+</span><span class="">  320: L&lt;https://metacpan.org/dist/Text-Names-Abbreviate&gt;
+</span><span class="">  321: 
+</span><span class="">  322: =item * RT: CPAN&#39;s request tracker
+</span><span class="">  323: 
+</span><span class="">  324: L&lt;https://rt.cpan.org/NoAuth/Bugs.html?Dist=Text-Names-Abbreviate&gt;
+</span><span class="">  325: 
+</span><span class="">  326: =item * CPAN Testers&#39; Matrix
+</span><span class="">  327: 
+</span><span class="">  328: L&lt;http://matrix.cpantesters.org/?dist=Text-Names-Abbreviate&gt;
+</span><span class="">  329: 
+</span><span class="">  330: =item * CPAN Testers Dependencies
+</span><span class="">  331: 
+</span><span class="">  332: L&lt;http://deps.cpantesters.org/?module=Text::Names::Abbreviate&gt;
+</span><span class="">  333: 
+</span><span class="">  334: =back
+</span><span class="">  335: 
+</span><span class="">  336: =head1 LICENCE AND COPYRIGHT
+</span><span class="">  337: 
+</span><span class="">  338: Copyright 2025-2026 Nigel Horne.
+</span><span class="">  339: 
+</span><span class="">  340: Usage is subject to the terms of GPL2.
+</span><span class="">  341: If you use it,
+</span><span class="">  342: please let me know.
+</span><span class="">  343: 
+</span><span class="">  344: =cut
+</span></pre>
+
+<script>
+function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+}
+
+(function() {
+    const saved = localStorage.getItem('theme');
+    if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+    }
+})();
+
+document.addEventListener("mousemove", function(e) {
+	document.querySelectorAll(".lcsaj-tip-text").forEach(function(tip) {
+		tip.style.left = (e.clientX + 12) + "px";
+		tip.style.top  = (e.clientY + 12) + "px";
+	});
+});
+</script>
+</body>
+</html>
+	

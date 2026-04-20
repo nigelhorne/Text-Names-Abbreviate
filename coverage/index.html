@@ -39,7 +39,7 @@
 		td.positive { color: green; font-weight: bold; }
 		td.negative { color: red; font-weight: bold; }
 		td.neutral { color: gray; }
-		// Show cursor points on the headers to show that they are clickable
+		/* Show cursor points on the headers to show that they are clickable */
 		th { background-color: #f2f2f2; cursor: pointer; }
 		th.sortable {
 			cursor: pointer;
@@ -58,6 +58,75 @@
 			display: inline-block;
 			vertical-align: middle;
 		}
+		tr.cpan-fail td {
+			background-color: #fdd;
+		}
+		tr.cpan-unknown td {
+			background-color: #eee;
+			color: #666;
+		}
+		tr.cpan-na td {
+			background-color: #ffffde;
+			color: #666;
+		}
+		.new-failure {
+			background: #c00;
+			color: #fff;
+			font-weight: bold;
+			padding: 2px 6px;
+			border-radius: 4px;
+			font-size: 0.85em;
+		}
+		.notice {
+			padding: 8px 12px;
+			margin: 10px 0;
+			border-radius: 4px;
+			font-size: 0.95em;
+		}
+		.notice strong {
+			font-weight: bold;
+		}
+		.notice.perl-version-cliff {
+			background-color: #fff3cd; /* soft amber */
+			border: 1px solid #ffeeba;
+			color: #856404;
+		}
+		.notice.perl-version-cliff a {
+			color: #533f03;
+			text-decoration: underline;
+		}
+		.notice.perl-version-cliff a:hover {
+			text-decoration: none;
+		}
+		.notice.locale-cliff {
+			border-left: 4px solid #d97706;
+			background: #fffbeb;
+			padding: 0.5em 1em;
+		}
+		.notice.rt-issues {
+			background: #fff6e5;
+			border-left: 4px solid #d9822b;
+		}
+		table.root-causes {
+			border-collapse: collapse;
+			width: 100%;
+			margin-bottom: 1.5em;
+		}
+		table.root-causes th,
+		table.root-causes td {
+			border: 1px solid #ccc;
+			padding: 8px;
+			vertical-align: top;
+		}
+		table.root-causes tr.high {
+			background-color: #dfd;
+		}
+		table.root-causes tr.med {
+			background-color: #ffd;
+		}
+		table.root-causes tr.low {
+			background-color: #fdd;
+		}
 	</style>
 </head>
 <body>
@@ -65,31 +134,28 @@
 	<a href="https://github.com/nigelhorne/Text-Names-Abbreviate">
 		<img src="https://img.shields.io/github/stars/nigelhorne/Text-Names-Abbreviate?style=social" alt="GitHub stars">
 	</a>
-	<img src="https://img.shields.io/badge/coverage-92%25-brightgreen" alt="Coverage badge">
+	<img src="https://img.shields.io/badge/coverage-98%25-brightgreen" alt="Coverage badge">
 </div>
 <h1>Text::Names::Abbreviate</h1><h2>Coverage Report</h2>
 <table data-sort-col="0" data-sort-order="asc">
 <!-- Make the column headers clickable -->
 <thead>
 <tr>
-	<th class="sortable" onclick="sortTable(0)"><span class="label">File</span> <span class="arrow active">&#x25B2;</span></th>
-	<th class="sortable" onclick="sortTable(1)"><span class="label">Stmt</span> <span class="arrow">&#x25B2;</span></th>
-	<th class="sortable" onclick="sortTable(2)"><span class="label">Branch</span> <span class="arrow">&#x25B2;</span></th>
-	<th class="sortable" onclick="sortTable(3)"><span class="label">Cond</span> <span class="arrow">&#x25B2;</span></th>
-	<th class="sortable" onclick="sortTable(4)"><span class="label">Sub</span> <span class="arrow">&#x25B2;</span></th>
-	<th class="sortable" onclick="sortTable(5)"><span class="label">Total</span> <span class="arrow">&#x25B2;</span></th>
-	<th class="sortable" onclick="sortTable(6)"><span class="label">&Delta;</span> <span class="arrow">&#x25B2;</span></th>
+	<th class="sortable" onclick="sortTable(this, 0)"><span class="label">File</span> <span class="arrow active">&#x25B2;</span></th>
+	<th class="sortable" onclick="sortTable(this, 1)"><span class="label">Stmt</span> <span class="arrow">&#x25B2;</span></th>
+	<th class="sortable" onclick="sortTable(this, 2)"><span class="label">Branch</span> <span class="arrow">&#x25B2;</span></th>
+	<th class="sortable" onclick="sortTable(this, 3)"><span class="label">Cond</span> <span class="arrow">&#x25B2;</span></th>
+	<th class="sortable" onclick="sortTable(this, 4)"><span class="label">Sub</span> <span class="arrow">&#x25B2;</span></th>
+	<th class="sortable" onclick="sortTable(this, 5)"><span class="label">Total</span> <span class="arrow">&#x25B2;</span></th>
+	<th class="sortable" onclick="sortTable(this, 6)"><span class="label">&Delta;</span> <span class="arrow">&#x25B2;</span></th>
 </tr>
 </thead>
 
 <tbody>
 
-<tr class="high"><td><a href="blib-lib-Text-Names-Abbreviate-pm.html" title="View coverage line by line" target="_blank">blib/lib/Text/Names/Abbreviate.pm</a> <a href="https://github.com/nigelhorne/Text-Names-Abbreviate/blob/0a5d0b75713f3cfd4f022dc27c6538adc7ad2eaa/blib/lib/Text/Names/Abbreviate.pm" class="icon-link" title="View source on GitHub">&#128269;</a><canvas class="sparkline" width="80" height="20" data-points="88.7,97.1,97.1,87.9,97.1,97.1,97.1,97.1,97.1,97.1,97.1,97.1,97.1,97.1,97.1,92.8,92.8,92.8,92.8"></canvas></td><td>95.7</td><td>88.1</td><td>90.0</td><td>100.0</td><td><span class="coverage-badge badge-good" title="Excellent coverage">92.8%</span></td><td class="neutral" title="Previous: 92.8%">&#9679; 0.0%</td></tr>
-
-<tr class="summary-row nosort"><td colspan="2"><strong>Summary</strong></td><td colspan="2">1 files</td><td colspan="3">Avg: 92%, Low: 0</td></tr>
-
-<tr class="high nosort"><td><strong>Total</strong></td><td>95.7</td><td>88.1</td><td>90.0</td><td>100.0</td><td colspan="2"><strong>92.8</strong></td></tr>
-
+<tr class="high"><td><a href="lib-Text-Names-Abbreviate-pm.html" title="View coverage line by line" target="_blank">lib/Text/Names/Abbreviate.pm</a> <a href="https://github.com/nigelhorne/Text-Names-Abbreviate/blob/869b74bdde1203f83cebc4cc6aaf5254dff24cef/lib/Text/Names/Abbreviate.pm" class="icon-link" title="View source on GitHub">&#128269;</a><canvas class="sparkline" width="80" height="20" data-points="97.1,97.1,97.1,97.1,97.1,92.8,92.8,92.8,92.8,92.8"></canvas></td><td>100.0</td><td>97.6</td><td>95.7</td><td>100.0</td><td><span class="coverage-badge badge-good" title="Excellent coverage">98.6%</span></td><td class="neutral" title="No previous data">&#9679;</td></tr>
+<tr class="summary-row nosort"><td colspan="2"><strong>Summary</strong></td><td colspan="2">1 files</td><td colspan="3">Avg: 98%, Low: 0</td></tr>
+<tr class="high nosort"><td><strong>Total</strong></td><td>100.0</td><td>97.6</td><td>95.7</td><td>100.0</td><td colspan="2"><strong>98.6</strong></td></tr>
 </tbody></table>
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1em;">
 	<div>
@@ -106,12 +172,11 @@
 		<button id="resetZoomBtn" type="button">Reset Zoom</button>
 	</div>
 </div>
-
 <canvas id="coverageTrend" width="600" height="300"></canvas>
 <!-- Zoom controls for the trend chart -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!-- Add chartjs-plugin-zoom (required for wheel/pinch/drag zoom & pan) -->
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.1.1/dist/chartjs-plugin-zoom.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom\@2.1.1/dist/chartjs-plugin-zoom.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
 <script>
 function linearRegression(data) {
@@ -124,6 +189,9 @@ function linearRegression(data) {
 	const sumXY = xs.reduce((acc, val, i) => acc + val * ys[i], 0);
 	const sumX2 = xs.reduce((acc, val) => acc + val * val, 0);
 
+	if (n < 2 || (n * sumX2 - sumX * sumX) === 0) {
+		return [];
+	}
 	const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
 	const intercept = (sumY - slope * sumX) / n;
 
@@ -132,6 +200,7 @@ function linearRegression(data) {
 		y: slope * x + intercept
 	}));
 }
+
 
 const dataPoints = [ { x: "2025-10-04T08:33:53-04:00", y: 97.0588235294118, delta: 0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/7388166", label: "2025-10-04T08:33:53-04:00", pointBackgroundColor: "gray", comment: "Latest fuzz" },
 { x: "2025-10-08T08:30:53-04:00", y: 97.0588235294118, delta: 0.0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/8575338", label: "2025-10-08T08:30:53-04:00", pointBackgroundColor: "gray", comment: "Latest fuzz" },
@@ -143,7 +212,6 @@ const dataPoints = [ { x: "2025-10-04T08:33:53-04:00", y: 97.0588235294118, delt
 { x: "2025-12-22T20:39:51-05:00", y: 92.8057553956834, delta: 0.0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/84bb8b0", label: "2025-12-22T20:39:51-05:00", pointBackgroundColor: "gray", comment: "Debugging using P:V:S" },
 { x: "2026-01-15T09:11:34-05:00", y: 92.8057553956834, delta: 0.0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/e8379b9", label: "2026-01-15T09:11:34-05:00", pointBackgroundColor: "gray", comment: "Update to the latest fuzzing" },
 { x: "2026-01-15T09:13:50-05:00", y: 92.8057553956834, delta: 0.0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/2b2c4ca", label: "2026-01-15T09:13:50-05:00", pointBackgroundColor: "gray", comment: "Latest fuzz workflow" } ];
-
 const regressionPoints = linearRegression(dataPoints);
 // Try to register the zoom plugin (handles different UMD builds)
 (function registerZoomPlugin(){
@@ -266,35 +334,30 @@ if (resetBtn) {
 	});
 }
 
-function sortTable(n) {
-	const table = document.querySelector("table");
-	if (!table || !table.tBodies || !table.tBodies[0]) return;
+function sortTable(th, colIndex) {
+	const table = th.closest("table");
+	if (!table || !table.tBodies.length) return;
 
-	// All rows in tbody
-	const allBodyRows = Array.from(table.tBodies[0].rows);
+	const tbody = table.tBodies[0];
+	const rows = Array.from(tbody.rows);
 
-	// Separate normal (sortable) rows and fixed (nosort) rows.
-	const normalRows = allBodyRows.filter(r => !r.classList.contains("nosort"));
-	const fixedRows = allBodyRows.filter(r => r.classList.contains("nosort"));
-
-	// Decide numeric vs text column (column 0 = File => text)
-	const isNumeric = n > 0;
-
-	// Determine ascending/descending toggle logic
 	const prevCol = table.getAttribute("data-sort-col");
 	const prevOrder = table.getAttribute("data-sort-order") || "desc";
-	const asc = (prevCol != n) ? true : (prevOrder === "desc");
+	const asc = (prevCol != colIndex) ? true : (prevOrder === "desc");
+
+	const isNumeric = colIndex === 0; // Date column
+
+	const normalRows = rows.filter(r => !r.classList.contains("nosort"));
+	const fixedRows = rows.filter(r => r.classList.contains("nosort"));
 
 	normalRows.sort((a, b) => {
-		let x = (a.cells[n] && a.cells[n].innerText) ? a.cells[n].innerText.trim() : "";
-		let y = (b.cells[n] && b.cells[n].innerText) ? b.cells[n].innerText.trim() : "";
+		let x = a.cells[colIndex]?.innerText.trim() || "";
+		let y = b.cells[colIndex]?.innerText.trim() || "";
 
 		if (isNumeric) {
-			// Remove non-number characters (arrows, percent signs, bullets, etc.)
-			x = parseFloat(x.replace(/[^0-9.\-+eE]/g, '')) || 0;
-			y = parseFloat(y.replace(/[^0-9.\-+eE]/g, '')) || 0;
+			x = Date.parse(x) || 0;
+			y = Date.parse(y) || 0;
 		} else {
-			// Text compare (case-insensitive)
 			x = x.toLowerCase();
 			y = y.toLowerCase();
 		}
@@ -304,30 +367,28 @@ function sortTable(n) {
 		return 0;
 	});
 
-	// Reattach rows: sorted normalRows first, then fixedRows (keeps summary/total last)
-	normalRows.forEach(r => table.tBodies[0].appendChild(r));
-	fixedRows.forEach(r => table.tBodies[0].appendChild(r));
+	normalRows.forEach(r => tbody.appendChild(r));
+	fixedRows.forEach(r => tbody.appendChild(r));
 
-	// Update header arrows
+	// Update arrows
 	const headers = table.tHead.rows[0].cells;
 	for (let i = 0; i < headers.length; i++) {
 		const arrow = headers[i].querySelector(".arrow");
 		if (!arrow) continue;
-		if (i === n) {
-			// active column: bold arrow, direction ▲ or ▼
+
+		if (i === colIndex) {
 			arrow.textContent = asc ? "▲" : "▼";
 			arrow.classList.add("active");
 		} else {
-			// inactive column: always ▲, dimmed
 			arrow.textContent = "▲";
 			arrow.classList.remove("active");
 		}
 	}
 
-	// Remember state (so clicking same column toggles)
-	table.setAttribute("data-sort-col", n);
+	table.setAttribute("data-sort-col", colIndex);
 	table.setAttribute("data-sort-order", asc ? "asc" : "desc");
 }
+
 
 // Initial display.
 // The table has been set up sorted in ascending order on the filename; reflect that in the GUI
@@ -400,10 +461,239 @@ function refresh(){
 }
 </script>
 
+<p><center>Use mouse wheel or pinch to zoom; drag to pan</center></p>
+<p>No issues active on <a href="https://rt.cpan.org/Public/Dist/Display.html?Name=Text-Names-Abbreviate">RT</a></p>
+<h2>CPAN Testers Failures for Text-Names-Abbreviate 0.01</h2>
+<p class="notice perl-version-cliff">
+Fails on Perl &leq; 5.12.5; passes on Perl &geq; 5.14.0. 
+<a href="https://perldoc.perl.org/perl5140delta" target="_blank">See perldelta for this release</a>
+ <span class="coverage-badge badge-warn" title="33 fails, 8 passes">Moderate confidence</span></p>
+<h3>Failure Summary (all reports)</h3>
+<ul>
+<li><b>Perl 5.12.x</b>: 33 failures</li>
+<p><em>84% of failures occur on Perl 5.12.x</em></p>
+<li><b>linux</b>: 16 failures</li>
+<li><b>5.12 / linux</b>: 12 failures</li>
+</ul>
+<h3>Likely Root Causes</h3>
+<table class="root-causes">
+<thead>
+<tr>
+	<th>Cause</th>
+	<th>Confidence</th>
+	<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+
+<tr class="high">
+	<td halign="center"><strong>Perl version regression (Perl &lt; 5.14.0) (<a href="https://perldoc.perl.org/perl5140delta" target="_blank">perldelta</a>)</strong></td>
+	<td halign="center">Strong (100%)</td>
+	<td halign="center"><ul><li>All failures on Perl &leq; 5.12.5</li><li>All passes on Perl &geq; 5.14.0</li></ul></td>
+</tr>
+
+</tbody>
+</table>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+	const toggleFail = document.getElementById('toggleFail');
+	const toggleUnknown = document.getElementById('toggleUnknown');
+	const toggleNA = document.getElementById('toggleNA');
+	const toggleNew = document.getElementById('toggleNew');
+
+	function update() {
+		document.querySelectorAll('tr').forEach(row => {
+			// Skip header rows
+			if (row.querySelector('th')) return;
+
+			// Determine row status
+			const isFail = row.classList.contains('cpan-fail');
+			const isUnknown = row.classList.contains('cpan-unknown');
+			const isNA = row.classList.contains('cpan-na');
+			const isNew = !!row.querySelector('.new-failure');
+
+			// Decide whether to show the row
+			let show = true;
+
+			if (toggleFail && !toggleFail.checked && isFail) show = false;
+			if (toggleUnknown && !toggleUnknown.checked && isUnknown) show = false;
+			if (toggleNA && !toggleNA.checked && isNA) show = false;
+			if (toggleNew && toggleNew.checked && !isNew) show = false;
+
+			row.style.display = show ? '' : 'none';
+		});
+	}
+
+	[toggleFail, toggleUnknown, toggleNA, toggleNew].forEach(cb => {
+		if (cb) cb.addEventListener('change', update);
+	});
+
+	update();
+});
+document.addEventListener("DOMContentLoaded", () => {
+	const th = document.querySelector("table.sortable-table th");
+	if (th) sortTable(th, 0);
+});
+</script>
+
+<p><em>Showing one failure per OS/Perl combination.</em></p>
+<div style="margin-bottom: 0.5em;">
+	<label>
+		<input type="checkbox" id="toggleFail" checked>
+		FAIL
+	</label>
+	<label style="margin-left: 1em;">
+		<input type="checkbox" id="toggleUnknown">
+		UNKNOWN
+	</label>
+	<label style="margin-left: 1em;">
+		<input type="checkbox" id="toggleNA">
+		NA
+	</label>
+	<label style="margin-left: 1em;">
+		<input type="checkbox" id="toggleNew">
+		NEW only
+	</label>
+</div>
+
+<table class="sortable-table" data-sort-col="0" data-sort-order="asc">
+<thead>
+<tr>
+	<th class="sortable" onclick="sortTable(this, 0)">
+		<span class="label">Date</span> <span class="arrow">&#x25B2;</span>
+	</th>
+	<th class="sortable" onclick="sortTable(this, 1)">
+		<span class="label">OS</span> <span class="arrow">&#x25B2;</span>
+	</th>
+	<th class="sortable" onclick="sortTable(this, 2)">
+		<span class="label">Perl</span> <span class="arrow">&#x25B2;</span>
+	</th>
+	<th class="sortable" onclick="sortTable(this, 3)">
+		<span class="label">Reporter</span> <span class="arrow">&#x25B2;</span>
+	</th>
+	<th class="sortable" onclick="sortTable(this, 4)" title="Marks failures that did not occur in the previous release. The same OS, Perl version, architecture, and platform were passing before.">
+		<span class="label">New</span> <span class="arrow">&#x25B2;</span>
+	</th>
+	<th>Report</th>
+</tr>
+</thead>
+<tbody>
+
+<tr class="cpan-fail"><td>2025-05-29T16:02:00Z</td><td>openbsd</td><td>5.12.5</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/4e8dd844-3ca6-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-30T02:01:00Z</td><td>openbsd</td><td>5.12.3</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/008da33c-3cfa-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-06-05T07:38:00Z</td><td>solaris</td><td>5.12.1</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/0d5ddcae-41e0-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-30T16:24:00Z</td><td>linux</td><td>5.12.2</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/7eb08a9a-3d72-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-31T00:46:00Z</td><td>freebsd</td><td>5.8.9</td><td>David Cantrell (DCANTRELL)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/bcca9ea6-3db8-11f0-ba68-b00ff8a234be" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-30T09:26:00Z</td><td>linux</td><td>5.12.5</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/3248191e-3d38-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-30T15:13:00Z</td><td>linux</td><td>5.12.2</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/972b25bc-3d68-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-30T10:34:00Z</td><td>linux</td><td>5.12.4</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/ad003bba-3d41-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-29T15:45:00Z</td><td>linux</td><td>5.10.0</td><td>Andreas J. K&ouml;nig (ANDK)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/f2df6b0e-3ca3-11f0-9253-818d1484f67c" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-29T15:46:00Z</td><td>linux</td><td>5.8.9</td><td>Andreas J. K&ouml;nig (ANDK)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/0608e156-3ca4-11f0-8cc4-c0b6973b8e2b" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-06-04T13:45:00Z</td><td>solaris</td><td>5.12.3</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/2ff94e4c-414a-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-29T15:45:00Z</td><td>linux</td><td>5.10.1</td><td>Andreas J. K&ouml;nig (ANDK)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/e1bf3e76-3ca3-11f0-b60e-b77c3b69aba4" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-06-04T04:43:00Z</td><td>solaris</td><td>5.12.4</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/7a4c16ce-40fe-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-06-04T22:45:00Z</td><td>solaris</td><td>5.12.2</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/9222c33c-4195-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-30T12:53:00Z</td><td>linux</td><td>5.12.3</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/2597bbd0-3d55-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-30T18:43:00Z</td><td>linux</td><td>5.12.1</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/ecc1c356-3d85-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-30T19:51:00Z</td><td>linux</td><td>5.12.0</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/7b9ea6a8-3d8f-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-29T15:44:00Z</td><td>linux</td><td>5.12.5</td><td>Andreas J. K&ouml;nig (ANDK)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/c6c98ad6-3ca3-11f0-9346-d0a3fd871c68" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-06-04T00:15:00Z</td><td>solaris</td><td>5.12.5</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/0e9d8d88-40d9-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-30T14:04:00Z</td><td>linux</td><td>5.12.3</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/0d7250a6-3d5f-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-30T04:32:00Z</td><td>openbsd</td><td>5.12.2</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/1e9bfce2-3d0f-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-30T07:06:00Z</td><td>openbsd</td><td>5.12.2</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/a8316018-3d24-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-30T16:18:00Z</td><td>openbsd</td><td>5.12.0</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/c14dba22-3d71-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-06-04T09:17:00Z</td><td>solaris</td><td>5.12.4</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/c70f7156-4124-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-30T17:32:00Z</td><td>linux</td><td>5.12.1</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/0cd7d586-3d7c-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-29T13:34:00Z</td><td>openbsd</td><td>5.12.5</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/a027d228-3c91-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-29T23:28:00Z</td><td>openbsd</td><td>5.12.3</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/a09b32ce-3ce4-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-31T00:32:00Z</td><td>linux</td><td>5.10.1</td><td>David Cantrell (DCANTRELL)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/cb18effa-3db6-11f0-b86d-6d1bde348148" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-29T18:28:00Z</td><td>openbsd</td><td>5.12.4</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/c48a9e38-3cba-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-06-27T21:27:00Z</td><td>freebsd</td><td>5.10.1</td><td>Slaven Rezi&#x107;</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/951af54a-539d-11f0-8e9c-32f66d8775ea" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-30T11:45:00Z</td><td>linux</td><td>5.12.4</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/98c6f936-3d4b-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-06-05T03:14:00Z</td><td>solaris</td><td>5.12.2</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/2f9f7b26-41bb-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-30T13:58:00Z</td><td>openbsd</td><td>5.12.0</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/297a9e1c-3d5e-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-06-04T18:18:00Z</td><td>solaris</td><td>5.12.3</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/5f31946e-4170-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-29T20:59:00Z</td><td>openbsd</td><td>5.12.4</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/bebb67f2-3ccf-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-30T11:39:00Z</td><td>openbsd</td><td>5.12.1</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/c98e84fe-3d4a-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-30T20:55:00Z</td><td>linux</td><td>5.12.0</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/65d05f84-3d98-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-06-03T19:53:00Z</td><td>solaris</td><td>5.12.5</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/5e9b9b88-40b4-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2025-05-30T09:19:00Z</td><td>openbsd</td><td>5.12.1</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/24ba4e08-3d37-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+</tbody></table>
+<h2>Mutation Report</h2>
+<h3>Mutation Summary</h3>
+<ul>
+<li><b>Score</b>: 100.00%</li>
+<li><b>Total</b>: 11</li>
+<li><b>Killed</b>: 
+11
+</li>
+<li><b>Survived</b>: 
+0
+</li>
+</ul>
+<h3>Mutation Files</h3>
+
+<table border='1' cellpadding='5'>
+
+<tr><th>File</th><th>Total</th><th>Killed</th><th>Survivors</th><th>Score%</th><th>Complexity</th><th title="TER1=Statement, TER2=Branch, TER3=LCSAJ Path">TER1 / TER2 / TER3</th></tr>
+
+<tr class="high"><td><a href="mutation_html/lib/Text/Names/Abbreviate.pm.html" title="View mutation line by line" target="_blank">lib/Text/Names/Abbreviate.pm</a> <a href="https://github.com/nigelhorne/Text-Names-Abbreviate/blob/869b74bdde1203f83cebc4cc6aaf5254dff24cef/lib/Text/Names/Abbreviate.pm" class="icon-link" title="View source on GitHub">&#128269;</a></td><td>11</td><td>11</td><td>0</td><td><span class="coverage-badge badge-good" title="Excellent">100.0%</span></td><td><span class="coverage-badge badge-good" title="Good">27</span></td><td><span class="coverage-badge badge-good" title="Excellent">100.0%</span> / <span class="coverage-badge badge-good" title="Excellent">97.6%</span> / <span class="coverage-badge badge-warn" title="Moderate">72.0%</span></td></tr>
+</table>
+
+<h2>Structural Coverage (Approximate)</h2>
+<div class='summary'>
+Statement Coverage: 100.00% (73 / 73)<br>
+Branch Coverage: 97.62% (41 / 42)<br>
+<em>Approximate LCSAJ derived from branch and statement coverage.</em>
+</div>
+<h2>Executive Summary</h2>
+<div class='summary'>
+Tests execute 100.00% of the code, but detect only 100.00% of injected faults.
+</div>
 <footer>
-	<p><span style="margin-left:8px;color:#666;font-size:0.9em;">Use mouse wheel or pinch to zoom; drag to pan</span></p>
 	<p>Project: <a href="https://github.com/nigelhorne/Text-Names-Abbreviate">Text-Names-Abbreviate</a></p>
-	<p><em>Last updated: 2026-01-15 18:39:54 - <a href="https://github.com/nigelhorne/Text-Names-Abbreviate/commit/0a5d0b75713f3cfd4f022dc27c6538adc7ad2eaa">commit <code>0a5d0b7</code></a></em></p>
+	<p><em>Last updated: 2026-04-20 12:17:55 - <a href="https://github.com/nigelhorne/Text-Names-Abbreviate/commit/869b74bdde1203f83cebc4cc6aaf5254dff24cef">commit <code>869b74b</code></a></em></p>
 </footer>
+
 </body>
 </html>
