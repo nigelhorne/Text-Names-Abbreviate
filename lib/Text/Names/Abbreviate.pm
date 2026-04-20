@@ -197,6 +197,7 @@ sub abbreviate
 
 	# Normalize commas (e.g., "Adams, John Q." -> ("Adams", "John Q."))
 	my $had_leading_comma = 0;
+	$name =~ s/,,/,/g;
 	if ($name =~ /,/) {
 		my ($last, $rest) = map { s/^\s+|\s+$//gr } split(/\s*,\s*/, $name, 2);
 		$rest ||= '';
@@ -287,7 +288,7 @@ L<https://github.com/nigelhorne/Text-Names-Abbreviate>
 
 =over 4
 
-=item * Test coverage report: L<https://nigelhorne.github.io/Text-Names-Abbreviate/coverage/>
+=item * L<Test Dashboard|https://nigelhorne.github.io/Text-Names-Abbreviate/coverage/>
 
 =back
 

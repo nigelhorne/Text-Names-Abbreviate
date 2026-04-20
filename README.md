@@ -140,7 +140,7 @@ Nigel Horne, `<njh at nigelhorne.com>`
 
 # SEE ALSO
 
-- Test coverage report: [https://nigelhorne.github.io/Text-Names-Abbreviate/coverage/](https://nigelhorne.github.io/Text-Names-Abbreviate/coverage/)
+- [Test Dashboard](https://nigelhorne.github.io/Text-Names-Abbreviate/coverage/)
 
 # SUPPORT
 
