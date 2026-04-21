@@ -45,16 +45,16 @@ WriteMakefile(
 		resources => {
 			homepage => 'https://metacpan.org/pod/Text::Names::Abbreviate',
 			repository => {
-			repository => 'https://github.com/nigelhorne/Text-Names-Abbreviate',
 				type => 'git',
-				url => 'git://github.com/nigelhorne/Text-Names-Abbreviate.git',
-				web => 'https://github.com/nigelhorne/Text-Names-Abbreviate',
-				# license    => 'http://dev.perl.org/licenses/',
+				url => 'git://github.com/nigelhorne/Text-Name-Abbreviate.git',
+				web => 'https://github.com/nigelhorne/Text-Name-Abbreviate',
+				# license => 'http://dev.perl.org/licenses/',
 			}, bugtracker => {
-				mailto => 'bug-Text-Names-Abbreviate@rt.cpan.org',
-				url => 'https://github.com/nigelhorne/Text-Names-Abbreviate/issues',
-				# web => 'https://rt.cpan.org/Public/Dist/Display.html?Name=Text-Names-Abbreviate',
-				web => 'https://github.com/nigelhorne/Text-Names-Abbreviate/issues'
+				web => 'https://rt.cpan.org/Public/Dist/Display.html?Name=Text-Name-Abbreviate',
+				url => 'https://rt.cpan.org/Public/Dist/Display.html?Name=Text-Name-Abbreviate',
+				# web => 'https://github.com/nigelhorne/Text-Name-Abbreviate/issues',
+				# url => 'https://github.com/nigelhorne/Text-Name-Abbreviate/issues',
+				mailto => 'bug-Text-Name-Abbreviate@rt.cpan.org'
 			}
 		},
 	},

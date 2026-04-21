@@ -5,6 +5,10 @@
 
 Text::Names::Abbreviate - Create abbreviated name formats from full names
 
+## VERSION
+
+Version 0.02
+
 # SYNOPSIS
 
     use Text::Names::Abbreviate qw(abbreviate);
@@ -96,7 +100,7 @@ As a result, passing the output of `abbreviate()` back into the function
 may not yield equivalent results:
 
     abbreviate("George R R Martin", { format => 'compact' })   # "GRRM"
-    abbreviate("GRRM", { format => 'initials' })               # "G."
+    abbreviate("GRRM", { format => 'initials' })                  # "G."
 
 In such cases, the input is treated as a single name.
 

@@ -9,11 +9,18 @@ use Params::Get 0.13;
 use Params::Validate::Strict 0.13;
 
 our @EXPORT_OK = qw(abbreviate);
-our $VERSION = '0.01';
 
 =head1 NAME
 
 Text::Names::Abbreviate - Create abbreviated name formats from full names
+
+=head2 VERSION
+
+Version 0.02
+
+=cut
+
+our $VERSION = '0.02';
 
 =head1 SYNOPSIS
 
@@ -131,7 +138,7 @@ As a result, passing the output of C<abbreviate()> back into the function
 may not yield equivalent results:
 
   abbreviate("George R R Martin", { format => 'compact' })   # "GRRM"
-  abbreviate("GRRM", { format => 'initials' })               # "G."
+  abbreviate("GRRM", { format => 'initials' })			# "G."
 
 In such cases, the input is treated as a single name.
 
