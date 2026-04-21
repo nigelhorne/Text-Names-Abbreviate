@@ -2,7 +2,6 @@ Revision history for Text-Names-Abbreviate
 
 0.02
 	Use Params::Get
-	Added the test dashboard
 	Added fuzz testing in GitHub Actions
 	Fixed "abbreviate('0')" which gave a Usage error
 	Fixed edge cases

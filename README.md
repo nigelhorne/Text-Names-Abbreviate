@@ -142,10 +142,6 @@ Nigel Horne, `<njh at nigelhorne.com>`
 
 [https://github.com/nigelhorne/Text-Names-Abbreviate](https://github.com/nigelhorne/Text-Names-Abbreviate)
 
-# SEE ALSO
-
-- [Test Dashboard](https://nigelhorne.github.io/Text-Names-Abbreviate/coverage/)
-
 # SUPPORT
 
 This module is provided as-is without any warranty.
