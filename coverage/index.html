@@ -153,7 +153,7 @@
 
 <tbody>
 
-<tr class="high"><td><a href="lib-Text-Names-Abbreviate-pm.html" title="View coverage line by line" target="_blank">lib/Text/Names/Abbreviate.pm</a> <a href="https://github.com/nigelhorne/Text-Names-Abbreviate/blob/869b74bdde1203f83cebc4cc6aaf5254dff24cef/lib/Text/Names/Abbreviate.pm" class="icon-link" title="View source on GitHub">&#128269;</a><canvas class="sparkline" width="80" height="20" data-points="97.1,97.1,97.1,97.1,97.1,92.8,92.8,92.8,92.8,92.8"></canvas></td><td>100.0</td><td>97.6</td><td>95.7</td><td>100.0</td><td><span class="coverage-badge badge-good" title="Excellent coverage">98.6%</span></td><td class="neutral" title="No previous data">&#9679;</td></tr>
+<tr class="high"><td><a href="blib-lib-Text-Names-Abbreviate-pm.html" title="View coverage line by line" target="_blank">lib/Text/Names/Abbreviate.pm</a> <a href="https://github.com/nigelhorne/Text-Names-Abbreviate/blob/63edeb9b1c00ff6c99847e18b2950a3b9f7945b2/lib/Text/Names/Abbreviate.pm" class="icon-link" title="View source on GitHub">&#128269;</a><canvas class="sparkline" width="80" height="20" data-points="97.1,97.1,97.1,97.1,92.8,92.8,92.8,92.8,92.8,98.6"></canvas></td><td>100.0</td><td>97.6</td><td>95.7</td><td>100.0</td><td><span class="coverage-badge badge-good" title="Excellent coverage">98.6%</span></td><td class="positive" title="Previous (sparkline): 92.8%">&#9650; 5.8%</td></tr>
 <tr class="summary-row nosort"><td colspan="2"><strong>Summary</strong></td><td colspan="2">1 files</td><td colspan="3">Avg: 98%, Low: 0</td></tr>
 <tr class="high nosort"><td><strong>Total</strong></td><td>100.0</td><td>97.6</td><td>95.7</td><td>100.0</td><td colspan="2"><strong>98.6</strong></td></tr>
 </tbody></table>
@@ -189,7 +189,7 @@ function linearRegression(data) {
 	const sumXY = xs.reduce((acc, val, i) => acc + val * ys[i], 0);
 	const sumX2 = xs.reduce((acc, val) => acc + val * val, 0);
 
-	if (n < 2 || (n * sumX2 - sumX * sumX) === 0) {
+	if(n < 2 || (n * sumX2 - sumX * sumX) === 0) {
 		return [];
 	}
 	const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
@@ -202,23 +202,23 @@ function linearRegression(data) {
 }
 
 
-const dataPoints = [ { x: "2025-10-04T08:33:53-04:00", y: 97.0588235294118, delta: 0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/7388166", label: "2025-10-04T08:33:53-04:00", pointBackgroundColor: "gray", comment: "Latest fuzz" },
-{ x: "2025-10-08T08:30:53-04:00", y: 97.0588235294118, delta: 0.0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/8575338", label: "2025-10-08T08:30:53-04:00", pointBackgroundColor: "gray", comment: "Latest fuzz" },
-{ x: "2025-10-09T12:49:40-04:00", y: 97.0588235294118, delta: 0.0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/977b5ee", label: "2025-10-09T12:49:40-04:00", pointBackgroundColor: "gray", comment: "Latest fuzz.t" },
-{ x: "2025-10-09T13:58:57-04:00", y: 97.0588235294118, delta: 0.0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/dc455e4", label: "2025-10-09T13:58:57-04:00", pointBackgroundColor: "gray", comment: "Latest fuzz.t" },
-{ x: "2025-10-14T13:19:29-04:00", y: 97.0588235294118, delta: 0.0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/78e29d6", label: "2025-10-14T13:19:29-04:00", pointBackgroundColor: "gray", comment: "Added fuzz testing in GitHub Actions" },
-{ x: "2025-10-14T14:04:46-04:00", y: 97.1428571428571, delta: 0.1, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/beefeea", label: "2025-10-14T14:04:46-04:00", pointBackgroundColor: "green", comment: "Fix typo" },
-{ x: "2025-12-22T10:29:16-05:00", y: 92.8057553956834, delta: -4.3, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/b7bb3c5", label: "2025-12-22T10:29:16-05:00", pointBackgroundColor: "red", comment: "Fix the rest of the edge cases" },
-{ x: "2025-12-22T20:39:51-05:00", y: 92.8057553956834, delta: 0.0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/84bb8b0", label: "2025-12-22T20:39:51-05:00", pointBackgroundColor: "gray", comment: "Debugging using P:V:S" },
-{ x: "2026-01-15T09:11:34-05:00", y: 92.8057553956834, delta: 0.0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/e8379b9", label: "2026-01-15T09:11:34-05:00", pointBackgroundColor: "gray", comment: "Update to the latest fuzzing" },
-{ x: "2026-01-15T09:13:50-05:00", y: 92.8057553956834, delta: 0.0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/2b2c4ca", label: "2026-01-15T09:13:50-05:00", pointBackgroundColor: "gray", comment: "Latest fuzz workflow" } ];
+const dataPoints = [ { x: "2025-10-08T08:30:53-04:00", y: 97.0588235294118, delta: 0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/8575338a6f02d3edbe71c7223a7669ab69dca3ae", label: "2025-10-08T08:30:53-04:00", pointBackgroundColor: "gray", comment: "Latest fuzz" },
+{ x: "2025-10-09T12:49:40-04:00", y: 97.0588235294118, delta: 0.0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/977b5ee8735bf84694188fffdcf8ed06901ccfa4", label: "2025-10-09T12:49:40-04:00", pointBackgroundColor: "gray", comment: "Latest fuzz.t" },
+{ x: "2025-10-09T13:58:57-04:00", y: 97.0588235294118, delta: 0.0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/dc455e4d5e74b6e5450a545c1665d09d2ef03111", label: "2025-10-09T13:58:57-04:00", pointBackgroundColor: "gray", comment: "Latest fuzz.t" },
+{ x: "2025-10-14T13:19:29-04:00", y: 97.0588235294118, delta: 0.0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/78e29d6bb87d65a76bb4dcaf1b7146879b5091eb", label: "2025-10-14T13:19:29-04:00", pointBackgroundColor: "gray", comment: "Added fuzz testing in GitHub Actions" },
+{ x: "2025-10-14T14:04:46-04:00", y: 97.1428571428571, delta: 0.1, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/beefeea9b1d26d5ff08452db9b58b3801227da6a", label: "2025-10-14T14:04:46-04:00", pointBackgroundColor: "green", comment: "Fix typo" },
+{ x: "2025-12-22T10:29:16-05:00", y: 92.8057553956834, delta: -4.3, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/b7bb3c5185b8c42e08adcc131e08cd03c626cb04", label: "2025-12-22T10:29:16-05:00", pointBackgroundColor: "red", comment: "Fix the rest of the edge cases" },
+{ x: "2025-12-22T20:39:51-05:00", y: 92.8057553956834, delta: 0.0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/84bb8b0ca85a7dc5f293d0c0a09cfb3c4d44a0f0", label: "2025-12-22T20:39:51-05:00", pointBackgroundColor: "gray", comment: "Debugging using P:V:S" },
+{ x: "2026-01-15T09:11:34-05:00", y: 92.8057553956834, delta: 0.0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/e8379b9e64a6354d3da07ce1ea891064e65b0ed0", label: "2026-01-15T09:11:34-05:00", pointBackgroundColor: "gray", comment: "Update to the latest fuzzing" },
+{ x: "2026-01-15T09:13:50-05:00", y: 92.8057553956834, delta: 0.0, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/2b2c4ca27016b9aabdd4df4ede9430b82fabd4b5", label: "2026-01-15T09:13:50-05:00", pointBackgroundColor: "gray", comment: "Latest fuzz workflow" },
+{ x: "2026-04-20T08:16:08-04:00", y: 98.6206896551724, delta: 5.8, url: "https://github.com/nigelhorne/Text-Names-Abbreviate/commit/869b74bdde1203f83cebc4cc6aaf5254dff24cef", label: "2026-04-20T08:16:08-04:00", pointBackgroundColor: "green", comment: "Added note" } ];
 const regressionPoints = linearRegression(dataPoints);
 // Try to register the zoom plugin (handles different UMD builds)
 (function registerZoomPlugin(){
 	try {
 		const candidates = ['chartjsPluginZoom','ChartZoom','zoomPlugin','chartjs_plugin_zoom','ChartjsPluginZoom','chartjsPluginZoom'];
-		for (const name of candidates) {
-			if (window[name]) {
+		for(const name of candidates) {
+			if(window[name]) {
 				try { Chart.register(window[name]); console.log('Registered zoom plugin:', name); return; } catch(e) { console.warn('zoom register failed for', name, e); }
 			}
 		}
@@ -303,7 +303,7 @@ const chart = new Chart(ctx, {
 			}
 		}, onClick: (e) => {
 			const points = chart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
-			if (points.length) {
+			if(points.length) {
 				const url = chart.data.datasets[0].data[points[0].index].url;
 				window.open(url, '_blank');
 			}
@@ -320,10 +320,10 @@ document.getElementById('toggleTrend').addEventListener('change', function(e) {
 
 // Reset Zoom button handler (calls plugin API if available)
 const resetBtn = document.getElementById('resetZoomBtn');
-if (resetBtn) {
+if(resetBtn) {
 	resetBtn.addEventListener('click', function() {
 		try {
-			if (chart && typeof chart.resetZoom === 'function') {
+			if(chart && typeof chart.resetZoom === 'function') {
 				chart.resetZoom();
 			} else {
 				console.warn('resetZoom not available; zoom plugin may not be registered.');
@@ -336,7 +336,7 @@ if (resetBtn) {
 
 function sortTable(th, colIndex) {
 	const table = th.closest("table");
-	if (!table || !table.tBodies.length) return;
+	if(!table || !table.tBodies.length) return;
 
 	const tbody = table.tBodies[0];
 	const rows = Array.from(tbody.rows);
@@ -354,7 +354,7 @@ function sortTable(th, colIndex) {
 		let x = a.cells[colIndex]?.innerText.trim() || "";
 		let y = b.cells[colIndex]?.innerText.trim() || "";
 
-		if (isNumeric) {
+		if(isNumeric) {
 			x = Date.parse(x) || 0;
 			y = Date.parse(y) || 0;
 		} else {
@@ -362,8 +362,8 @@ function sortTable(th, colIndex) {
 			y = y.toLowerCase();
 		}
 
-		if (x < y) return asc ? -1 : 1;
-		if (x > y) return asc ? 1 : -1;
+		if(x < y) return asc ? -1 : 1;
+		if(x > y) return asc ? 1 : -1;
 		return 0;
 	});
 
@@ -372,11 +372,11 @@ function sortTable(th, colIndex) {
 
 	// Update arrows
 	const headers = table.tHead.rows[0].cells;
-	for (let i = 0; i < headers.length; i++) {
+	for(let i = 0; i < headers.length; i++) {
 		const arrow = headers[i].querySelector(".arrow");
-		if (!arrow) continue;
+		if(!arrow) continue;
 
-		if (i === colIndex) {
+		if(i === colIndex) {
 			arrow.textContent = asc ? "▲" : "▼";
 			arrow.classList.add("active");
 		} else {
@@ -394,14 +394,14 @@ function sortTable(th, colIndex) {
 // The table has been set up sorted in ascending order on the filename; reflect that in the GUI
 document.addEventListener("DOMContentLoaded", () => {
 	const table = document.querySelector("table");
-	if (!table) return;
+	if(!table) return;
 
 	const headers = table.tHead.rows[0].cells;
-	for (let i = 0; i < headers.length; i++) {
+	for(let i = 0; i < headers.length; i++) {
 		const arrow = headers[i].querySelector(".arrow");
-		if (!arrow) continue;
+		if(!arrow) continue;
 
-		if (i === 0) {
+		if(i === 0) {
 			arrow.textContent = "▲";
 			arrow.classList.add("active");
 		} else {
@@ -414,7 +414,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
 	document.querySelectorAll("canvas.sparkline").forEach(canvas => {
 		const raw = canvas.getAttribute("data-points");
-		if (!raw) return;
+		if(!raw) return;
 		const points = raw.split(",").map(v => parseFloat(v));
 
 		new Chart(canvas.getContext("2d"), {
@@ -463,17 +463,13 @@ function refresh(){
 
 <p><center>Use mouse wheel or pinch to zoom; drag to pan</center></p>
 <p>No issues active on <a href="https://rt.cpan.org/Public/Dist/Display.html?Name=Text-Names-Abbreviate">RT</a></p>
-<h2>CPAN Testers Failures for Text-Names-Abbreviate 0.01</h2>
-<p class="notice perl-version-cliff">
-Fails on Perl &leq; 5.12.5; passes on Perl &geq; 5.14.0. 
-<a href="https://perldoc.perl.org/perl5140delta" target="_blank">See perldelta for this release</a>
- <span class="coverage-badge badge-warn" title="33 fails, 8 passes">Moderate confidence</span></p>
+<h2>CPAN Testers Failures for Text-Names-Abbreviate 0.02</h2>
 <h3>Failure Summary (all reports)</h3>
 <ul>
-<li><b>Perl 5.12.x</b>: 33 failures</li>
-<p><em>84% of failures occur on Perl 5.12.x</em></p>
-<li><b>linux</b>: 16 failures</li>
-<li><b>5.12 / linux</b>: 12 failures</li>
+<li><b>Perl 5.12.x</b>: 24 failures</li>
+<p><em>82% of failures occur on Perl 5.12.x</em></p>
+<li><b>linux</b>: 27 failures</li>
+<li><b>5.12 / linux</b>: 24 failures</li>
 </ul>
 <h3>Likely Root Causes</h3>
 <table class="root-causes">
@@ -487,9 +483,21 @@ Fails on Perl &leq; 5.12.5; passes on Perl &geq; 5.14.0.
 <tbody>
 
 <tr class="high">
-	<td halign="center"><strong>Perl version regression (Perl &lt; 5.14.0) (<a href="https://perldoc.perl.org/perl5140delta" target="_blank">perldelta</a>)</strong></td>
+	<td halign="center"><strong>Locale-sensitive behavior (de_DE)</strong></td>
 	<td halign="center">Strong (100%)</td>
-	<td halign="center"><ul><li>All failures on Perl &leq; 5.12.5</li><li>All passes on Perl &geq; 5.14.0</li></ul></td>
+	<td halign="center"><ul><li>2/2 failures with LANG=de_DE</li><li>English locales show fewer or no failures</li></ul></td>
+</tr>
+
+<tr class="high">
+	<td halign="center"><strong>OS-specific behavior (linux)</strong></td>
+	<td halign="center">Strong (93%)</td>
+	<td halign="center"><ul><li>27/29 failures on linux</li><li>Passes observed on other operating systems</li></ul></td>
+</tr>
+
+<tr class="low">
+	<td halign="center"><strong>Scattered failures (no clear version or OS pattern)</strong></td>
+	<td halign="center">Weak (40%)</td>
+	<td halign="center"><ul><li>Failures and passes both seen on 2 common Perl series</li><li>Possible causes: flaky tests, optional dependency differences, or CGI environment assumptions</li><li>Review test output from failing reports for specific error messages</li></ul></td>
 </tr>
 
 </tbody>
@@ -505,7 +513,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	function update() {
 		document.querySelectorAll('tr').forEach(row => {
 			// Skip header rows
-			if (row.querySelector('th')) return;
+			if(row.querySelector('th')) return;
 
 			// Determine row status
 			const isFail = row.classList.contains('cpan-fail');
@@ -516,24 +524,24 @@ document.addEventListener("DOMContentLoaded", function () {
 			// Decide whether to show the row
 			let show = true;
 
-			if (toggleFail && !toggleFail.checked && isFail) show = false;
-			if (toggleUnknown && !toggleUnknown.checked && isUnknown) show = false;
-			if (toggleNA && !toggleNA.checked && isNA) show = false;
-			if (toggleNew && toggleNew.checked && !isNew) show = false;
+			if(toggleFail && !toggleFail.checked && isFail) show = false;
+			if(toggleUnknown && !toggleUnknown.checked && isUnknown) show = false;
+			if(toggleNA && !toggleNA.checked && isNA) show = false;
+			if(toggleNew && toggleNew.checked && !isNew) show = false;
 
 			row.style.display = show ? '' : 'none';
 		});
 	}
 
 	[toggleFail, toggleUnknown, toggleNA, toggleNew].forEach(cb => {
-		if (cb) cb.addEventListener('change', update);
+		if(cb) cb.addEventListener('change', update);
 	});
 
 	update();
 });
 document.addEventListener("DOMContentLoaded", () => {
 	const th = document.querySelector("table.sortable-table th");
-	if (th) sortTable(th, 0);
+	if(th) sortTable(th, 0);
 });
 </script>
 
@@ -580,92 +588,72 @@ document.addEventListener("DOMContentLoaded", () => {
 </thead>
 <tbody>
 
-<tr class="cpan-fail"><td>2025-05-29T16:02:00Z</td><td>openbsd</td><td>5.12.5</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/4e8dd844-3ca6-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-30T02:01:00Z</td><td>openbsd</td><td>5.12.3</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/008da33c-3cfa-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-06-05T07:38:00Z</td><td>solaris</td><td>5.12.1</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/0d5ddcae-41e0-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-30T16:24:00Z</td><td>linux</td><td>5.12.2</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/7eb08a9a-3d72-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-31T00:46:00Z</td><td>freebsd</td><td>5.8.9</td><td>David Cantrell (DCANTRELL)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/bcca9ea6-3db8-11f0-ba68-b00ff8a234be" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-30T09:26:00Z</td><td>linux</td><td>5.12.5</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/3248191e-3d38-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-30T15:13:00Z</td><td>linux</td><td>5.12.2</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/972b25bc-3d68-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-30T10:34:00Z</td><td>linux</td><td>5.12.4</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/ad003bba-3d41-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-29T15:45:00Z</td><td>linux</td><td>5.10.0</td><td>Andreas J. K&ouml;nig (ANDK)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/f2df6b0e-3ca3-11f0-9253-818d1484f67c" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-29T15:46:00Z</td><td>linux</td><td>5.8.9</td><td>Andreas J. K&ouml;nig (ANDK)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/0608e156-3ca4-11f0-8cc4-c0b6973b8e2b" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-06-04T13:45:00Z</td><td>solaris</td><td>5.12.3</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/2ff94e4c-414a-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-29T15:45:00Z</td><td>linux</td><td>5.10.1</td><td>Andreas J. K&ouml;nig (ANDK)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/e1bf3e76-3ca3-11f0-b60e-b77c3b69aba4" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-06-04T04:43:00Z</td><td>solaris</td><td>5.12.4</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/7a4c16ce-40fe-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-06-04T22:45:00Z</td><td>solaris</td><td>5.12.2</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/9222c33c-4195-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-30T12:53:00Z</td><td>linux</td><td>5.12.3</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/2597bbd0-3d55-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-30T18:43:00Z</td><td>linux</td><td>5.12.1</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/ecc1c356-3d85-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-30T19:51:00Z</td><td>linux</td><td>5.12.0</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/7b9ea6a8-3d8f-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-29T15:44:00Z</td><td>linux</td><td>5.12.5</td><td>Andreas J. K&ouml;nig (ANDK)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/c6c98ad6-3ca3-11f0-9346-d0a3fd871c68" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-06-04T00:15:00Z</td><td>solaris</td><td>5.12.5</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/0e9d8d88-40d9-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-30T14:04:00Z</td><td>linux</td><td>5.12.3</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/0d7250a6-3d5f-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-30T04:32:00Z</td><td>openbsd</td><td>5.12.2</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/1e9bfce2-3d0f-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-30T07:06:00Z</td><td>openbsd</td><td>5.12.2</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/a8316018-3d24-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-30T16:18:00Z</td><td>openbsd</td><td>5.12.0</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/c14dba22-3d71-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-06-04T09:17:00Z</td><td>solaris</td><td>5.12.4</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/c70f7156-4124-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-30T17:32:00Z</td><td>linux</td><td>5.12.1</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/0cd7d586-3d7c-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-29T13:34:00Z</td><td>openbsd</td><td>5.12.5</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/a027d228-3c91-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-29T23:28:00Z</td><td>openbsd</td><td>5.12.3</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/a09b32ce-3ce4-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-31T00:32:00Z</td><td>linux</td><td>5.10.1</td><td>David Cantrell (DCANTRELL)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/cb18effa-3db6-11f0-b86d-6d1bde348148" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-29T18:28:00Z</td><td>openbsd</td><td>5.12.4</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/c48a9e38-3cba-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-06-27T21:27:00Z</td><td>freebsd</td><td>5.10.1</td><td>Slaven Rezi&#x107;</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/951af54a-539d-11f0-8e9c-32f66d8775ea" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-30T11:45:00Z</td><td>linux</td><td>5.12.4</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/98c6f936-3d4b-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-06-05T03:14:00Z</td><td>solaris</td><td>5.12.2</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/2f9f7b26-41bb-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-30T13:58:00Z</td><td>openbsd</td><td>5.12.0</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/297a9e1c-3d5e-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-06-04T18:18:00Z</td><td>solaris</td><td>5.12.3</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/5f31946e-4170-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-29T20:59:00Z</td><td>openbsd</td><td>5.12.4</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/bebb67f2-3ccf-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-30T11:39:00Z</td><td>openbsd</td><td>5.12.1</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/c98e84fe-3d4a-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-30T20:55:00Z</td><td>linux</td><td>5.12.0</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/65d05f84-3d98-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-06-03T19:53:00Z</td><td>solaris</td><td>5.12.5</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/5e9b9b88-40b4-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
-<tr class="cpan-fail"><td>2025-05-30T09:19:00Z</td><td>openbsd</td><td>5.12.1</td><td>Chris Williams (BINGOS)</td><td></td>
-				<td><a href="https://www.cpantesters.org/cpan/report/24ba4e08-3d37-11f0-acaa-c91c7f7edd59" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-25T20:07:00Z</td><td>linux</td><td>5.12.0</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/627a969e-40e2-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-25T01:12:00Z</td><td>linux</td><td>5.12.2</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/de288188-4043-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-25T05:46:00Z</td><td>linux</td><td>5.12.1</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/0a610538-406a-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-21T13:01:00Z</td><td>linux</td><td>5.40.0</td><td>Andreas J. K&ouml;nig (ANDK)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/2d2e1c44-3d82-11f1-ad2d-ab869b1d0675" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-24T20:53:00Z</td><td>linux</td><td>5.12.3</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/a042e4a4-401f-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-25T22:11:00Z</td><td>linux</td><td>5.12.0</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/a6494fe4-40f3-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-25T03:28:00Z</td><td>linux</td><td>5.12.1</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/d6c72288-4056-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-25T13:54:00Z</td><td>linux</td><td>5.12.1</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/3ef8f6fe-40ae-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-25T10:20:00Z</td><td>linux</td><td>5.12.0</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/513cca16-4090-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-22T13:17:00Z</td><td>linux</td><td>5.40.0</td><td>Slaven Rezi&#x107;</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/a8e6e3fe-3e4d-11f1-8ee1-4b526e8775ea" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-24T07:30:00Z</td><td>linux</td><td>5.12.5</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/778e8ae2-3faf-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-24T09:24:00Z</td><td>linux</td><td>5.12.4</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/72c082b2-3fbf-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-25T04:13:00Z</td><td>linux</td><td>5.12.2</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/207dd9f2-405d-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-24T19:01:00Z</td><td>linux</td><td>5.12.3</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/097525be-4010-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-22T13:17:00Z</td><td>linux</td><td>5.38.2</td><td>Slaven Rezi&#x107;</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/a77d57e6-3e4d-11f1-8ee1-4b526e8775ea" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-21T13:09:00Z</td><td>linux</td><td>5.12.1</td><td>Andreas J. K&ouml;nig (ANDK)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/43527bb8-3d83-11f1-b327-c69fd01f22ef" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-25T08:01:00Z</td><td>linux</td><td>5.12.0</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/ea99d848-407c-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-24T03:46:00Z</td><td>linux</td><td>5.12.5</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/31b5434a-3f90-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-24T22:50:00Z</td><td>linux</td><td>5.12.2</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/04c3f66a-4030-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-25T06:00:00Z</td><td>linux</td><td>5.12.2</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/05a76cc4-406c-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-24T11:23:00Z</td><td>linux</td><td>5.12.4</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/1048133c-3fd0-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-24T22:48:00Z</td><td>linux</td><td>5.12.3</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/bc03b424-402f-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-22T03:51:00Z</td><td>linux</td><td>5.12.5</td><td>David Cantrell (DCANTRELL)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/9236d87a-3dfe-11f1-82d1-db8bffb78cdf" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-24T17:02:00Z</td><td>linux</td><td>5.12.3</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/560e767a-3fff-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-24T15:05:00Z</td><td>linux</td><td>5.12.4</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/12b9a85a-3fef-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-21T13:07:00Z</td><td>linux</td><td>5.12.5</td><td>Andreas J. K&ouml;nig (ANDK)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/1e59ce42-3d83-11f1-b120-d221b9247cd0" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-22T12:21:00Z</td><td>freebsd</td><td>5.8.9</td><td>Slaven Rezi&#x107;</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/c3f43be0-3e45-11f1-9b0b-62ed6d8775ea" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-22T12:11:00Z</td><td>freebsd</td><td>5.10.1</td><td>Slaven Rezi&#x107;</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/61b4bfb4-3e44-11f1-80ce-6a306e8775ea" target="_blank">View</a></td></tr>
+<tr class="cpan-fail"><td>2026-04-24T13:11:00Z</td><td>linux</td><td>5.12.4</td><td>Chris Williams (BINGOS)</td><td></td>
+				<td><a href="https://www.cpantesters.org/cpan/report/27e12a56-3fdf-11f1-a3bc-a055f9c4ba34" target="_blank">View</a></td></tr>
 </tbody></table>
 <h2>Mutation Report</h2>
 <h3>Mutation Summary</h3>
 <ul>
-<li><b>Score</b>: 100.00%</li>
-<li><b>Total</b>: 11</li>
+<li><b>Score</b>: 100%</li>
+<li><b>Total</b>: 0</li>
 <li><b>Killed</b>: 
-11
+0
 </li>
 <li><b>Survived</b>: 
 0
@@ -675,9 +663,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <table border='1' cellpadding='5'>
 
-<tr><th>File</th><th>Total</th><th>Killed</th><th>Survivors</th><th>Score%</th><th>Complexity</th><th title="TER1=Statement, TER2=Branch, TER3=LCSAJ Path">TER1 / TER2 / TER3</th></tr>
+<tr><th>File</th><th>Total</th><th>Killed</th><th>Survivors</th><th>Skipped</th><th>Score%</th><th>Complexity</th><th title="TER1=Statement, TER2=Branch, TER3=LCSAJ Path">TER1 / TER2 / TER3</th></tr>
 
-<tr class="high"><td><a href="mutation_html/lib/Text/Names/Abbreviate.pm.html" title="View mutation line by line" target="_blank">lib/Text/Names/Abbreviate.pm</a> <a href="https://github.com/nigelhorne/Text-Names-Abbreviate/blob/869b74bdde1203f83cebc4cc6aaf5254dff24cef/lib/Text/Names/Abbreviate.pm" class="icon-link" title="View source on GitHub">&#128269;</a></td><td>11</td><td>11</td><td>0</td><td><span class="coverage-badge badge-good" title="Excellent">100.0%</span></td><td><span class="coverage-badge badge-good" title="Good">27</span></td><td><span class="coverage-badge badge-good" title="Excellent">100.0%</span> / <span class="coverage-badge badge-good" title="Excellent">97.6%</span> / <span class="coverage-badge badge-warn" title="Moderate">72.0%</span></td></tr>
 </table>
 
 <h2>Structural Coverage (Approximate)</h2>
@@ -688,12 +675,12 @@ Branch Coverage: 97.62% (41 / 42)<br>
 </div>
 <h2>Executive Summary</h2>
 <div class='summary'>
-Tests execute 100.00% of the code, but detect only 100.00% of injected faults.
+Tests execute 100.00% of the code. No mutation data available yet — trigger the mutation workflow for fault detection analysis.
 </div>
 <footer>
 	<p>Project: <a href="https://github.com/nigelhorne/Text-Names-Abbreviate">Text-Names-Abbreviate</a></p>
-	<p><em>Last updated: 2026-04-20 12:17:55 - <a href="https://github.com/nigelhorne/Text-Names-Abbreviate/commit/869b74bdde1203f83cebc4cc6aaf5254dff24cef">commit <code>869b74b</code></a></em></p>
+	<p><em>Last updated: 2026-06-15 11:57:31 - <a href="https://github.com/nigelhorne/Text-Names-Abbreviate/commit/63edeb9b1c00ff6c99847e18b2950a3b9f7945b2">commit <code>63edeb9</code></a></em></p>
+	<p style="float: right; font-size: 0.85em; color: #999;">Powered by <a href="https://metacpan.org/dist/App-Test-Generator">App::Test::Generator 0.38</a></p>
 </footer>
-
 </body>
 </html>
