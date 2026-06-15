@@ -1,5 +1,9 @@
 Revision history for Text-Names-Abbreviate
 
+0.03
+	[ Enhancements ]
+	- Latest test dashboard
+
 0.02	Mon Apr 20 20:25:46 EDT 2026
 	Use Params::Get
 	Added fuzz testing in GitHub Actions
