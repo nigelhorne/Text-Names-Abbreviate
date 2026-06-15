@@ -1,8 +1,7 @@
 use strict;
 use warnings;
 
-use Test::Most;
-use Test::Exception;
+use Test::Most;    # exports throws_ok, lives_ok, is, ok, etc. — Test::Exception not needed
 
 use Text::Names::Abbreviate qw(abbreviate);
 
@@ -10,110 +9,67 @@ use Text::Names::Abbreviate qw(abbreviate);
 # Default format: all branches
 # --------------------------------------------------
 subtest 'default format full branch coverage' => sub {
-	is(
-		abbreviate('John Quincy Adams'),
-		'J. Q. Adams',
-		'normal default case'
-	);
-
-	is(
-		abbreviate('John'),
-		'John',
-		'no initials branch'
-	);
-
-	is(
-		abbreviate('John Quincy'),
-		'J. Quincy',
-		'single initial + last'
-	);
+	is(abbreviate('John Quincy Adams'), 'J. Q. Adams', 'normal default case');
+	is(abbreviate('John'),              'John',         'no initials branch');
+	is(abbreviate('John Quincy'),       'J. Quincy',    'single initial + last');
 
 	is(
 		abbreviate('John Quincy', { style => 'last_first' }),
 		'Quincy, J.',
-		'last_first with one initial'
+		'last_first with one initial',
 	);
+
+	done_testing();
 };
 
 # --------------------------------------------------
 # initials format: all combinations
 # --------------------------------------------------
 subtest 'initials format coverage' => sub {
-	is(
-		abbreviate('John Quincy Adams', { format => 'initials' }),
-		'J.Q.A.',
-		'initials includes last name'
-	);
-
-	is(
-		abbreviate('John', { format => 'initials' }),
-		'J.',
-		'single name initials'
-	);
-
-	is(
-		abbreviate('John Quincy', { format => 'initials' }),
-		'J.Q.',
-		'two-part initials'
-	);
+	is(abbreviate('John Quincy Adams', { format => 'initials' }), 'J.Q.A.', 'initials includes last name');
+	is(abbreviate('John',              { format => 'initials' }), 'J.',      'single name initials');
+	is(abbreviate('John Quincy',       { format => 'initials' }), 'J.Q.',    'two-part initials');
 
 	is(
 		abbreviate(', John Quincy', { format => 'initials' }),
 		'J.Q.',
-		'leading comma removes last name'
+		'leading comma removes last name',
 	);
+
+	done_testing();
 };
 
 # --------------------------------------------------
 # compact format: edge coverage
 # --------------------------------------------------
 subtest 'compact format coverage' => sub {
-	is(
-		abbreviate('John Quincy Adams', { format => 'compact' }),
-		'JQA',
-		'normal compact'
-	);
-
-	is(
-		abbreviate('John', { format => 'compact' }),
-		'J',
-		'single name → no initials'
-	);
-
-	is(
-		abbreviate('John Quincy', { format => 'compact' }),
-		'JQ',
-		'two-part compact'
-	);
+	is(abbreviate('John Quincy Adams', { format => 'compact' }), 'JQA', 'normal compact');
+	is(abbreviate('John',              { format => 'compact' }), 'J',   'single name');
+	is(abbreviate('John Quincy',       { format => 'compact' }), 'JQ',  'two-part compact');
 
 	is(
 		abbreviate(', John Quincy', { format => 'compact' }),
 		'JQ',
-		'leading comma compact'
+		'leading comma compact',
 	);
+
+	done_testing();
 };
 
 # --------------------------------------------------
 # shortlast: all branches
 # --------------------------------------------------
 subtest 'shortlast format coverage' => sub {
-	is(
-		abbreviate('John Quincy Adams', { format => 'shortlast' }),
-		'J. Q. Adams',
-		'normal shortlast'
-	);
-
-	is(
-		abbreviate('John', { format => 'shortlast' }),
-		'John',
-		'no initials branch'
-	);
+	is(abbreviate('John Quincy Adams', { format => 'shortlast' }), 'J. Q. Adams', 'normal shortlast');
+	is(abbreviate('John',              { format => 'shortlast' }), 'John',         'no initials branch');
 
 	is(
 		abbreviate(', John Quincy', { format => 'shortlast' }),
 		'J. Q. ',
-		'no last name but initials exist'
+		'no last name but initials exist',
 	);
+
+	done_testing();
 };
 
 # --------------------------------------------------
@@ -123,92 +79,59 @@ subtest 'last_first with non-default formats' => sub {
 	is(
 		abbreviate('John Quincy Adams', { format => 'initials', style => 'last_first' }),
 		'A.J.Q.',
-		'last initial moved to front'
+		'last initial moved to front',
 	);
 
 	is(
 		abbreviate('John Quincy Adams', { format => 'compact', style => 'last_first' }),
 		'AJQ',
-		'compact last_first ordering'
+		'compact last_first ordering',
 	);
+
+	done_testing();
 };
 
 # --------------------------------------------------
 # separator interactions across formats
 # --------------------------------------------------
 subtest 'separator interaction matrix' => sub {
-	is(
-		abbreviate('John Quincy Adams', { separator => ':' }),
-		'J: Q: Adams',
-		'default format custom separator'
-	);
+	is(abbreviate('John Quincy Adams', { separator => ':' }),                        'J: Q: Adams', 'default format custom separator');
+	is(abbreviate('John Quincy Adams', { format => 'shortlast', separator => ':' }), 'J: Q: Adams', 'shortlast custom separator');
+	is(abbreviate('John Quincy Adams', { format => 'initials',  separator => ':' }), 'J:Q:A:',      'initials custom separator');
 
-	is(
-		abbreviate('John Quincy Adams', { format => 'shortlast', separator => ':' }),
-		'J: Q: Adams',
-		'shortlast custom separator'
-	);
-
-	is(
-		abbreviate('John Quincy Adams', { format => 'initials', separator => ':' }),
-		'J:Q:A:',
-		'initials custom separator'
-	);
+	done_testing();
 };
 
 # --------------------------------------------------
 # normalization branches
 # --------------------------------------------------
 subtest 'comma normalization branches' => sub {
-	is(
-		abbreviate('Adams, John Quincy'),
-		'J. Q. Adams',
-		'normal comma case'
-	);
+	is(abbreviate('Adams, John Quincy'),  'J. Q. Adams', 'normal comma case');
+	is(abbreviate('Adams,John Quincy'),   'J. Q. Adams', 'comma without space');
+	is(abbreviate('Adams , John Quincy'), 'J. Q. Adams', 'space before comma');
+	is(abbreviate('Adams ,John Quincy'),  'J. Q. Adams', 'space variations');
 
-	is(
-		abbreviate('Adams,John Quincy'),
-		'J. Q. Adams',
-		'comma without space'
-	);
-
-	is(
-		abbreviate('Adams , John Quincy'),
-		'J. Q. Adams',
-		'space before comma'
-	);
-
-	is(
-		abbreviate('Adams ,John Quincy'),
-		'J. Q. Adams',
-		'space variations'
-	);
+	done_testing();
 };
 
 # --------------------------------------------------
 # rare normalization paths
 # --------------------------------------------------
 subtest 'normalization fallback branches' => sub {
-	is(
-		abbreviate('Adams,'),
-		'Adams',
-		'only last name survives'
-	);
+	is(abbreviate('Adams,'), 'Adams', 'only last name survives');
+	is(abbreviate(',John'),  'J.',    'only rest survives');
 
-	is(
-		abbreviate(',John'),
-		'J.',
-		'only rest survives'
-	);
+	done_testing();
 };
 
 # --------------------------------------------------
-# initials filtering (empty substr edge)
+# initial filtering (empty substr edge)
 # --------------------------------------------------
 subtest 'initial filtering edge cases' => sub {
-	is(abbreviate('  J   Q   Adams  '), 'J. Q. Adams', 'handles already-initial-like input');
+	is(abbreviate('  J   Q   Adams  '), 'J. Q. Adams',    'handles already-initial-like input');
+	is(abbreviate(' . . Adams'),         '.. .. Adams',    'non-letter tokens treated literally as initials');
 
-	is( abbreviate(' . . Adams'), '.. .. Adams', 'non-letter tokens treated literally as initials')
+	done_testing();
 };
 
 # --------------------------------------------------
@@ -217,13 +140,15 @@ subtest 'initial filtering edge cases' => sub {
 subtest 'format + style + separator combinations' => sub {
 	is(
 		abbreviate('John Quincy Adams', {
-			format => 'initials',
-			style => 'last_first',
-			separator => '-'
+			format    => 'initials',
+			style     => 'last_first',
+			separator => '-',
 		}),
 		'A-J-Q-',
-		'all options combined'
+		'all options combined',
 	);
+
+	done_testing();
 };
 
 # --------------------------------------------------
@@ -235,17 +160,20 @@ subtest 'statelessness' => sub {
 	my $c = abbreviate('John Quincy Adams');
 
 	is($a, 'J. Q. Adams', 'first call correct');
-	is($b, 'JQA', 'second call correct');
+	is($b, 'JQA',         'second call correct');
 	is($c, 'J. Q. Adams', 'no state leakage');
+
+	done_testing();
 };
 
 # --------------------------------------------------
 # boundary: minimal substr behavior
 # --------------------------------------------------
 subtest 'substr boundary behavior' => sub {
-	is(abbreviate('A B C'), 'A. B. C', 'single-letter tokens');
+	is(abbreviate('A B C'),                       'A. B. C', 'single-letter tokens');
+	is(abbreviate('A B', { format => 'initials' }),'A.B.',    'single letters initials format');
 
-	is(abbreviate('A B', { format => 'initials' }), 'A.B.', 'single letters initials format');
+	done_testing();
 };
 
 done_testing();

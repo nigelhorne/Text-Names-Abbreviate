@@ -2,7 +2,20 @@ Revision history for Text-Names-Abbreviate
 
 0.03
 	[ Enhancements ]
+	- Extract _normalize_name and _extract_parts as private helpers
+	- Add Readonly constants for all format/style/separator magic strings
+	- Enforce encapsulation with Sub::Private on internal helpers
+	- Add full POD: LIMITATIONS, MESSAGES, FORMAL SPECIFICATION, PSEUDOCODE
+	- Add locale test suite (t/locales.t) with BAIL_OUT sanity, per-locale croak checks
+	[ Tests ]
 	- Latest test dashboard
+	- Remove hardcoded test count from t/30-basics.t
+	- Remove redundant Test::Exception from t/extended_tests.t
+	- Remove redundant Test::Deep from t/function.t
+	- Fix missing semicolon in t/extended_tests.t
+	[ Build ]
+	- Move Readonly to PREREQ_PM (used in module, not just tests)
+	- Add Sub::Private to PREREQ_PM
 
 0.02	Mon Apr 20 20:25:46 EDT 2026
 	Use Params::Get
