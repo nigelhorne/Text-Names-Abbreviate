@@ -245,9 +245,9 @@ pre details.mutant-details ul {
 </div><div class='summary'>
 <strong>Structural Coverage (Approximate)</strong><p>
 TER1 (Statement): 100.00%<br>
-TER2 (Branch): 97.37%<br>
+TER2 (Branch): 97.83%<br>
 TER3 (LCSAJ): 100.0% (13/13)<br>
-Approximate LCSAJ segments: 39<br>
+Approximate LCSAJ segments: 47<br>
 </div>
 
     <div class="legend">
@@ -292,322 +292,322 @@ Approximate LCSAJ segments: 39<br>
 	<pre>
 <span class="">    1: package Text::Names::Abbreviate;
 </span><span class="">    2: 
-</span><span class="">    3: # 0.03 - Extract private helpers, Readonly constants, full POD with formal spec, Sub::Private encapsulation
-</span><span class="">    4: 
-</span><span class="">    5: use strict;
-</span><span class="">    6: use warnings;
-</span><span class="">    7: use autodie qw(:all);
-</span><span class="">    8: use utf8;
-</span><span class="">    9: 
-</span><span class="">   10: use Carp;
-</span><span class="">   11: use Exporter &#39;import&#39;;
-</span><span class="">   12: use Params::Get 0.13;
-</span><span class="">   13: use Params::Validate::Strict 0.13;
-</span><span class="">   14: use Readonly;
+</span><span class="">    3: use strict;
+</span><span class="">    4: use warnings;
+</span><span class="">    5: use autodie qw(:all);
+</span><span class="">    6: use utf8;
+</span><span class="">    7: 
+</span><span class="">    8: use Carp;
+</span><span class="">    9: use Exporter &#39;import&#39;;
+</span><span class="">   10: use Params::Get 0.13;
+</span><span class="">   11: use Params::Validate::Strict 0.13;
+</span><span class="">   12: use Readonly;
+</span><span class="">   13: 
+</span><span class="">   14: our @EXPORT_OK = qw(abbreviate);
 </span><span class="">   15: 
-</span><span class="">   16: our @EXPORT_OK = qw(abbreviate);
+</span><span class="">   16: =head1 NAME
 </span><span class="">   17: 
-</span><span class="">   18: =head1 NAME
+</span><span class="">   18: Text::Names::Abbreviate - Create abbreviated name formats from full names
 </span><span class="">   19: 
-</span><span class="">   20: Text::Names::Abbreviate - Create abbreviated name formats from full names
+</span><span class="">   20: =head2 VERSION
 </span><span class="">   21: 
-</span><span class="">   22: =head2 VERSION
+</span><span class="">   22: Version 0.02
 </span><span class="">   23: 
-</span><span class="">   24: Version 0.03
+</span><span class="">   24: =cut
 </span><span class="">   25: 
-</span><span class="">   26: =cut
+</span><span class="">   26: our $VERSION = &#39;0.02&#39;;
 </span><span class="">   27: 
-</span><span class="">   28: our $VERSION = &#39;0.03&#39;;
-</span><span class="">   29: 
+</span><span class="">   28: # ---------------------------------------------------------------------------
+</span><span class="">   29: # Named constants -- eliminate magic strings throughout the logic
 </span><span class="">   30: # ---------------------------------------------------------------------------
-</span><span class="">   31: # Named constants -- eliminate magic strings throughout the logic
-</span><span class="">   32: # ---------------------------------------------------------------------------
-</span><span class="">   33: Readonly my $FMT_DEFAULT   =&gt; &#39;default&#39;;
-</span><span class="">   34: Readonly my $FMT_INITIALS  =&gt; &#39;initials&#39;;
-</span><span class="">   35: Readonly my $FMT_COMPACT   =&gt; &#39;compact&#39;;
-</span><span class="">   36: Readonly my $FMT_SHORTLAST =&gt; &#39;shortlast&#39;;
-</span><span class="">   37: Readonly my $STY_FIRST     =&gt; &#39;first_last&#39;;
-</span><span class="">   38: Readonly my $STY_LAST      =&gt; &#39;last_first&#39;;
-</span><span class="">   39: Readonly my $DEFAULT_SEP   =&gt; &#39;.&#39;;
-</span><span class="">   40: 
-</span><span class="">   41: # Single source of truth for parameter validation; also reflected in POD below.
-</span><span class="">   42: Readonly my %PARAM_SCHEMA =&gt; (
-</span><span class="">   43: 	name =&gt; {
-</span><span class="">   44: 		type     =&gt; &#39;string&#39;,
-</span><span class="">   45: 		min      =&gt; 1,
-</span><span class="">   46: 		optional =&gt; 0,
-</span><span class="">   47: 	},
-</span><span class="">   48: 	format =&gt; {
-</span><span class="">   49: 		type     =&gt; &#39;string&#39;,
-</span><span class="">   50: 		memberof =&gt; [ $FMT_DEFAULT, $FMT_INITIALS, $FMT_COMPACT, $FMT_SHORTLAST ],
-</span><span class="">   51: 		optional =&gt; 1,
-</span><span class="">   52: 	},
-</span><span class="">   53: 	style =&gt; {
-</span><span class="">   54: 		type     =&gt; &#39;string&#39;,
-</span><span class="">   55: 		memberof =&gt; [ $STY_FIRST, $STY_LAST ],
-</span><span class="">   56: 		optional =&gt; 1,
-</span><span class="">   57: 	},
-</span><span class="">   58: 	separator =&gt; {
-</span><span class="">   59: 		type     =&gt; &#39;string&#39;,
-</span><span class="">   60: 		optional =&gt; 1,
-</span><span class="">   61: 	},
-</span><span class="">   62: );
+</span><span class="">   31: Readonly my $FMT_DEFAULT   =&gt; &#39;default&#39;;
+</span><span class="">   32: Readonly my $FMT_INITIALS  =&gt; &#39;initials&#39;;
+</span><span class="">   33: Readonly my $FMT_COMPACT   =&gt; &#39;compact&#39;;
+</span><span class="">   34: Readonly my $FMT_SHORTLAST =&gt; &#39;shortlast&#39;;
+</span><span class="">   35: Readonly my $STY_FIRST     =&gt; &#39;first_last&#39;;
+</span><span class="">   36: Readonly my $STY_LAST      =&gt; &#39;last_first&#39;;
+</span><span class="">   37: Readonly my $DEFAULT_SEP   =&gt; &#39;.&#39;;
+</span><span class="">   38: 
+</span><span class="">   39: # Single source of truth for parameter validation; also reflected in POD below.
+</span><span class="">   40: Readonly my %PARAM_SCHEMA =&gt; (
+</span><span class="">   41: 	name =&gt; {
+</span><span class="">   42: 		type     =&gt; &#39;string&#39;,
+</span><span class="">   43: 		min      =&gt; 1,
+</span><span class="">   44: 		optional =&gt; 0,
+</span><span class="">   45: 	},
+</span><span class="">   46: 	format =&gt; {
+</span><span class="">   47: 		type     =&gt; &#39;string&#39;,
+</span><span class="">   48: 		memberof =&gt; [ $FMT_DEFAULT, $FMT_INITIALS, $FMT_COMPACT, $FMT_SHORTLAST ],
+</span><span class="">   49: 		optional =&gt; 1,
+</span><span class="">   50: 	},
+</span><span class="">   51: 	style =&gt; {
+</span><span class="">   52: 		type     =&gt; &#39;string&#39;,
+</span><span class="">   53: 		memberof =&gt; [ $STY_FIRST, $STY_LAST ],
+</span><span class="">   54: 		optional =&gt; 1,
+</span><span class="">   55: 	},
+</span><span class="">   56: 	separator =&gt; {
+</span><span class="">   57: 		type     =&gt; &#39;string&#39;,
+</span><span class="">   58: 		optional =&gt; 1,
+</span><span class="">   59: 	},
+</span><span class="">   60: );
+</span><span class="">   61: 
+</span><span class="">   62: =head1 SYNOPSIS
 </span><span class="">   63: 
-</span><span class="">   64: =head1 SYNOPSIS
+</span><span class="">   64:   use Text::Names::Abbreviate qw(abbreviate);
 </span><span class="">   65: 
-</span><span class="">   66:   use Text::Names::Abbreviate qw(abbreviate);
-</span><span class="">   67: 
-</span><span class="">   68:   say abbreviate(&#39;John Quincy Adams&#39;);                            # J. Q. Adams
-</span><span class="">   69:   say abbreviate(&#39;Adams, John Quincy&#39;);                          # J. Q. Adams
-</span><span class="">   70:   say abbreviate(&#39;George R R Martin&#39;, { format =&gt; &#39;initials&#39; }); # G.R.R.M.
+</span><span class="">   66:   say abbreviate(&#39;John Quincy Adams&#39;);                            # J. Q. Adams
+</span><span class="">   67:   say abbreviate(&#39;Adams, John Quincy&#39;);                          # J. Q. Adams
+</span><span class="">   68:   say abbreviate(&#39;George R R Martin&#39;, { format =&gt; &#39;initials&#39; }); # G.R.R.M.
+</span><span class="">   69: 
+</span><span class="">   70: =head1 DESCRIPTION
 </span><span class="">   71: 
-</span><span class="">   72: =head1 DESCRIPTION
-</span><span class="">   73: 
-</span><span class="">   74: This module provides simple abbreviation logic for full personal names with
-</span><span class="">   75: multiple formatting options and styles.  Input is expected to be a personal
-</span><span class="">   76: name consisting of one or more whitespace-separated components interpreted as:
+</span><span class="">   72: This module provides simple abbreviation logic for full personal names with
+</span><span class="">   73: multiple formatting options and styles.  Input is expected to be a personal
+</span><span class="">   74: name consisting of one or more whitespace-separated components interpreted as:
+</span><span class="">   75: 
+</span><span class="">   76:   First [Middle ...] Last
 </span><span class="">   77: 
-</span><span class="">   78:   First [Middle ...] Last
+</span><span class="">   78: Names consisting of a single component are returned unchanged.
 </span><span class="">   79: 
-</span><span class="">   80: Names consisting of a single component are returned unchanged.
+</span><span class="">   80: =head1 SUBROUTINES/METHODS
 </span><span class="">   81: 
-</span><span class="">   82: =head1 SUBROUTINES/METHODS
+</span><span class="">   82: =head2 abbreviate
 </span><span class="">   83: 
-</span><span class="">   84: =head2 abbreviate
+</span><span class="">   84: Produce an abbreviated form of a personal name.
 </span><span class="">   85: 
-</span><span class="">   86: Produce an abbreviated form of a personal name.
+</span><span class="">   86: =head3 Purpose
 </span><span class="">   87: 
-</span><span class="">   88: =head3 Purpose
-</span><span class="">   89: 
-</span><span class="">   90: Accept a full name in either C&lt;First Middle Last&gt; or C&lt;Last, First Middle&gt;
-</span><span class="">   91: form and return a formatted abbreviated string according to the requested
-</span><span class="">   92: C&lt;format&gt;, C&lt;style&gt;, and C&lt;separator&gt;.
+</span><span class="">   88: Accept a full name in either C&lt;First Middle Last&gt; or C&lt;Last, First Middle&gt;
+</span><span class="">   89: form and return a formatted abbreviated string according to the requested
+</span><span class="">   90: C&lt;format&gt;, C&lt;style&gt;, and C&lt;separator&gt;.
+</span><span class="">   91: 
+</span><span class="">   92: =head3 Args
 </span><span class="">   93: 
-</span><span class="">   94: =head3 Args
+</span><span class="">   94: =over 4
 </span><span class="">   95: 
-</span><span class="">   96: =over 4
+</span><span class="">   96: =item name (required)
 </span><span class="">   97: 
-</span><span class="">   98: =item name (required)
+</span><span class="">   98: Non-empty string.  Accepted in two forms:
 </span><span class="">   99: 
-</span><span class="">  100: Non-empty string.  Accepted in two forms:
+</span><span class="">  100: =over 4
 </span><span class="">  101: 
-</span><span class="">  102: =over 4
+</span><span class="">  102: =item C&lt;First [Middle ...] Last&gt;
 </span><span class="">  103: 
-</span><span class="">  104: =item C&lt;First [Middle ...] Last&gt;
+</span><span class="">  104: =item C&lt;Last, First [Middle ...]&gt;
 </span><span class="">  105: 
-</span><span class="">  106: =item C&lt;Last, First [Middle ...]&gt;
+</span><span class="">  106: =back
 </span><span class="">  107: 
-</span><span class="">  108: =back
-</span><span class="">  109: 
-</span><span class="">  110: A leading comma (C&lt;&quot;, John&quot;&gt;) signals that no last name is present; only
-</span><span class="">  111: initials are produced.
+</span><span class="">  108: A leading comma (C&lt;&quot;, John&quot;&gt;) signals that no last name is present; only
+</span><span class="">  109: initials are produced.
+</span><span class="">  110: 
+</span><span class="">  111: =item format (optional, default C&lt;default&gt;)
 </span><span class="">  112: 
-</span><span class="">  113: =item format (optional, default C&lt;default&gt;)
+</span><span class="">  113: One of C&lt;default&gt;, C&lt;initials&gt;, C&lt;compact&gt;, C&lt;shortlast&gt;.
 </span><span class="">  114: 
-</span><span class="">  115: One of C&lt;default&gt;, C&lt;initials&gt;, C&lt;compact&gt;, C&lt;shortlast&gt;.
+</span><span class="">  115: =over 4
 </span><span class="">  116: 
-</span><span class="">  117: =over 4
+</span><span class="">  117: =item C&lt;default&gt;   -- C&lt;J. Q. Adams&gt;
 </span><span class="">  118: 
-</span><span class="">  119: =item C&lt;default&gt;   -- C&lt;J. Q. Adams&gt;
+</span><span class="">  119: =item C&lt;initials&gt;  -- C&lt;J.Q.A.&gt;
 </span><span class="">  120: 
-</span><span class="">  121: =item C&lt;initials&gt;  -- C&lt;J.Q.A.&gt;
+</span><span class="">  121: =item C&lt;compact&gt;   -- C&lt;JQA&gt;
 </span><span class="">  122: 
-</span><span class="">  123: =item C&lt;compact&gt;   -- C&lt;JQA&gt;
-</span><span class="">  124: 
-</span><span class="">  125: =item C&lt;shortlast&gt; -- initials then full last name; ignores C&lt;last_first&gt; style.
-</span><span class="">  126: 
-</span><span class="">  127: =back
-</span><span class="">  128: 
-</span><span class="">  129: =item style (optional, default C&lt;first_last&gt;)
-</span><span class="">  130: 
-</span><span class="">  131: One of C&lt;first_last&gt;, C&lt;last_first&gt;.  Ignored by C&lt;shortlast&gt; format.
-</span><span class="">  132: 
-</span><span class="">  133: =item separator (optional, default C&lt;.&gt;)
-</span><span class="">  134: 
-</span><span class="">  135: String appended after each initial.  Empty string removes all punctuation.
-</span><span class="">  136: 
-</span><span class="">  137: =back
-</span><span class="">  138: 
-</span><span class="">  139: =head3 Returns
-</span><span class="">  140: 
-</span><span class="">  141: A plain string.  Returns C&lt;&#39;&#39;&gt; for inputs that normalise to nothing (e.g. a
-</span><span class="">  142: bare comma).
-</span><span class="">  143: 
-</span><span class="">  144: =head3 Side Effects
-</span><span class="">  145: 
-</span><span class="">  146: None.  The function is purely functional with no persistent state.
-</span><span class="">  147: 
-</span><span class="">  148: =head3 Usage
-</span><span class="">  149: 
-</span><span class="">  150:   # Positional
-</span><span class="">  151:   my $abbrev = abbreviate(&#39;John Quincy Adams&#39;);
-</span><span class="">  152: 
-</span><span class="">  153:   # Options hashref
-</span><span class="">  154:   my $abbrev = abbreviate(&#39;John Quincy Adams&#39;, {
-</span><span class="">  155:       format    =&gt; &#39;initials&#39;,
-</span><span class="">  156:       style     =&gt; &#39;last_first&#39;,
-</span><span class="">  157:       separator =&gt; &#39;-&#39;,
-</span><span class="">  158:   });
-</span><span class="">  159: 
-</span><span class="">  160: =head3 API SPECIFICATION
-</span><span class="">  161: 
-</span><span class="">  162:   INPUT
-</span><span class="">  163:   {
-</span><span class="">  164:     name      =&gt; { type =&gt; &#39;string&#39;, min =&gt; 1, optional =&gt; 0 },
-</span><span class="">  165:     format    =&gt; { type =&gt; &#39;string&#39;,
-</span><span class="">  166:                    memberof =&gt; [qw(default initials compact shortlast)],
-</span><span class="">  167:                    optional =&gt; 1 },
-</span><span class="">  168:     style     =&gt; { type =&gt; &#39;string&#39;,
-</span><span class="">  169:                    memberof =&gt; [qw(first_last last_first)],
-</span><span class="">  170:                    optional =&gt; 1 },
-</span><span class="">  171:     separator =&gt; { type =&gt; &#39;string&#39;, optional =&gt; 1 },
-</span><span class="">  172:   }
-</span><span class="">  173: 
-</span><span class="">  174:   OUTPUT
-</span><span class="">  175:   { type =&gt; &#39;string&#39; }    # croaks on argument error
-</span><span class="">  176: 
-</span><span class="">  177: =head3 MESSAGES
-</span><span class="">  178: 
-</span><span class="">  179:   Error                                    Meaning / Resolution
-</span><span class="">  180:   ---------------------------------------  -----------------------------------------------
-</span><span class="">  181:   name parameter missing or undefined      Called without a name argument; supply one.
-</span><span class="">  182:   name must be a non-empty string          Passed &#39;&#39; or undef; supply a non-empty string.
-</span><span class="">  183:   format must be one of: ...               Invalid format constant; see API SPECIFICATION.
-</span><span class="">  184:   style must be one of: ...               Invalid style constant; see API SPECIFICATION.
-</span><span class="">  185: 
-</span><span class="">  186: =head3 FORMAL SPECIFICATION
-</span><span class="">  187: 
-</span><span class="">  188:   Let Sigma* denote the set of all Unicode strings.
-</span><span class="">  189:   Let epsilon denote the empty string.
-</span><span class="">  190: 
-</span><span class="">  191:   Sigma+ = Sigma* \ {epsilon}
-</span><span class="">  192:   Format = {default, initials, compact, shortlast}
-</span><span class="">  193:   Style  = {first_last, last_first}
-</span><span class="">  194: 
-</span><span class="">  195:   collapse(s) -- replace runs of whitespace with a single space, then trim
-</span><span class="">  196: 
-</span><span class="">  197:   normalize : Sigma+ -&gt; Sigma* x Bool
-</span><span class="">  198:   normalize(n) =
-</span><span class="">  199:     let n1 = gsub(n, &quot;,,&quot;, &quot;,&quot;)
-</span><span class="">  200:     if &quot;,&quot; not-in n1 then (collapse(n1), false)
-</span><span class="">  201:     else
-</span><span class="">  202:       let (L, R) = split(n1, &quot;,&quot;, 2) each trimmed
-</span><span class="">  203:       case
-</span><span class="">  204:         L = epsilon ^ R != epsilon  -&gt;  (collapse(R), true)
-</span><span class="">  205:         L != epsilon ^ R != epsilon -&gt;  (collapse(R ++ &quot; &quot; ++ L), false)
-</span><span class="">  206:         L != epsilon ^ R = epsilon  -&gt;  (collapse(L), false)
-</span><span class="">  207:         L = epsilon ^ R = epsilon   -&gt;  (epsilon, false)
-</span><span class="">  208:       end
-</span><span class="">  209: 
-</span><span class="">  210:   extract : Sigma* x Bool x Format x Style -&gt; (seq Sigma) x Sigma*
-</span><span class="">  211:   extract(n, leading, fmt, sty) =
-</span><span class="">  212:     let ps = tokenize(n)    -- split on whitespace
-</span><span class="">  213:     if ps = [] then ([], epsilon)
-</span><span class="">  214:     else if leading then
-</span><span class="">  215:       ([ first(p) | p &lt;- ps ], epsilon)
-</span><span class="">  216:     else
-</span><span class="">  217:       let last  = ps[#ps]
-</span><span class="">  218:           inits = [ first(p) | p &lt;- ps[1..#ps-1] ]
-</span><span class="">  219:       if sty = last_first ^ fmt != default ^ last != epsilon
-</span><span class="">  220:         then ([first(last)] ++ inits, epsilon)
-</span><span class="">  221:         else (inits, last)
-</span><span class="">  222: 
-</span><span class="">  223:   abbreviate : Sigma+ x Format x Style x Sigma* -&gt; Sigma*
-</span><span class="">  224:   abbreviate = format_result . extract . normalize
-</span><span class="">  225: 
-</span><span class="">  226: =head3 PSEUDOCODE
-</span><span class="">  227: 
-</span><span class="">  228:   FUNCTION abbreviate(name, options):
-</span><span class="">  229:     1. Validate parameters via %PARAM_SCHEMA       (croak on violation)
-</span><span class="">  230:     2. Assign defaults: format=default, style=first_last, sep=&quot;.&quot;
-</span><span class="">  231:     3. _normalize_name(name):
-</span><span class="">  232:          - collapse consecutive commas
-</span><span class="">  233:          - detect and reorder &quot;Last, First&quot; form
-</span><span class="">  234:          - track $had_leading_comma (input had no last-name component)
-</span><span class="">  235:          - collapse internal whitespace; trim
-</span><span class="">  236:     4. Return &#39;&#39; if normalized name is empty
-</span><span class="">  237:     5. _extract_parts(name, had_leading_comma, format, style):
-</span><span class="">  238:          - tokenize on whitespace
-</span><span class="">  239:          - pop last token as $last_name (unless leading-comma form)
-</span><span class="">  240:          - build @initials from remaining tokens (first char each)
-</span><span class="">  241:          - if style=last_first and format!=default: unshift last initial, clear $last_name
-</span><span class="">  242:          - filter empty initials
-</span><span class="">  243:     6. Format result:
-</span><span class="">  244:          compact   -&gt; join(&#39;&#39;, @initials, first($last_name))
-</span><span class="">  245:          initials  -&gt; join($sep, @all_letters) . $sep
-</span><span class="">  246:          shortlast -&gt; join(&#39; &#39;, map {&quot;$_$sep&quot;} @initials) . &quot; $last_name&quot;
-</span><span class="">  247:          default   -&gt; joined initials; prepend/append $last_name per $style
-</span><span class="">  248: 
-</span><span class="">  249: =cut
-</span><span class="">  250: 
-</span><span class="">  251: # ---------------------------------------------------------------------------
-</span><span class="">  252: # Private helpers
-</span><span class="">  253: # ---------------------------------------------------------------------------
-</span><span class="">  254: 
-</span><span class="">  255: # Purpose:      Resolve &quot;Last, First&quot; and leading-comma forms into a canonical
-</span><span class="">  256: #               &quot;First ... Last&quot; string, collapsing all internal whitespace.
-</span><span class="">  257: # Entry Criteria: $raw is a defined, non-empty string (validated by the caller).
-</span><span class="">  258: # Exit Status:  Returns ($normalized, $had_leading_comma).  $normalized is
-</span><span class="">  259: #               whitespace-collapsed and trimmed.  $had_leading_comma is 1 when
-</span><span class="">  260: #               the original input began with a comma (no last-name component).
-</span><span class="">  261: # Side Effects: None.
-</span><span class="">  262: sub _normalize_name {
-</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">263 → 269 → 287</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">263 → 269 → 0</span></span>  263: 	my ($raw) = @_;
-</span><span class="">  264: 
-</span><span class="">  265: 	$raw =~ s/,,/,/g;    # collapse consecutive commas before splitting
-</span><span class="">  266: 
-</span><span class="">  267: 	my $had_leading_comma = 0;
-</span><span class="">  268: 
-</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  269: 	if ($raw =~ /,/) {
-</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  270: 		my ($last, $rest) = map { s/^\s+|\s+$//gr } split /\s*,\s*/, $raw, 2;
-</span><span class="">  271: 		$rest //= q{};
-</span><span class="">  272: 		$last //= q{};
-</span><span class="">  273: 
-</span><span class="">  274: 		$had_leading_comma = 1 if !length($last) &amp;&amp; length($rest);
-</span><span class="">  275: 
-</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  276: 		if (length($last) &amp;&amp; length($rest)) {
-</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  277: 			$raw = &quot;$rest $last&quot;;
-</span><span class="">  278: 		} elsif (length $rest) {
-</span><span class="">  279: 			$raw = $rest;
-</span><span class="">  280: 		} elsif (length $last) {
-</span><span class="">  281: 			$raw = $last;
-</span><span class="">  282: 		} else {
-</span><span class="">  283: 			return (q{}, 0);
-</span><span class="">  284: 		}
-</span><span class="">  285: 	}
-</span><span class="">  286: 
-</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">287 → 290 → 0</span></span>  287: 	$raw =~ s/^\s+|\s+$//g;
-</span><span class="">  288: 	$raw =~ s/\s+/ /g;
-</span><span class="">  289: 
-</span><span class="">  290: 	return ($raw, $had_leading_comma);
-</span><span class="">  291: }
-</span><span class="">  292: 
-</span><span class="">  293: # Purpose:      Derive the ordered list of initials and the preserved last name
-</span><span class="">  294: #               from a normalized name string, honouring format and style.
-</span><span class="">  295: # Entry Criteria: $name is output of _normalize_name (trimmed, single-spaced).
-</span><span class="">  296: #                 $had_leading_comma is the boolean from _normalize_name.
-</span><span class="">  297: #                 $format and $style are validated constants (FMT_*/STY_*).
-</span><span class="">  298: # Exit Status:  Returns ($initials_ref, $last_name).  $initials_ref is an
-</span><span class="">  299: #               arrayref of single-character strings with empty entries removed.
-</span><span class="">  300: #               $last_name is &#39;&#39; when consumed by style/format reordering.
-</span><span class="">  301: # Side Effects: None.
-</span><span class="">  302: sub _extract_parts {
-</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">303 → 310 → 324</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">303 → 310 → 0</span></span>  303: 	my ($name, $had_leading_comma, $format, $style) = @_;
-</span><span class="">  304: 
-</span><span class="">  305: 	my @parts = split /\s+/, $name;
-</span><span class="">  306: 	return ([], q{}) unless @parts;
-</span><span class="">  307: 
-</span><span class="">  308: 	my ($last_name, @initials);
-</span><span class="">  309: 
-</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  310: 	if ($had_leading_comma) {
-</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  311: 		$last_name = q{};
-</span><span class="">  312: 		@initials  = map { substr $_, 0, 1 } @parts;
-</span><span class="">  313: 	} else {
-</span><span class="">  314: 		$last_name = pop @parts;
-</span><span class="">  315: 		@initials  = map { substr $_, 0, 1 } @parts;
-</span><span class="">  316: 
-</span><span class="">  317: 		# last_first on non-default formats: last-name initial leads; last name discarded
-</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  318: 		if ($style eq $STY_LAST &amp;&amp; $format ne $FMT_DEFAULT &amp;&amp; length $last_name) {
+</span><span class="">  123: =item C&lt;shortlast&gt; -- initials then full last name; honours C&lt;last_first&gt; style
+</span><span class="">  124: (e.g. C&lt;Adams, J. Q.&gt;).
+</span><span class="">  125: 
+</span><span class="">  126: =back
+</span><span class="">  127: 
+</span><span class="">  128: =item style (optional, default C&lt;first_last&gt;)
+</span><span class="">  129: 
+</span><span class="">  130: One of C&lt;first_last&gt;, C&lt;last_first&gt;.  All formats honour this option.
+</span><span class="">  131: 
+</span><span class="">  132: =item separator (optional, default C&lt;.&gt;)
+</span><span class="">  133: 
+</span><span class="">  134: String appended after each initial.  Empty string removes all punctuation.
+</span><span class="">  135: 
+</span><span class="">  136: =back
+</span><span class="">  137: 
+</span><span class="">  138: =head3 Returns
+</span><span class="">  139: 
+</span><span class="">  140: A plain string.  Returns C&lt;&#39;&#39;&gt; for inputs that normalise to nothing (e.g. a
+</span><span class="">  141: bare comma).
+</span><span class="">  142: 
+</span><span class="">  143: =head3 Side Effects
+</span><span class="">  144: 
+</span><span class="">  145: None.  The function is purely functional with no persistent state.
+</span><span class="">  146: 
+</span><span class="">  147: =head3 Usage
+</span><span class="">  148: 
+</span><span class="">  149:   # Positional
+</span><span class="">  150:   my $abbrev = abbreviate(&#39;John Quincy Adams&#39;);
+</span><span class="">  151: 
+</span><span class="">  152:   # Options hashref
+</span><span class="">  153:   my $abbrev = abbreviate(&#39;John Quincy Adams&#39;, {
+</span><span class="">  154:       format    =&gt; &#39;initials&#39;,
+</span><span class="">  155:       style     =&gt; &#39;last_first&#39;,
+</span><span class="">  156:       separator =&gt; &#39;-&#39;,
+</span><span class="">  157:   });
+</span><span class="">  158: 
+</span><span class="">  159: =head3 API SPECIFICATION
+</span><span class="">  160: 
+</span><span class="">  161:   INPUT
+</span><span class="">  162:   {
+</span><span class="">  163:     name      =&gt; { type =&gt; &#39;string&#39;, min =&gt; 1, optional =&gt; 0 },
+</span><span class="">  164:     format    =&gt; { type =&gt; &#39;string&#39;,
+</span><span class="">  165:                    memberof =&gt; [qw(default initials compact shortlast)],
+</span><span class="">  166:                    optional =&gt; 1 },
+</span><span class="">  167:     style     =&gt; { type =&gt; &#39;string&#39;,
+</span><span class="">  168:                    memberof =&gt; [qw(first_last last_first)],
+</span><span class="">  169:                    optional =&gt; 1 },
+</span><span class="">  170:     separator =&gt; { type =&gt; &#39;string&#39;, optional =&gt; 1 },
+</span><span class="">  171:   }
+</span><span class="">  172: 
+</span><span class="">  173:   OUTPUT
+</span><span class="">  174:   { type =&gt; &#39;string&#39; }    # croaks on argument error
+</span><span class="">  175: 
+</span><span class="">  176: =head3 MESSAGES
+</span><span class="">  177: 
+</span><span class="">  178:   Error                                    Meaning / Resolution
+</span><span class="">  179:   ---------------------------------------  -----------------------------------------------
+</span><span class="">  180:   name parameter missing or undefined      Called without a name argument; supply one.
+</span><span class="">  181:   name must be a non-empty string          Passed &#39;&#39; or undef; supply a non-empty string.
+</span><span class="">  182:   format must be one of: ...               Invalid format constant; see API SPECIFICATION.
+</span><span class="">  183:   style must be one of: ...               Invalid style constant; see API SPECIFICATION.
+</span><span class="">  184: 
+</span><span class="">  185: =head3 FORMAL SPECIFICATION
+</span><span class="">  186: 
+</span><span class="">  187:   Let Sigma* denote the set of all Unicode strings.
+</span><span class="">  188:   Let epsilon denote the empty string.
+</span><span class="">  189: 
+</span><span class="">  190:   Sigma+ = Sigma* \ {epsilon}
+</span><span class="">  191:   Format = {default, initials, compact, shortlast}
+</span><span class="">  192:   Style  = {first_last, last_first}
+</span><span class="">  193: 
+</span><span class="">  194:   collapse(s) -- replace runs of whitespace with a single space, then trim
+</span><span class="">  195: 
+</span><span class="">  196:   normalize : Sigma+ -&gt; Sigma* x Bool
+</span><span class="">  197:   normalize(n) =
+</span><span class="">  198:     let n1 = gsub(n, &quot;,,&quot;, &quot;,&quot;)
+</span><span class="">  199:     if &quot;,&quot; not-in n1 then (collapse(n1), false)
+</span><span class="">  200:     else
+</span><span class="">  201:       let (L, R) = split(n1, &quot;,&quot;, 2) each trimmed
+</span><span class="">  202:       case
+</span><span class="">  203:         L = epsilon ^ R != epsilon  -&gt;  (collapse(R), true)
+</span><span class="">  204:         L != epsilon ^ R != epsilon -&gt;  (collapse(R ++ &quot; &quot; ++ L), false)
+</span><span class="">  205:         L != epsilon ^ R = epsilon  -&gt;  (collapse(L), false)
+</span><span class="">  206:         L = epsilon ^ R = epsilon   -&gt;  (epsilon, false)
+</span><span class="">  207:       end
+</span><span class="">  208: 
+</span><span class="">  209:   extract : Sigma* x Bool x Format x Style -&gt; (seq Sigma) x Sigma*
+</span><span class="">  210:   extract(n, leading, fmt, sty) =
+</span><span class="">  211:     let ps = tokenize(n)    -- split on whitespace
+</span><span class="">  212:     if ps = [] then ([], epsilon)
+</span><span class="">  213:     else if leading then
+</span><span class="">  214:       ([ first(p) | p &lt;- ps ], epsilon)
+</span><span class="">  215:     else
+</span><span class="">  216:       let last  = ps[#ps]
+</span><span class="">  217:           inits = [ first(p) | p &lt;- ps[1..#ps-1] ]
+</span><span class="">  218:       if sty = last_first ^ fmt != default ^ last != epsilon
+</span><span class="">  219:         then ([first(last)] ++ inits, epsilon)
+</span><span class="">  220:         else (inits, last)
+</span><span class="">  221: 
+</span><span class="">  222:   abbreviate : Sigma+ x Format x Style x Sigma* -&gt; Sigma*
+</span><span class="">  223:   abbreviate = format_result . extract . normalize
+</span><span class="">  224: 
+</span><span class="">  225: =head3 PSEUDOCODE
+</span><span class="">  226: 
+</span><span class="">  227:   FUNCTION abbreviate(name, options):
+</span><span class="">  228:     1. Validate parameters via %PARAM_SCHEMA       (croak on violation)
+</span><span class="">  229:     2. Assign defaults: format=default, style=first_last, sep=&quot;.&quot;
+</span><span class="">  230:     3. _normalize_name(name):
+</span><span class="">  231:          - collapse consecutive commas
+</span><span class="">  232:          - detect and reorder &quot;Last, First&quot; form
+</span><span class="">  233:          - track $had_leading_comma (input had no last-name component)
+</span><span class="">  234:          - collapse internal whitespace; trim
+</span><span class="">  235:     4. Return &#39;&#39; if normalized name is empty
+</span><span class="">  236:     5. _extract_parts(name, had_leading_comma, format, style):
+</span><span class="">  237:          - tokenize on whitespace
+</span><span class="">  238:          - pop last token as $last_name (unless leading-comma form)
+</span><span class="">  239:          - build @initials from remaining tokens (first char each)
+</span><span class="">  240:          - if style=last_first and format!=default: unshift last initial, clear $last_name
+</span><span class="">  241:          - filter empty initials
+</span><span class="">  242:     6. Format result:
+</span><span class="">  243:          compact   -&gt; join(&#39;&#39;, @initials, first($last_name))
+</span><span class="">  244:          initials  -&gt; join($sep, @all_letters) . $sep
+</span><span class="">  245:          shortlast -&gt; join(&#39; &#39;, map {&quot;$_$sep&quot;} @initials) . &quot; $last_name&quot;
+</span><span class="">  246:          default   -&gt; joined initials; prepend/append $last_name per $style
+</span><span class="">  247: 
+</span><span class="">  248: =cut
+</span><span class="">  249: 
+</span><span class="">  250: # ---------------------------------------------------------------------------
+</span><span class="">  251: # Private helpers
+</span><span class="">  252: # ---------------------------------------------------------------------------
+</span><span class="">  253: 
+</span><span class="">  254: # Purpose:      Resolve &quot;Last, First&quot; and leading-comma forms into a canonical
+</span><span class="">  255: #               &quot;First ... Last&quot; string, collapsing all internal whitespace.
+</span><span class="">  256: # Entry Criteria: $raw is a defined, non-empty string (validated by the caller).
+</span><span class="">  257: # Exit Status:  Returns ($normalized, $had_leading_comma).  $normalized is
+</span><span class="">  258: #               whitespace-collapsed and trimmed.  $had_leading_comma is 1 when
+</span><span class="">  259: #               the original input began with a comma (no last-name component).
+</span><span class="">  260: # Side Effects: None.
+</span><span class="">  261: sub _normalize_name {
+</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">262 → 268 → 286</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">262 → 268 → 0</span></span>  262: 	my ($raw) = @_;
+</span><span class="">  263: 
+</span><span class="">  264: 	$raw =~ s/,,/,/g;    # collapse consecutive commas before splitting
+</span><span class="">  265: 
+</span><span class="">  266: 	my $had_leading_comma = 0;
+</span><span class="">  267: 
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  268: 	if ($raw =~ /,/) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  269: 		my ($last, $rest) = map { s/^\s+|\s+$//gr } split /\s*,\s*/, $raw, 2;
+</span><span class="">  270: 		$rest //= q{};
+</span><span class="">  271: 		$last //= q{};
+</span><span class="">  272: 
+</span><span class="">  273: 		$had_leading_comma = 1 if !length($last) &amp;&amp; length($rest);
+</span><span class="">  274: 
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  275: 		if (length($last) &amp;&amp; length($rest)) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  276: 			$raw = &quot;$rest $last&quot;;
+</span><span class="">  277: 		} elsif (length $rest) {
+</span><span class="">  278: 			$raw = $rest;
+</span><span class="">  279: 		} elsif (length $last) {
+</span><span class="">  280: 			$raw = $last;
+</span><span class="">  281: 		} else {
+</span><span class="">  282: 			return (q{}, 0);
+</span><span class="">  283: 		}
+</span><span class="">  284: 	}
+</span><span class="">  285: 
+</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">286 → 289 → 0</span></span>  286: 	$raw =~ s/^\s+|\s+$//g;
+</span><span class="">  287: 	$raw =~ s/\s+/ /g;
+</span><span class="">  288: 
+</span><span class="">  289: 	return ($raw, $had_leading_comma);
+</span><span class="">  290: }
+</span><span class="">  291: 
+</span><span class="">  292: # Purpose:      Derive the ordered list of initials and the preserved last name
+</span><span class="">  293: #               from a normalized name string, honouring format and style.
+</span><span class="">  294: # Entry Criteria: $name is output of _normalize_name (trimmed, single-spaced).
+</span><span class="">  295: #                 $had_leading_comma is the boolean from _normalize_name.
+</span><span class="">  296: #                 $format and $style are validated constants (FMT_*/STY_*).
+</span><span class="">  297: # Exit Status:  Returns ($initials_ref, $last_name).  $initials_ref is an
+</span><span class="">  298: #               arrayref of single-character strings with empty entries removed.
+</span><span class="">  299: #               $last_name is &#39;&#39; when consumed by style/format reordering.
+</span><span class="">  300: # Side Effects: None.
+</span><span class="">  301: sub _extract_parts {
+</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">302 → 309 → 324</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">302 → 309 → 0</span></span>  302: 	my ($name, $had_leading_comma, $format, $style) = @_;
+</span><span class="">  303: 
+</span><span class="">  304: 	my @parts = split /\s+/, $name;
+</span><span class="">  305: 	return ([], q{}) unless @parts;
+</span><span class="">  306: 
+</span><span class="">  307: 	my ($last_name, @initials);
+</span><span class="">  308: 
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  309: 	if ($had_leading_comma) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  310: 		$last_name = q{};
+</span><span class="">  311: 		@initials  = map { substr $_, 0, 1 } @parts;
+</span><span class="">  312: 	} else {
+</span><span class="">  313: 		$last_name = pop @parts;
+</span><span class="">  314: 		@initials  = map { substr $_, 0, 1 } @parts;
+</span><span class="">  315: 
+</span><span class="">  316: 		# last_first on non-default formats (except shortlast, which keeps the full last name):
+</span><span class="">  317: 		# move the last-name initial to the front and discard the full last name
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  318: 		if ($style eq $STY_LAST &amp;&amp; $format ne $FMT_DEFAULT &amp;&amp; $format ne $FMT_SHORTLAST &amp;&amp; length $last_name) {
 </span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  319: 			unshift @initials, substr $last_name, 0, 1;
 </span><span class="">  320: 			$last_name = q{};
 </span><span class="">  321: 		}
@@ -651,46 +651,52 @@ Approximate LCSAJ segments: 39<br>
 </span><span class="">  359: 		return join($sep, @letters) . $sep;
 </span><span class="">  360: 	}
 </span><span class="">  361: 
-</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic."><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">362 → 362 → 369</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">362 → 362 → 0</span></span>  362: 	if ($format eq $FMT_SHORTLAST) {
-</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  363: 		return @{$initials}
-</span><span class="">  364: 			? join(&#39; &#39;, map { $_ . $sep } @{$initials}) . &quot; $last_name&quot;
-</span><span class="">  365: 			: $last_name;
-</span><span class="">  366: 	}
-</span><span class="">  367: 
-</span><span class="">  368: 	# default format
-</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic."><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">369 → 371 → 0</span></span>  369: 	return $last_name unless @{$initials};
-</span><p> <b> Mutants (Total: 2, Killed: 2, Survived: 0)</b><p><span class="">  370: 	my $joined = join &#39; &#39;, map { $_ . $sep } @{$initials};
-</span><span class="">  371: 	return ($style eq $STY_LAST &amp;&amp; length $last_name)
-</span><span class="">  372: 		? &quot;$last_name, $joined&quot;
-</span><span class="">  373: 		: ($last_name ? &quot;$joined $last_name&quot; : $joined);
-</span><span class="">  374: }
-</span><span class="">  375: 
-</span><span class="">  376: 1;
-</span><span class="">  377: 
-</span><span class="">  378: __END__
+</span><span class="survived-1 tooltip" data-tooltip="Mutation survived. Add targeted tests to validate this branch."><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">362 → 362 → 373</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">362 → 362 → 0</span></span>  362: 	if ($format eq $FMT_SHORTLAST) {
+</span>
+					<details class="mutant-details">
+					<summary>Mutants (Total: 1, Killed: 0, Survived: 1)</summary>
+					<ul>
+				<li><b>COND_INV_362_2: Invert condition if to unless</b><br>MEDIUM: Add tests asserting both true and false outcomes
+</li></ul></details>
+<span class="">  363: 		my $joined = @{$initials} ? join(&#39; &#39;, map { $_ . $sep } @{$initials}) : q{};
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  364: 		if ($style eq $STY_LAST &amp;&amp; length $last_name) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  365: 			return length($joined) ? &quot;$last_name, $joined&quot; : $last_name;
+</span><span class="">  366: 		}
+</span><span class="">  367: 		return length($joined)
+</span><span class="">  368: 			? (length($last_name) ? &quot;$joined $last_name&quot; : $joined)
+</span><span class="">  369: 			: $last_name;
+</span><span class="">  370: 	}
+</span><span class="">  371: 
+</span><span class="">  372: 	# default format
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic."><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">373 → 375 → 0</span></span>  373: 	return $last_name unless @{$initials};
+</span><p> <b> Mutants (Total: 2, Killed: 2, Survived: 0)</b><p><span class="">  374: 	my $joined = join &#39; &#39;, map { $_ . $sep } @{$initials};
+</span><span class="">  375: 	return ($style eq $STY_LAST &amp;&amp; length $last_name)
+</span><span class="">  376: 		? &quot;$last_name, $joined&quot;
+</span><span class="">  377: 		: ($last_name ? &quot;$joined $last_name&quot; : $joined);
+</span><span class="">  378: }
 </span><span class="">  379: 
-</span><span class="">  380: =head1 LIMITATIONS
+</span><span class="">  380: 1;
 </span><span class="">  381: 
-</span><span class="">  382: =over 4
+</span><span class="">  382: __END__
 </span><span class="">  383: 
-</span><span class="">  384: =item *
+</span><span class="">  384: =head1 LIMITATIONS
 </span><span class="">  385: 
-</span><span class="">  386: Honorifics (C&lt;Dr.&gt;, C&lt;Prof.&gt;) and suffixes (C&lt;Jr.&gt;, C&lt;III&gt;) are not
-</span><span class="">  387: detected or stripped; they are treated as name components.
-</span><span class="">  388: 
-</span><span class="">  389: =item *
-</span><span class="">  390: 
-</span><span class="">  391: Initials are taken verbatim from the first character of each token.
-</span><span class="">  392: Non-alphabetic leading characters (digits, punctuation) are included as-is.
-</span><span class="">  393: 
-</span><span class="">  394: =item *
-</span><span class="">  395: 
-</span><span class="">  396: Multiple consecutive commas collapse to a single comma before parsing.
-</span><span class="">  397: Names with two legitimate comma-separated clauses are not supported.
-</span><span class="">  398: 
-</span><span class="">  399: =item *
-</span><span class="">  400: 
-</span><span class="">  401: The C&lt;shortlast&gt; format does not honour the C&lt;last_first&gt; style option.
+</span><span class="">  386: =over 4
+</span><span class="">  387: 
+</span><span class="">  388: =item *
+</span><span class="">  389: 
+</span><span class="">  390: Honorifics (C&lt;Dr.&gt;, C&lt;Prof.&gt;) and suffixes (C&lt;Jr.&gt;, C&lt;III&gt;) are not
+</span><span class="">  391: detected or stripped; they are treated as name components.
+</span><span class="">  392: 
+</span><span class="">  393: =item *
+</span><span class="">  394: 
+</span><span class="">  395: Initials are taken verbatim from the first character of each token.
+</span><span class="">  396: Non-alphabetic leading characters (digits, punctuation) are included as-is.
+</span><span class="">  397: 
+</span><span class="">  398: =item *
+</span><span class="">  399: 
+</span><span class="">  400: Multiple consecutive commas collapse to a single comma before parsing.
+</span><span class="">  401: Names with two legitimate comma-separated clauses are not supported.
 </span><span class="">  402: 
 </span><span class="">  403: =item *
 </span><span class="">  404: 
