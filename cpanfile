@@ -4,7 +4,7 @@ requires 'perl', '5.008';
 
 requires 'Carp';
 requires 'Params::Get', '0.13';
-requires 'Params::Validate::Strict', '0.13';
+requires 'Params::Validate::Strict', '0.34';
 
 on 'test' => sub {
 	requires 'Class::Simple';

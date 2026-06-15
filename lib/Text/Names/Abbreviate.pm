@@ -6,7 +6,7 @@ use warnings;
 use Carp;
 use Exporter 'import';
 use Params::Get 0.13;
-use Params::Validate::Strict 0.13;
+use Params::Validate::Strict 0.34;
 
 our @EXPORT_OK = qw(abbreviate);
 

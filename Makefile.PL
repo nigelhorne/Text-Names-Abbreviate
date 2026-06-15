@@ -18,7 +18,7 @@ WriteMakefile(
 	PREREQ_PM => {
 		'Carp' => 0,
 		'Params::Get' => 0.13,
-		'Params::Validate::Strict' => 0.13
+		'Params::Validate::Strict' => 0.34
 	}, TEST_REQUIRES => {
 		'autodie' => 0,
 		'Class::Simple' => 0,
