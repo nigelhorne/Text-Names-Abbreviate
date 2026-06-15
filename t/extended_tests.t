@@ -65,8 +65,8 @@ subtest 'shortlast format coverage' => sub {
 
 	is(
 		abbreviate(', John Quincy', { format => 'shortlast' }),
-		'J. Q. ',
-		'no last name but initials exist',
+		'J. Q.',
+		'no last name but initials exist (no trailing space)',
 	);
 
 	done_testing();
@@ -79,13 +79,25 @@ subtest 'last_first with non-default formats' => sub {
 	is(
 		abbreviate('John Quincy Adams', { format => 'initials', style => 'last_first' }),
 		'A.J.Q.',
-		'last initial moved to front',
+		'last initial moved to front in initials',
 	);
 
 	is(
 		abbreviate('John Quincy Adams', { format => 'compact', style => 'last_first' }),
 		'AJQ',
 		'compact last_first ordering',
+	);
+
+	is(
+		abbreviate('John Quincy Adams', { format => 'shortlast', style => 'last_first' }),
+		'Adams, J. Q.',
+		'shortlast last_first: full last name first',
+	);
+
+	is(
+		abbreviate('Madonna', { format => 'shortlast', style => 'last_first' }),
+		'Madonna',
+		'shortlast last_first single name unchanged',
 	);
 
 	done_testing();

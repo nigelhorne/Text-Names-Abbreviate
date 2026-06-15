@@ -1,7 +1,5 @@
 package Text::Names::Abbreviate;
 
-# 0.03 - Extract private helpers, Readonly constants, full POD with formal spec, Sub::Private encapsulation
-
 use strict;
 use warnings;
 use autodie qw(:all);
@@ -21,11 +19,11 @@ Text::Names::Abbreviate - Create abbreviated name formats from full names
 
 =head2 VERSION
 
-Version 0.03
+Version 0.02
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.02';
 
 # ---------------------------------------------------------------------------
 # Named constants -- eliminate magic strings throughout the logic
@@ -122,13 +120,14 @@ One of C<default>, C<initials>, C<compact>, C<shortlast>.
 
 =item C<compact>   -- C<JQA>
 
-=item C<shortlast> -- initials then full last name; ignores C<last_first> style.
+=item C<shortlast> -- initials then full last name; honours C<last_first> style
+(e.g. C<Adams, J. Q.>).
 
 =back
 
 =item style (optional, default C<first_last>)
 
-One of C<first_last>, C<last_first>.  Ignored by C<shortlast> format.
+One of C<first_last>, C<last_first>.  All formats honour this option.
 
 =item separator (optional, default C<.>)
 
@@ -314,8 +313,9 @@ sub _extract_parts {
 		$last_name = pop @parts;
 		@initials  = map { substr $_, 0, 1 } @parts;
 
-		# last_first on non-default formats: last-name initial leads; last name discarded
-		if ($style eq $STY_LAST && $format ne $FMT_DEFAULT && length $last_name) {
+		# last_first on non-default formats (except shortlast, which keeps the full last name):
+		# move the last-name initial to the front and discard the full last name
+		if ($style eq $STY_LAST && $format ne $FMT_DEFAULT && $format ne $FMT_SHORTLAST && length $last_name) {
 			unshift @initials, substr $last_name, 0, 1;
 			$last_name = q{};
 		}
@@ -360,8 +360,12 @@ sub abbreviate {
 	}
 
 	if ($format eq $FMT_SHORTLAST) {
-		return @{$initials}
-			? join(' ', map { $_ . $sep } @{$initials}) . " $last_name"
+		my $joined = @{$initials} ? join(' ', map { $_ . $sep } @{$initials}) : q{};
+		if ($style eq $STY_LAST && length $last_name) {
+			return length($joined) ? "$last_name, $joined" : $last_name;
+		}
+		return length($joined)
+			? (length($last_name) ? "$joined $last_name" : $joined)
 			: $last_name;
 	}
 
@@ -395,10 +399,6 @@ Non-alphabetic leading characters (digits, punctuation) are included as-is.
 
 Multiple consecutive commas collapse to a single comma before parsing.
 Names with two legitimate comma-separated clauses are not supported.
-
-=item *
-
-The C<shortlast> format does not honour the C<last_first> style option.
 
 =item *
 
