@@ -5,6 +5,7 @@ requires 'perl', '5.008';
 requires 'Carp';
 requires 'Params::Get', '0.13';
 requires 'Params::Validate::Strict', '0.34';
+requires 'Readonly';
 
 on 'test' => sub {
 	requires 'Class::Simple';
@@ -15,8 +16,8 @@ on 'test' => sub {
 	requires 'IPC::System::Simple';
 	requires 'JSON::MaybeXS';
 	requires 'POSIX';
-	requires 'Readonly';
 	requires 'Test::DescribeMe';
+	requires 'Test::Memory::Cycle';
 	requires 'Test::Most';
 	requires 'Test::Needs';
 	requires 'Test::Returns';

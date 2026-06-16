@@ -31,6 +31,7 @@ WriteMakefile(
 		'JSON::MaybeXS' => 0,
 		'POSIX' => 0,
 		'Test::DescribeMe' => 0,
+		'Test::Memory::Cycle' => 0,
 		'Test::Most' => 0,
 		'Test::Needs' => 0,
 		'Test::Returns' => 0,
