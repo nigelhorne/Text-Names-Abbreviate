@@ -487,7 +487,7 @@ Approximate LCSAJ segments: 47<br>
 </span><span class="">  195: 
 </span><span class="">  196:   normalize : Sigma+ -&gt; Sigma* x Bool
 </span><span class="">  197:   normalize(n) =
-</span><span class="">  198:     let n1 = gsub(n, &quot;,,&quot;, &quot;,&quot;)
+</span><span class="">  198:     let n1 = gsub(n, &quot;,+&quot;, &quot;,&quot;)
 </span><span class="">  199:     if &quot;,&quot; not-in n1 then (collapse(n1), false)
 </span><span class="">  200:     else
 </span><span class="">  201:       let (L, R) = split(n1, &quot;,&quot;, 2) each trimmed
@@ -553,7 +553,7 @@ Approximate LCSAJ segments: 47<br>
 </span><span class="">  261: sub _normalize_name {
 </span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">262 → 268 → 286</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">262 → 268 → 0</span></span>  262: 	my ($raw) = @_;
 </span><span class="">  263: 
-</span><span class="">  264: 	$raw =~ s/,,/,/g;    # collapse consecutive commas before splitting
+</span><span class="">  264: 	$raw =~ s/,+/,/g;    # collapse any run of commas to one before splitting
 </span><span class="">  265: 
 </span><span class="">  266: 	my $had_leading_comma = 0;
 </span><span class="">  267: 
