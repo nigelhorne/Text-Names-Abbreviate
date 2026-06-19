@@ -195,7 +195,7 @@ None.  The function is purely functional with no persistent state.
 
   normalize : Sigma+ -> Sigma* x Bool
   normalize(n) =
-    let n1 = gsub(n, ",,", ",")
+    let n1 = gsub(n, ",+", ",")
     if "," not-in n1 then (collapse(n1), false)
     else
       let (L, R) = split(n1, ",", 2) each trimmed
@@ -261,7 +261,7 @@ None.  The function is purely functional with no persistent state.
 sub _normalize_name {
 	my ($raw) = @_;
 
-	$raw =~ s/,,/,/g;    # collapse consecutive commas before splitting
+	$raw =~ s/,+/,/g;    # collapse any run of commas to one before splitting
 
 	my $had_leading_comma = 0;
 
