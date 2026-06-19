@@ -94,11 +94,26 @@ subtest '_normalize_name: bare comma returns empty string' => sub {
 };
 
 subtest '_normalize_name: consecutive commas collapse before parsing' => sub {
-	# Strategy: the s/,,/,/g guard prevents the split from creating
-	# a spurious empty middle segment.
+	# Strategy: s/,+/,/g (not the original s/,,/,/g) collapses any run of
+	# commas in one left-to-right pass, including odd-length runs of 3+.
 	my ($name, $had) = $normalize->('Adams,,John');
-	is($name, 'John Adams', 'consecutive commas reduced then reordered');
+	is($name, 'John Adams', 'double comma reduced then reordered');
 	is($had,  0,            'not a leading-comma form');
+
+	# 3 commas — original s/,,/,/g would have left 2 commas after one pass.
+	($name, $had) = $normalize->('Adams,,,John');
+	is($name, 'John Adams', '3 commas collapsed to 1 then reordered');
+	is($had,  0,            'not a leading-comma form (3 commas)');
+
+	# Leading triple comma — collapses to single leading comma.
+	($name, $had) = $normalize->(',,,John');
+	is($name, 'John', '3 leading commas → rest extracted');
+	is($had,  1,      'had_leading_comma is 1 (leading triple comma)');
+
+	# Trailing triple comma — collapses to trailing comma → just last name.
+	($name, $had) = $normalize->('Adams,,,');
+	is($name, 'Adams', '3 trailing commas → last name only');
+	is($had,  0,       'not a leading-comma form (trailing commas)');
 
 	done_testing();
 };
@@ -150,6 +165,23 @@ subtest '_extract_parts: last_first reordering for initials and compact' => sub 
 		my ($inits, $last) = $extract->('John Quincy Adams', 0, $fmt, 'last_first');
 		is_deeply($inits, ['A', 'J', 'Q'], "last initial first for format=$fmt");
 		is($last, '',                       "last_name cleared for format=$fmt");
+	}
+	done_testing();
+};
+
+subtest '_extract_parts: last_first reorder for single-token input (compact/initials)' => sub {
+	# Strategy: a single token is popped as last_name; @initials starts empty.
+	# The reorder condition is still true (length $last_name > 0), so
+	# unshift moves 'M' onto @initials and clears last_name.
+	# This covers the path: @initials=[] before reorder, ['M'] after.
+	#
+	# Note: the `&& length $last_name` sub-condition in the reorder guard is
+	# always true in this (non-leading-comma) branch since pop from a non-empty
+	# split never yields ''.  It is a defensive dead-code guard.
+	for my $fmt (qw(initials compact)) {
+		my ($inits, $last) = $extract->('Madonna', 0, $fmt, 'last_first');
+		is_deeply($inits, ['M'], "single-token $fmt/last_first: initials=['M']");
+		is($last,          '',   "single-token $fmt/last_first: last_name cleared");
 	}
 	done_testing();
 };

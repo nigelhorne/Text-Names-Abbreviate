@@ -134,6 +134,13 @@ subtest 'initials format: last_first style moves last initial to front' => sub {
 		'A.J.',
 		'two-part last_first initials',
 	);
+	# Single name: _extract_parts reorder clears last_name; formatter sees
+	# @initials=['M'], last_name='' → push skipped → result 'M.'
+	is(
+		abbreviate($SINGLE, { format => 'initials', style => 'last_first' }),
+		'M.',
+		'single name last_first initials: "M." (reorder clears last_name)',
+	);
 	done_testing();
 };
 
