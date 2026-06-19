@@ -184,6 +184,13 @@ subtest 'compact format: last_first style' => sub {
 		'AJ',
 		'two-part compact last_first',
 	);
+	# Single name: _extract_parts reorder clears last_name; formatter sees
+	# @initials=['M'], last_name='' → (length '' ? ... : ()) is empty → 'M'
+	is(
+		abbreviate($SINGLE, { format => 'compact', style => 'last_first' }),
+		'M',
+		'single name compact last_first: "M" (reorder clears last_name)',
+	);
 	done_testing();
 };
 
