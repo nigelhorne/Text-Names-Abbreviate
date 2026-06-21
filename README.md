@@ -4,7 +4,7 @@ Text::Names::Abbreviate - Create abbreviated name formats from full names
 
 ## VERSION
 
-Version 0.02
+Version 0.03
 
 # SYNOPSIS
 

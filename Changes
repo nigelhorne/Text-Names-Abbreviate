@@ -1,6 +1,6 @@
 Revision history for Text-Names-Abbreviate
 
-0.03
+0.03	Sun Jun 21 07:08:25 EDT 2026
 	[ Enhancements ]
 	- Extract _normalize_name and _extract_parts as private helpers
 	- Add Readonly constants for all format/style/separator magic strings
