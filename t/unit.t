@@ -560,13 +560,18 @@ subtest 'global state: $! (errno) not clobbered' => sub {
 
 subtest 'global state: alarm not cancelled by abbreviate' => sub {
 	# abbreviate must not call alarm(0) or otherwise disturb a pending timer.
-	{
-		local $SIG{ALRM} = sub { die "ALRM\n" };    # safety net in case timer fires
-		alarm(60);
-		abbreviate($FULL_NAME);
-		my $remaining = alarm(0);    # cancel and retrieve remaining time
-		cmp_ok($remaining, '>', 0, 'alarm still pending after abbreviate');
-	}
+	# alarm() is not reliably implemented on Windows Perl (no native SIGALRM):
+	# alarm(60) is a silent no-op there, so alarm(0) always reports 0 remaining
+	# regardless of what abbreviate does.  Skip on that platform; this is a
+	# test-portability limitation, not something abbreviate can be blamed for.
+	plan skip_all => 'alarm() is not reliably supported on Windows Perl'
+		if $^O eq 'MSWin32';
+
+	local $SIG{ALRM} = sub { die "ALRM\n" };    # safety net in case timer fires
+	alarm(60);
+	abbreviate($FULL_NAME);
+	my $remaining = alarm(0);    # cancel and retrieve remaining time
+	cmp_ok($remaining, '>', 0, 'alarm still pending after abbreviate');
 	done_testing();
 };
 

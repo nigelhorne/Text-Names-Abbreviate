@@ -374,7 +374,7 @@ sub abbreviate {
 	my $joined = join ' ', map { $_ . $sep } @{$initials};
 	return ($style eq $STY_LAST && length $last_name)
 		? "$last_name, $joined"
-		: ($last_name ? "$joined $last_name" : $joined);
+		: (length $last_name ? "$joined $last_name" : $joined);
 }
 
 1;
