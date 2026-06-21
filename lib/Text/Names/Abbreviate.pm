@@ -182,64 +182,24 @@ None.  The function is purely functional with no persistent state.
   format must be one of: ...               Invalid format constant; see API SPECIFICATION.
   style must be one of: ...               Invalid style constant; see API SPECIFICATION.
 
-=head3 FORMAL SPECIFICATION
-
-  Let Sigma* denote the set of all Unicode strings.
-  Let epsilon denote the empty string.
-
-  Sigma+ = Sigma* \ {epsilon}
-  Format = {default, initials, compact, shortlast}
-  Style  = {first_last, last_first}
-
-  collapse(s) -- replace runs of whitespace with a single space, then trim
-
-  normalize : Sigma+ -> Sigma* x Bool
-  normalize(n) =
-    let n1 = gsub(n, ",+", ",")
-    if "," not-in n1 then (collapse(n1), false)
-    else
-      let (L, R) = split(n1, ",", 2) each trimmed
-      case
-        L = epsilon ^ R != epsilon  ->  (collapse(R), true)
-        L != epsilon ^ R != epsilon ->  (collapse(R ++ " " ++ L), false)
-        L != epsilon ^ R = epsilon  ->  (collapse(L), false)
-        L = epsilon ^ R = epsilon   ->  (epsilon, false)
-      end
-
-  extract : Sigma* x Bool x Format x Style -> (seq Sigma) x Sigma*
-  extract(n, leading, fmt, sty) =
-    let ps = tokenize(n)    -- split on whitespace
-    if ps = [] then ([], epsilon)
-    else if leading then
-      ([ first(p) | p <- ps ], epsilon)
-    else
-      let last  = ps[#ps]
-          inits = [ first(p) | p <- ps[1..#ps-1] ]
-      if sty = last_first ^ fmt != default ^ last != epsilon
-        then ([first(last)] ++ inits, epsilon)
-        else (inits, last)
-
-  abbreviate : Sigma+ x Format x Style x Sigma* -> Sigma*
-  abbreviate = format_result . extract . normalize
-
 =head3 PSEUDOCODE
 
   FUNCTION abbreviate(name, options):
-    1. Validate parameters via %PARAM_SCHEMA       (croak on violation)
-    2. Assign defaults: format=default, style=first_last, sep="."
-    3. _normalize_name(name):
+     Validate parameters via %PARAM_SCHEMA       (croak on violation)
+     Assign defaults: format=default, style=first_last, sep="."
+     _normalize_name(name):
          - collapse consecutive commas
          - detect and reorder "Last, First" form
          - track $had_leading_comma (input had no last-name component)
          - collapse internal whitespace; trim
-    4. Return '' if normalized name is empty
-    5. _extract_parts(name, had_leading_comma, format, style):
+     Return '' if normalized name is empty
+     _extract_parts(name, had_leading_comma, format, style):
          - tokenize on whitespace
          - pop last token as $last_name (unless leading-comma form)
          - build @initials from remaining tokens (first char each)
          - if style=last_first and format!=default: unshift last initial, clear $last_name
          - filter empty initials
-    6. Format result:
+     Format result:
          compact   -> join('', @initials, first($last_name))
          initials  -> join($sep, @all_letters) . $sep
          shortlast -> join(' ', map {"$_$sep"} @initials) . " $last_name"
@@ -420,6 +380,14 @@ L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Text-Names-Abbreviate>.
 
 L<https://github.com/nigelhorne/Text-Names-Abbreviate>
 
+=head1 SEE ALSO
+
+=over 4
+
+=item * L<Test Dashboard|https://nigelhorne.github.io/Text-Names-Abbreviate/coverage/>
+
+=back
+
 =head1 SUPPORT
 
 This module is provided as-is without any warranty.
@@ -435,6 +403,48 @@ This module is provided as-is without any warranty.
 =item * CPAN Testers: L<http://matrix.cpantesters.org/?dist=Text-Names-Abbreviate>
 
 =back
+
+=head1 FORMAL SPECIFICATION
+
+=head2 abbreviate
+
+  Let Sigma* denote the set of all Unicode strings.
+  Let epsilon denote the empty string.
+
+  Sigma+ = Sigma* \ {epsilon}
+  Format = {default, initials, compact, shortlast}
+  Style  = {first_last, last_first}
+
+  collapse(s) -- replace runs of whitespace with a single space, then trim
+
+  normalize : Sigma+ -> Sigma* x Bool
+  normalize(n) =
+    let n1 = gsub(n, ",+", ",")
+    if "," not-in n1 then (collapse(n1), false)
+    else
+      let (L, R) = split(n1, ",", 2) each trimmed
+      case
+        L = epsilon ^ R != epsilon  ->  (collapse(R), true)
+        L != epsilon ^ R != epsilon ->  (collapse(R ++ " " ++ L), false)
+        L != epsilon ^ R = epsilon  ->  (collapse(L), false)
+        L = epsilon ^ R = epsilon   ->  (epsilon, false)
+      end
+
+  extract : Sigma* x Bool x Format x Style -> (seq Sigma) x Sigma*
+  extract(n, leading, fmt, sty) =
+    let ps = tokenize(n)    -- split on whitespace
+    if ps = [] then ([], epsilon)
+    else if leading then
+      ([ first(p) | p <- ps ], epsilon)
+    else
+      let last  = ps[#ps]
+          inits = [ first(p) | p <- ps[1..#ps-1] ]
+      if sty = last_first ^ fmt != default ^ last != epsilon
+        then ([first(last)] ++ inits, epsilon)
+        else (inits, last)
+
+  abbreviate : Sigma+ x Format x Style x Sigma* -> Sigma*
+  abbreviate = format_result . extract . normalize
 
 =head1 LICENCE AND COPYRIGHT
 

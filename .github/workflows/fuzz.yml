@@ -25,7 +25,7 @@ jobs:
           - macos-latest
           - ubuntu-latest
           - windows-latest
-        perl: '5.42'
+        perl: ["5.42"]
 
     runs-on: ${{ matrix.os }}
     name: Fuzz testing with perl ${{ matrix.perl }} on ${{ matrix.os }}
