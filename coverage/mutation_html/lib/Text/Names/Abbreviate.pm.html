@@ -517,15 +517,15 @@ Approximate LCSAJ segments: 47<br>
 </span><span class="">  225: 
 </span><span class="">  226: 	my $had_leading_comma = 0;
 </span><span class="">  227: 
-</span><span class="">  228: 	if ($raw =~ /,/) {
-</span><span class="">  229: 		my ($last, $rest) = map { s/^\s+|\s+$//gr } split /\s*,\s*/, $raw, 2;
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  228: 	if ($raw =~ /,/) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  229: 		my ($last, $rest) = map { s/^\s+|\s+$//gr } split /\s*,\s*/, $raw, 2;
 </span><span class="">  230: 		$rest //= q{};
 </span><span class="">  231: 		$last //= q{};
 </span><span class="">  232: 
 </span><span class="">  233: 		$had_leading_comma = 1 if !length($last) &amp;&amp; length($rest);
 </span><span class="">  234: 
-</span><span class="">  235: 		if (length($last) &amp;&amp; length($rest)) {
-</span><span class="">  236: 			$raw = &quot;$rest $last&quot;;
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  235: 		if (length($last) &amp;&amp; length($rest)) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  236: 			$raw = &quot;$rest $last&quot;;
 </span><span class="">  237: 		} elsif (length $rest) {
 </span><span class="">  238: 			$raw = $rest;
 </span><span class="">  239: 		} elsif (length $last) {
@@ -557,18 +557,18 @@ Approximate LCSAJ segments: 47<br>
 </span><span class="">  265: 	return ([], q{}) unless @parts;
 </span><span class="">  266: 
 </span><span class="">  267: 	my ($last_name, @initials);
-</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  268: 
-</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  269: 	if ($had_leading_comma) {
-</span><span class="">  270: 		$last_name = q{};
+</span><span class="">  268: 
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  269: 	if ($had_leading_comma) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  270: 		$last_name = q{};
 </span><span class="">  271: 		@initials  = map { substr $_, 0, 1 } @parts;
 </span><span class="">  272: 	} else {
 </span><span class="">  273: 		$last_name = pop @parts;
 </span><span class="">  274: 		@initials  = map { substr $_, 0, 1 } @parts;
-</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  275: 
-</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  276: 		# last_first on non-default formats (except shortlast, which keeps the full last name):
+</span><span class="">  275: 
+</span><span class="">  276: 		# last_first on non-default formats (except shortlast, which keeps the full last name):
 </span><span class="">  277: 		# move the last-name initial to the front and discard the full last name
-</span><span class="">  278: 		if ($style eq $STY_LAST &amp;&amp; $format ne $FMT_DEFAULT &amp;&amp; $format ne $FMT_SHORTLAST &amp;&amp; length $last_name) {
-</span><span class="">  279: 			unshift @initials, substr $last_name, 0, 1;
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  278: 		if ($style eq $STY_LAST &amp;&amp; $format ne $FMT_DEFAULT &amp;&amp; $format ne $FMT_SHORTLAST &amp;&amp; length $last_name) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  279: 			unshift @initials, substr $last_name, 0, 1;
 </span><span class="">  280: 			$last_name = q{};
 </span><span class="">  281: 		}
 </span><span class="">  282: 	}
@@ -596,25 +596,31 @@ Approximate LCSAJ segments: 47<br>
 </span><span class="">  304: 	my $sep    = $params-&gt;{separator} // $DEFAULT_SEP;
 </span><span class="">  305: 
 </span><span class="">  306: 	my ($name, $had_leading_comma) = _normalize_name($params-&gt;{name});
-</span><span class="">  307: 	return q{} unless length $name;
-</span><span class="">  308: 
-</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  309: 	my ($initials, $last_name) = _extract_parts($name, $had_leading_comma, $format, $style);
-</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  310: 
-</span><span class="">  311: 	if ($format eq $FMT_COMPACT) {
-</span><span class="">  312: 		return join q{}, @{$initials},
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  307: 	return q{} unless length $name;
+</span><p> <b> Mutants (Total: 2, Killed: 2, Survived: 0)</b><p><span class="">  308: 
+</span><span class="">  309: 	my ($initials, $last_name) = _extract_parts($name, $had_leading_comma, $format, $style);
+</span><span class="">  310: 
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  311: 	if ($format eq $FMT_COMPACT) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  312: 		return join q{}, @{$initials},
 </span><span class="">  313: 			(length $last_name ? (substr $last_name, 0, 1) : ());
 </span><span class="">  314: 	}
 </span><span class="">  315: 
-</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">316 → 316 → 322</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">316 → 316 → 0</span></span>  316: 	if ($format eq $FMT_INITIALS) {
-</span><span class="">  317: 		my @letters = @{$initials};
-</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  318: 		push @letters, substr($last_name, 0, 1) if length $last_name;
-</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  319: 		return join($sep, @letters) . $sep;
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic."><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">316 → 316 → 322</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">316 → 316 → 0</span></span>  316: 	if ($format eq $FMT_INITIALS) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  317: 		my @letters = @{$initials};
+</span><span class="">  318: 		push @letters, substr($last_name, 0, 1) if length $last_name;
+</span><span class="">  319: 		return join($sep, @letters) . $sep;
 </span><span class="">  320: 	}
 </span><span class="">  321: 
-</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">322 → 322 → 333</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">322 → 322 → 0</span></span>  322: 	if ($format eq $FMT_SHORTLAST) {
-</span><span class="">  323: 		my $joined = @{$initials} ? join(&#39; &#39;, map { $_ . $sep } @{$initials}) : q{};
-</span><span class="">  324: 		if ($style eq $STY_LAST &amp;&amp; length $last_name) {
-</span><span class="">  325: 			return length($joined) ? &quot;$last_name, $joined&quot; : $last_name;
+</span><span class="survived-1 tooltip" data-tooltip="Mutation survived. Add targeted tests to validate this branch."><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">322 → 322 → 333</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">322 → 322 → 0</span></span>  322: 	if ($format eq $FMT_SHORTLAST) {
+</span>
+					<details class="mutant-details">
+					<summary>Mutants (Total: 1, Killed: 0, Survived: 1)</summary>
+					<ul>
+				<li><b>COND_INV_322_2: Invert condition if to unless</b><br>MEDIUM: Add tests asserting both true and false outcomes
+</li></ul></details>
+<span class="">  323: 		my $joined = @{$initials} ? join(&#39; &#39;, map { $_ . $sep } @{$initials}) : q{};
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  324: 		if ($style eq $STY_LAST &amp;&amp; length $last_name) {
+</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  325: 			return length($joined) ? &quot;$last_name, $joined&quot; : $last_name;
 </span><span class="">  326: 		}
 </span><span class="">  327: 		return length($joined)
 </span><span class="">  328: 			? (length($last_name) ? &quot;$joined $last_name&quot; : $joined)
@@ -622,8 +628,8 @@ Approximate LCSAJ segments: 47<br>
 </span><span class="">  330: 	}
 </span><span class="">  331: 
 </span><span class="">  332: 	# default format
-</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">333 → 335 → 0</span></span>  333: 	return $last_name unless @{$initials};
-</span><span class="">  334: 	my $joined = join &#39; &#39;, map { $_ . $sep } @{$initials};
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic."><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">333 → 335 → 0</span></span>  333: 	return $last_name unless @{$initials};
+</span><p> <b> Mutants (Total: 2, Killed: 2, Survived: 0)</b><p><span class="">  334: 	my $joined = join &#39; &#39;, map { $_ . $sep } @{$initials};
 </span><span class="">  335: 	return ($style eq $STY_LAST &amp;&amp; length $last_name)
 </span><span class="">  336: 		? &quot;$last_name, $joined&quot;
 </span><span class="">  337: 		: (length $last_name ? &quot;$joined $last_name&quot; : $joined);
@@ -636,31 +642,25 @@ Approximate LCSAJ segments: 47<br>
 </span><span class="">  344: =head1 LIMITATIONS
 </span><span class="">  345: 
 </span><span class="">  346: =over 4
-</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  347: 
-</span><p> <b> Mutants (Total: 2, Killed: 2, Survived: 0)</b><p><span class="">  348: =item *
+</span><span class="">  347: 
+</span><span class="">  348: =item *
 </span><span class="">  349: 
 </span><span class="">  350: Honorifics (C&lt;Dr.&gt;, C&lt;Prof.&gt;) and suffixes (C&lt;Jr.&gt;, C&lt;III&gt;) are not
-</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  351: detected or stripped; they are treated as name components.
-</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  352: 
+</span><span class="">  351: detected or stripped; they are treated as name components.
+</span><span class="">  352: 
 </span><span class="">  353: =item *
 </span><span class="">  354: 
 </span><span class="">  355: Initials are taken verbatim from the first character of each token.
-</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  356: Non-alphabetic leading characters (digits, punctuation) are included as-is.
-</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  357: 
+</span><span class="">  356: Non-alphabetic leading characters (digits, punctuation) are included as-is.
+</span><span class="">  357: 
 </span><span class="">  358: =item *
 </span><span class="">  359: 
 </span><span class="">  360: Multiple consecutive commas collapse to a single comma before parsing.
 </span><span class="">  361: Names with two legitimate comma-separated clauses are not supported.
-</span><span class="survived-1 tooltip" data-tooltip="Mutation survived. Add targeted tests to validate this branch.">  362: 
-</span>
-					<details class="mutant-details">
-					<summary>Mutants (Total: 1, Killed: 0, Survived: 1)</summary>
-					<ul>
-				<li><b>COND_INV_362_2: Invert condition if to unless</b><br>MEDIUM: Add tests asserting both true and false outcomes
-</li></ul></details>
-<span class="">  363: =item *
-</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  364: 
-</span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  365: C&lt;compact&gt; and C&lt;initials&gt; formats are lossy: passing their output back into
+</span><span class="">  362: 
+</span><span class="">  363: =item *
+</span><span class="">  364: 
+</span><span class="">  365: C&lt;compact&gt; and C&lt;initials&gt; formats are lossy: passing their output back into
 </span><span class="">  366: C&lt;abbreviate&gt; does not reproduce the original result.
 </span><span class="">  367: 
 </span><span class="">  368: =back
@@ -668,8 +668,8 @@ Approximate LCSAJ segments: 47<br>
 </span><span class="">  370: =head1 AUTHOR
 </span><span class="">  371: 
 </span><span class="">  372: Nigel Horne, C&lt;&lt; &lt;njh at nigelhorne.com&gt; &gt;&gt;
-</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  373: 
-</span><p> <b> Mutants (Total: 2, Killed: 2, Survived: 0)</b><p><span class="">  374: =head1 BUGS
+</span><span class="">  373: 
+</span><span class="">  374: =head1 BUGS
 </span><span class="">  375: 
 </span><span class="">  376: Please report bugs to C&lt;bug-text-names-abbreviate at rt.cpan.org&gt; or via
 </span><span class="">  377: L&lt;http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Text-Names-Abbreviate&gt;.
