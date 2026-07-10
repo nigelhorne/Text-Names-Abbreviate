@@ -4,198 +4,198 @@
          "OS" : "linux",
          "abstract" : "Generate abbreviated forms of personal names",
          "dir" : "/home/runner/work/Text-Names-Abbreviate/Text-Names-Abbreviate",
-         "finish" : 1782760628.92611,
+         "finish" : 1783706492.78376,
          "name" : "Text-Names-Abbreviate",
          "perl" : "5.40.4",
          "run" : "-e",
-         "start" : 1782760570.07954,
+         "start" : 1783706434.96058,
          "version" : "0.03"
       },
       {
          "OS" : "linux",
          "abstract" : "Generate abbreviated forms of personal names",
          "dir" : "/home/runner/work/Text-Names-Abbreviate/Text-Names-Abbreviate",
-         "finish" : 1782760570.22954,
+         "finish" : 1783706435.10701,
          "name" : "Text-Names-Abbreviate",
          "perl" : "5.40.4",
          "run" : "-e",
-         "start" : 1782760570.22939,
+         "start" : 1783706435.10688,
          "version" : "0.03"
       },
       {
          "OS" : "linux",
          "abstract" : "Generate abbreviated forms of personal names",
          "dir" : "/home/runner/work/Text-Names-Abbreviate/Text-Names-Abbreviate",
-         "finish" : 1782760570.53432,
+         "finish" : 1783706435.40813,
          "name" : "Text-Names-Abbreviate",
          "perl" : "5.40.4",
          "run" : "t/30-basics.t",
-         "start" : 1782760570.49468,
+         "start" : 1783706435.37223,
          "version" : "0.03"
       },
       {
          "OS" : "linux",
          "abstract" : "Generate abbreviated forms of personal names",
          "dir" : "/home/runner/work/Text-Names-Abbreviate/Text-Names-Abbreviate",
-         "finish" : 1782760571.04365,
+         "finish" : 1783706435.87912,
          "name" : "Text-Names-Abbreviate",
          "perl" : "5.40.4",
          "run" : "t/edge_cases.t",
-         "start" : 1782760570.88337,
+         "start" : 1783706435.7512,
          "version" : "0.03"
       },
       {
          "OS" : "linux",
          "abstract" : "Generate abbreviated forms of personal names",
          "dir" : "/home/runner/work/Text-Names-Abbreviate/Text-Names-Abbreviate",
-         "finish" : 1782760571.41832,
+         "finish" : 1783706436.25434,
          "name" : "Text-Names-Abbreviate",
          "perl" : "5.40.4",
          "run" : "t/eof.t",
-         "start" : 1782760571.41808,
+         "start" : 1783706436.25409,
          "version" : "0.03"
       },
       {
          "OS" : "linux",
          "abstract" : "Generate abbreviated forms of personal names",
          "dir" : "/home/runner/work/Text-Names-Abbreviate/Text-Names-Abbreviate",
-         "finish" : 1782760571.65039,
+         "finish" : 1783706436.49064,
          "name" : "Text-Names-Abbreviate",
          "perl" : "5.40.4",
          "run" : "t/eol.t",
-         "start" : 1782760571.6501,
+         "start" : 1783706436.4903,
          "version" : "0.03"
       },
       {
          "OS" : "linux",
          "abstract" : "Generate abbreviated forms of personal names",
          "dir" : "/home/runner/work/Text-Names-Abbreviate/Text-Names-Abbreviate",
-         "finish" : 1782760572.07139,
+         "finish" : 1783706436.91232,
          "name" : "Text-Names-Abbreviate",
          "perl" : "5.40.4",
          "run" : "t/extended_tests.t",
-         "start" : 1782760571.95025,
+         "start" : 1783706436.79021,
          "version" : "0.03"
       },
       {
          "OS" : "linux",
          "abstract" : "Generate abbreviated forms of personal names",
          "dir" : "/home/runner/work/Text-Names-Abbreviate/Text-Names-Abbreviate",
-         "finish" : 1782760572.57926,
+         "finish" : 1783706437.41645,
          "name" : "Text-Names-Abbreviate",
          "perl" : "5.40.4",
          "run" : "t/function.t",
-         "start" : 1782760572.47318,
+         "start" : 1783706437.31383,
          "version" : "0.03"
       },
       {
          "OS" : "linux",
          "abstract" : "Generate abbreviated forms of personal names",
          "dir" : "/home/runner/work/Text-Names-Abbreviate/Text-Names-Abbreviate",
-         "finish" : 1782760626.45364,
+         "finish" : 1783706490.30491,
          "name" : "Text-Names-Abbreviate",
          "perl" : "5.40.4",
          "run" : "t/fuzz.t",
-         "start" : 1782760573.05067,
+         "start" : 1783706437.8933,
          "version" : "0.03"
       },
       {
          "OS" : "linux",
          "abstract" : "Generate abbreviated forms of personal names",
          "dir" : "/home/runner/work/Text-Names-Abbreviate/Text-Names-Abbreviate",
-         "finish" : 1782760626.35515,
+         "finish" : 1783706490.20474,
          "name" : "Text-Names-Abbreviate",
          "perl" : "5.40.4",
          "run" : "/opt/hostedtoolcache/perl/5.40.4/x64/bin/fuzz-harness-generator",
-         "start" : 1782760573.33005,
+         "start" : 1783706438.16342,
          "version" : "0.03"
       },
       {
          "OS" : "linux",
          "abstract" : "Generate abbreviated forms of personal names",
          "dir" : "/home/runner/work/Text-Names-Abbreviate/Text-Names-Abbreviate",
-         "finish" : 1782760626.30784,
+         "finish" : 1783706490.15654,
          "name" : "Text-Names-Abbreviate",
          "perl" : "5.40.4",
          "run" : "/opt/hostedtoolcache/perl/5.40.4/x64/bin/prove",
-         "start" : 1782760573.555,
+         "start" : 1783706438.37064,
          "version" : "0.03"
       },
       {
          "OS" : "linux",
          "abstract" : "Generate abbreviated forms of personal names",
          "dir" : "/home/runner/work/Text-Names-Abbreviate/Text-Names-Abbreviate",
-         "finish" : 1782760625.71425,
+         "finish" : 1783706489.60091,
          "name" : "Text-Names-Abbreviate",
          "perl" : "5.40.4",
-         "run" : "/tmp/15xoaoqgvQ",
-         "start" : 1782760573.87002,
+         "run" : "/tmp/u47tpIiU6v",
+         "start" : 1783706438.68659,
          "version" : "0.03"
       },
       {
          "OS" : "linux",
          "abstract" : "Generate abbreviated forms of personal names",
          "dir" : "/home/runner/work/Text-Names-Abbreviate/Text-Names-Abbreviate",
-         "finish" : 1782760626.92991,
+         "finish" : 1783706490.78586,
          "name" : "Text-Names-Abbreviate",
          "perl" : "5.40.4",
          "run" : "t/integration.t",
-         "start" : 1782760626.78934,
+         "start" : 1783706490.6458,
          "version" : "0.03"
       },
       {
          "OS" : "linux",
          "abstract" : "Generate abbreviated forms of personal names",
          "dir" : "/home/runner/work/Text-Names-Abbreviate/Text-Names-Abbreviate",
-         "finish" : 1782760627.37123,
+         "finish" : 1783706491.21532,
          "name" : "Text-Names-Abbreviate",
          "perl" : "5.40.4",
          "run" : "t/locales.t",
-         "start" : 1782760627.33086,
+         "start" : 1783706491.18826,
          "version" : "0.03"
       },
       {
          "OS" : "linux",
          "abstract" : "Generate abbreviated forms of personal names",
          "dir" : "/home/runner/work/Text-Names-Abbreviate/Text-Names-Abbreviate",
-         "finish" : 1782760627.81137,
+         "finish" : 1783706491.66091,
          "name" : "Text-Names-Abbreviate",
          "perl" : "5.40.4",
          "run" : "t/mutant_killers.t",
-         "start" : 1782760627.71936,
+         "start" : 1783706491.56599,
          "version" : "0.03"
       },
       {
          "OS" : "linux",
          "abstract" : "Generate abbreviated forms of personal names",
          "dir" : "/home/runner/work/Text-Names-Abbreviate/Text-Names-Abbreviate",
-         "finish" : 1782760628.09375,
+         "finish" : 1783706491.94717,
          "name" : "Text-Names-Abbreviate",
          "perl" : "5.40.4",
          "run" : "t/pod-cm.t",
-         "start" : 1782760628.09352,
+         "start" : 1783706491.94691,
          "version" : "0.03"
       },
       {
          "OS" : "linux",
          "abstract" : "Generate abbreviated forms of personal names",
          "dir" : "/home/runner/work/Text-Names-Abbreviate/Text-Names-Abbreviate",
-         "finish" : 1782760628.33352,
+         "finish" : 1783706492.18673,
          "name" : "Text-Names-Abbreviate",
          "perl" : "5.40.4",
          "run" : "t/pod.t",
-         "start" : 1782760628.33327,
+         "start" : 1783706492.18645,
          "version" : "0.03"
       },
       {
          "OS" : "linux",
          "abstract" : "Generate abbreviated forms of personal names",
          "dir" : "/home/runner/work/Text-Names-Abbreviate/Text-Names-Abbreviate",
-         "finish" : 1782760628.76673,
+         "finish" : 1783706492.62401,
          "name" : "Text-Names-Abbreviate",
          "perl" : "5.40.4",
          "run" : "t/unit.t",
-         "start" : 1782760628.63886,
+         "start" : 1783706492.49324,
          "version" : "0.03"
       }
    ],
@@ -261,26 +261,26 @@
             "uncoverable" : 0
          }
       },
-      "/tmp/15xoaoqgvQ" : {
+      "/tmp/u47tpIiU6v" : {
          "branch" : {
-            "covered" : 147,
-            "error" : 567,
-            "percentage" : 20.5882352941177,
-            "total" : 714,
+            "covered" : 148,
+            "error" : 574,
+            "percentage" : 20.4986149584488,
+            "total" : 722,
             "uncoverable" : 0
          },
          "condition" : {
             "covered" : 75,
-            "error" : 230,
-            "percentage" : 24.5901639344262,
-            "total" : 305,
+            "error" : 233,
+            "percentage" : 24.3506493506493,
+            "total" : 308,
             "uncoverable" : 0
          },
          "statement" : {
-            "covered" : 372,
-            "error" : 810,
-            "percentage" : 31.4720812182741,
-            "total" : 1182
+            "covered" : 373,
+            "error" : 815,
+            "percentage" : 31.3973063973064,
+            "total" : 1188
          },
          "subroutine" : {
             "covered" : 34,
@@ -289,33 +289,33 @@
             "total" : 60
          },
          "total" : {
-            "covered" : 628,
-            "error" : 1633,
-            "percentage" : 27.7753206545776,
-            "total" : 2261,
+            "covered" : 630,
+            "error" : 1648,
+            "percentage" : 27.6558384547849,
+            "total" : 2278,
             "uncoverable" : 0
          }
       },
       "Total" : {
          "branch" : {
-            "covered" : 206,
-            "error" : 638,
-            "percentage" : 24.4075829383886,
-            "total" : 844,
+            "covered" : 207,
+            "error" : 645,
+            "percentage" : 24.2957746478873,
+            "total" : 852,
             "uncoverable" : 0
          },
          "condition" : {
             "covered" : 108,
-            "error" : 261,
-            "percentage" : 29.2682926829268,
-            "total" : 369,
+            "error" : 264,
+            "percentage" : 29.0322580645161,
+            "total" : 372,
             "uncoverable" : 0
          },
          "statement" : {
-            "covered" : 527,
-            "error" : 930,
-            "percentage" : 36.1702127659574,
-            "total" : 1457
+            "covered" : 528,
+            "error" : 935,
+            "percentage" : 36.0902255639098,
+            "total" : 1463
          },
          "subroutine" : {
             "covered" : 59,
@@ -324,10 +324,10 @@
             "total" : 89
          },
          "total" : {
-            "covered" : 900,
-            "error" : 1859,
-            "percentage" : 32.6205146792316,
-            "total" : 2759,
+            "covered" : 902,
+            "error" : 1874,
+            "percentage" : 32.492795389049,
+            "total" : 2776,
             "uncoverable" : 0
          }
       },

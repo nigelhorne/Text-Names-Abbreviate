@@ -246,7 +246,7 @@ pre details.mutant-details ul {
 <strong>Structural Coverage (Approximate)</strong><p>
 TER1 (Statement): 100.00%<br>
 TER2 (Branch): 100.00%<br>
-TER3 (LCSAJ): 100.0% (13/13)<br>
+TER3 (LCSAJ): 100.0% (5/5)<br>
 Approximate LCSAJ segments: 47<br>
 </div>
 
@@ -511,7 +511,7 @@ Approximate LCSAJ segments: 47<br>
 </span><span class="">  219: #               the original input began with a comma (no last-name component).
 </span><span class="">  220: # Side Effects: None.
 </span><span class="">  221: sub _normalize_name {
-</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">222 → 228 → 246</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">222 → 228 → 0</span></span>  222: 	my ($raw) = @_;
+</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">222 → 228 → 246</span></span>  222: 	my ($raw) = @_;
 </span><span class="">  223: 
 </span><span class="">  224: 	$raw =~ s/,+/,/g;    # collapse any run of commas to one before splitting
 </span><span class="">  225: 
@@ -535,7 +535,7 @@ Approximate LCSAJ segments: 47<br>
 </span><span class="">  243: 		}
 </span><span class="">  244: 	}
 </span><span class="">  245: 
-</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">246 → 249 → 0</span></span>  246: 	$raw =~ s/^\s+|\s+$//g;
+</span><span class="">  246: 	$raw =~ s/^\s+|\s+$//g;
 </span><span class="">  247: 	$raw =~ s/\s+/ /g;
 </span><span class="">  248: 
 </span><span class="">  249: 	return ($raw, $had_leading_comma);
@@ -551,7 +551,7 @@ Approximate LCSAJ segments: 47<br>
 </span><span class="">  259: #               $last_name is &#39;&#39; when consumed by style/format reordering.
 </span><span class="">  260: # Side Effects: None.
 </span><span class="">  261: sub _extract_parts {
-</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">262 → 269 → 284</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">262 → 269 → 0</span></span>  262: 	my ($name, $had_leading_comma, $format, $style) = @_;
+</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">262 → 269 → 284</span></span>  262: 	my ($name, $had_leading_comma, $format, $style) = @_;
 </span><span class="">  263: 
 </span><span class="">  264: 	my @parts = split /\s+/, $name;
 </span><span class="">  265: 	return ([], q{}) unless @parts;
@@ -573,7 +573,7 @@ Approximate LCSAJ segments: 47<br>
 </span><span class="">  281: 		}
 </span><span class="">  282: 	}
 </span><span class="">  283: 
-</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">284 → 286 → 0</span></span>  284: 	@initials = grep { length $_ } @initials;
+</span><span class="">  284: 	@initials = grep { length $_ } @initials;
 </span><span class="">  285: 
 </span><span class="">  286: 	return (\@initials, $last_name);
 </span><span class="">  287: }
@@ -583,7 +583,7 @@ Approximate LCSAJ segments: 47<br>
 </span><span class="">  291: # ---------------------------------------------------------------------------
 </span><span class="">  292: 
 </span><span class="">  293: sub abbreviate {
-</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">294 → 311 → 316</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">294 → 311 → 0</span></span>  294: 	my $params = Params::Validate::Strict::validate_strict({
+</span><span class=""><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">294 → 311 → 316</span></span>  294: 	my $params = Params::Validate::Strict::validate_strict({
 </span><span class="">  295: 		args   =&gt; Params::Get::get_params(&#39;name&#39;, @_),
 </span><span class="">  296: 		schema =&gt; \%PARAM_SCHEMA,
 </span><span class="">  297: 	});
@@ -605,13 +605,13 @@ Approximate LCSAJ segments: 47<br>
 </span><span class="">  313: 			(length $last_name ? (substr $last_name, 0, 1) : ());
 </span><span class="">  314: 	}
 </span><span class="">  315: 
-</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic."><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">316 → 316 → 322</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">316 → 316 → 0</span></span>  316: 	if ($format eq $FMT_INITIALS) {
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic."><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">316 → 316 → 322</span></span>  316: 	if ($format eq $FMT_INITIALS) {
 </span><p> <b> Mutants (Total: 1, Killed: 1, Survived: 0)</b><p><span class="">  317: 		my @letters = @{$initials};
 </span><span class="">  318: 		push @letters, substr($last_name, 0, 1) if length $last_name;
 </span><span class="">  319: 		return join($sep, @letters) . $sep;
 </span><span class="">  320: 	}
 </span><span class="">  321: 
-</span><span class="survived-1 tooltip" data-tooltip="Mutation survived. Add targeted tests to validate this branch."><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">322 → 322 → 333</span></span><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">322 → 322 → 0</span></span>  322: 	if ($format eq $FMT_SHORTLAST) {
+</span><span class="survived-1 tooltip" data-tooltip="Mutation survived. Add targeted tests to validate this branch."><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">322 → 322 → 333</span></span>  322: 	if ($format eq $FMT_SHORTLAST) {
 </span>
 					<details class="mutant-details">
 					<summary>Mutants (Total: 1, Killed: 0, Survived: 1)</summary>
@@ -628,7 +628,7 @@ Approximate LCSAJ segments: 47<br>
 </span><span class="">  330: 	}
 </span><span class="">  331: 
 </span><span class="">  332: 	# default format
-</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic."><span class="lcsaj-tip"><span class="lcsaj-dot">●</span><span class="lcsaj-tip-text">333 → 335 → 0</span></span>  333: 	return $last_name unless @{$initials};
+</span><span class="killed tooltip" data-tooltip="Mutations here were killed. Tests are effectively covering this logic.">  333: 	return $last_name unless @{$initials};
 </span><p> <b> Mutants (Total: 2, Killed: 2, Survived: 0)</b><p><span class="">  334: 	my $joined = join &#39; &#39;, map { $_ . $sep } @{$initials};
 </span><span class="">  335: 	return ($style eq $STY_LAST &amp;&amp; length $last_name)
 </span><span class="">  336: 		? &quot;$last_name, $joined&quot;
