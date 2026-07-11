@@ -43,6 +43,7 @@
 \.tmp$
 \.#
 \.rej$
+schemas\.yml$
 \.swp$
 
 # Avoid OS-specific files/dirs
@@ -68,6 +69,8 @@
 Text-.*
 .test-script-*
 typescript
-mutation.json
+mutation*
+^xt/mutant_\d
 CLAUDE.md
 \.claude
+\.circleci
