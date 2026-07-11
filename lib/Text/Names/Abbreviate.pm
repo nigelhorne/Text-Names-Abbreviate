@@ -20,11 +20,11 @@ Text::Names::Abbreviate - Create abbreviated name formats from full names
 
 =head2 VERSION
 
-Version 0.03
+Version 0.04
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 # ---------------------------------------------------------------------------
 # Named constants -- eliminate magic strings throughout the logic

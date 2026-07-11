@@ -1,6 +1,6 @@
 Revision history for Text-Names-Abbreviate
 
-0.04
+0.04	Fri Jul 10 20:18:12 EDT 2026
 	[ Enhancements ]
 	- Unicode NFC normalisation: _normalize_name() now calls
 	  Unicode::Normalize::NFC() before any processing. Strings that differ only
