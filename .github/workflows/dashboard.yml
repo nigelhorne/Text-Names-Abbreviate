@@ -35,11 +35,7 @@ jobs:
 
       # Install Perl via perlbrew
       - name: Setup Perl environment
-<<<<<<< HEAD
         uses: shogo82148/actions-setup-perl@v1.43.1
-=======
-        uses: shogo82148/actions-setup-perl@v1.42.0
->>>>>>> 818134322bdd2e8519eb6c6d82e902595841c4bd
         with:
           perl-version: ${{ matrix.perl }}
           # install cpanminus
